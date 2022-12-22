@@ -20,6 +20,8 @@ const styles = StyleSheet.create({
         color:'#8391A1',
         borderColor:'#E8ECF4',
         marginVertical:12,
+        borderColor:'#E8ECF4',
+        marginVertical:12,
         placeholderTextColor:'#8391A1',
         paddingHorizontal:20,
         paddingTop:5

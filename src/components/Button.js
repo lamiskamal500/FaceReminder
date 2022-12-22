@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
         display:'flex',
         alignItems:'center',
         width:331,
-        height:56,
         fontFamily:'Urbanist',
         paddingVertical:20,
     }
