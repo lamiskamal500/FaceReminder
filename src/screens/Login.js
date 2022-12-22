@@ -25,7 +25,7 @@ const Login = ()=>{
 
         <View style={styles.DontHaveAccountfull}>
         <Text style={styles.DontHaveAccountText}>Dont have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
           <Text style={styles.RegisterNowText}>Register Now</Text>
         </TouchableOpacity>
       </View>
