@@ -5,8 +5,7 @@ const InputText=(props)=>{
         <View style = {styles.InputTextStyle}>
                <TextInput
         placeholder={props.DefaultText}
-        // value
-        // onchange
+        placeholderTextColor='#8391A1'
        
         />
         </View>
@@ -15,11 +14,15 @@ const InputText=(props)=>{
 const styles = StyleSheet.create({
     InputTextStyle:{
         backgroundColor: '#F7F8F9',
-        width:331,
+        width:'90%',
         height:60,
         borderRadius:8,
+        color:'#8391A1',
+        borderColor:'#E8ECF4',
+        marginVertical:12,
         placeholderTextColor:'#8391A1',
-        textAlign:'left'
+        paddingHorizontal:20,
+        paddingTop:5
     },
     
 
