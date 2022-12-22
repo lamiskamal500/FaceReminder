@@ -4,8 +4,8 @@ const InputText=(props)=>{
     return(
         <View style = {styles.InputTextStyle}>
                <TextInput
-        placeholder={props.InputText}
-       
+        placeholder={props.DefaultText}
+        placeholderTextColor='#8391A1'
         />
         </View>
     );
@@ -17,9 +17,12 @@ const styles = StyleSheet.create({
         height:60,
         borderRadius:8,
         color:'#8391A1',
+        borderColor:'#E8ECF4',
+        marginVertical:12,
         placeholderTextColor:'#8391A1',
-        borderBottomColor:'#E8ECF4',
-        marginVertical:12
+        paddingHorizontal:20,
+        paddingTop:5
+
     },
     
 

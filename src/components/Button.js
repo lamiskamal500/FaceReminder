@@ -2,8 +2,9 @@ import React from "react";
 import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
 
 const Button = (props)=>{
+    console.log(props)
     return(
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={[styles.button, props.style]} >
             <Text>
                 {props.buttonText}
             </Text>
@@ -19,10 +20,9 @@ const styles = StyleSheet.create({
         display:'flex',
         alignItems:'center',
         width:331,
-        height:56,
         fontFamily:'Urbanist',
-        paddingVertical:20
+        paddingVertical:20,
     }
-
+    
 })
 export default Button;

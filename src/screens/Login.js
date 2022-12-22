@@ -7,6 +7,7 @@ const Login = ()=>{
     const navigation = useNavigation();
 
     return(
+        
         <TouchableOpacity onPress={() => navigation.navigate("Register")}>
             <Text style={{fontSize:20 , color:'white'}}>
                 Register
