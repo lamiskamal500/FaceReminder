@@ -1,10 +1,10 @@
 import React from 'react';
 import { TouchableOpacity,Text,View,StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native'; 
-import InputText from '../components/InputText';
 import Button from '../components/Button';
 import BackIcon from '../components/BackIcon';
 const ForgetPassword = ()=>{
+    const navigation = useNavigation();
     return(
         <View style={styles.ForgetPasswordScreen}>
            <BackIcon/>

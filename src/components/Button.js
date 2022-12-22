@@ -2,7 +2,7 @@ import React from "react";
 import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
 
 const Button = (props)=>{
-    console.log(props)
+
     return(
         <TouchableOpacity style={[styles.button, props.style]} >
             <Text>
