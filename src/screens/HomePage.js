@@ -5,7 +5,7 @@ import Button from '../components/Button';
 const HomePage = ()=>{
     return(
         <View style={styles.HomePageMain}>
-             <View style={{width:'85%'}} style={styles.Image}>
+             <View style={styles.Image}>
              <Image source={require('../assets/menu.png')} style={styles.Menu} />
              <Image source={require('../assets/User2.png')} style={styles.User2} />
              </View>
@@ -64,7 +64,8 @@ const styles = StyleSheet.create({
     },
     Image:{
         // display:"flex",
-        flexDirection:'row'
+        flexDirection:'row',
+        width:'85%'
     }
 })
 export default HomePage;

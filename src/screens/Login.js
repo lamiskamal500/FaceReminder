@@ -23,11 +23,7 @@ const Login = ()=>{
              onPress={()=> navigation.navigate('ForgetPassword')}>
             <View ><Text style={styles.ForgetText} >Forget Password?</Text></View>
             </TouchableOpacity>
-            <TouchableOpacity
-             onPress={()=> navigation.navigate('HomePage')}>
-                
-            <Button style={styles.RegisterButton} buttonText='login'/>
-            </TouchableOpacity>
+            <Button style={styles.RegisterButton} buttonText='login' onPress={()=> navigation.navigate('HomePage')}/>
 
         <View style={styles.DontHaveAccountfull}>
         <Text style={styles.DontHaveAccountText}>Dont have an account? </Text>

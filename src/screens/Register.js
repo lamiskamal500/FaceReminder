@@ -7,17 +7,32 @@ import BackIcon from '../components/BackIcon';
 
 const Register = () => {
   const [disable, setDisable] = React.useState(false);
-
+  const [loading, setLoading] = React.useState(false);
   const navigation = useNavigation();
+
+  function onPress() {
+    setDisable(true);
+    navigation.navigate('Login');
+    setLoading(true);
+  }
   return (
     <View style={styles.registerScreen}>
-      <BackIcon/>
+      <BackIcon />
       <Text style={styles.registerMessage}>Hello!Register to get started</Text>
       <InputText DefaultText="Email" />
       <InputText DefaultText="Password" />
       <InputText DefaultText="Confirm Password" />
-      <Button buttonText="Register" disable={disable} onPress={() => setDisable(true)}
-      style={styles.registerButton} styleButton={styles.buttonText}/>
+
+      <Button
+        buttonText="Register"
+        disable={disable}
+        onPress={onPress}
+        style={styles.registerButton}
+        styleButton={styles.buttonText}
+        loading={loading}
+        backgroundColor={{backgroundColor: loading ? '#8391A1' : '#1E232C'}}
+      />
+
       <View style={styles.haveAccount}>
         <Text style={styles.account}>Already have an account?</Text>
         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
@@ -45,8 +60,8 @@ const styles = StyleSheet.create({
   haveAccount: {
     color: '#1E232C',
     marginTop: 85,
-    display:"flex",
-    flexDirection:'row'
+    display: 'flex',
+    flexDirection: 'row',
   },
   loginNow: {
     color: '#35C2C1',
@@ -57,9 +72,11 @@ const styles = StyleSheet.create({
   account: {
     color: 'black',
   },
-  buttonText:{
-    fontSize:15
-  }
+  buttonText: {
+    fontSize: 15,
+    display: 'flex',
+    flexDirection: 'row',
+  },
 });
 
 export default Register;
