@@ -7,6 +7,7 @@ import Login from './src/screens/Login';
 import Register from './src/screens/Register';
 import ForgetPassword from './src/screens/ForgetPassword';
 import CreateNewPassword from './src/screens/CreateNewPassword';
+import HomePage from './src/screens/HomePage';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,8 @@ const App = () =>{
          <Stack.Screen name="ForgetPassword" component={ForgetPassword}
          options={{headerShown:false}}/>
           <Stack.Screen name="CreateNewPassword" component={CreateNewPassword}
+         options={{headerShown:false}}/>
+          <Stack.Screen name="HomePage" component={HomePage}
          options={{headerShown:false}}/>
       </Stack.Navigator>
     </NavigationContainer>

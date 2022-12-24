@@ -1,11 +1,13 @@
-import React from 'react';
+import React , { useState } from 'react';
 import { TouchableOpacity,Text,View,StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native'; 
 import InputText from '../components/InputText';
 import Button from '../components/Button';
+import HomePage from './HomePage';
 
 const Login = ()=>{
     const navigation = useNavigation();
+    
 
     return(
         <View style={styles.LoginScreen}>
@@ -21,7 +23,11 @@ const Login = ()=>{
              onPress={()=> navigation.navigate('ForgetPassword')}>
             <View ><Text style={styles.ForgetText} >Forget Password?</Text></View>
             </TouchableOpacity>
+            <TouchableOpacity
+             onPress={()=> navigation.navigate('HomePage')}>
+                
             <Button style={styles.RegisterButton} buttonText='login'/>
+            </TouchableOpacity>
 
         <View style={styles.DontHaveAccountfull}>
         <Text style={styles.DontHaveAccountText}>Dont have an account? </Text>
