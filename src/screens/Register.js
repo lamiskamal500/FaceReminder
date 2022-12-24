@@ -6,6 +6,8 @@ import InputText from '../components/InputText';
 import BackIcon from '../components/BackIcon';
 
 const Register = () => {
+  const [disable, setDisable] = React.useState(false);
+
   const navigation = useNavigation();
   return (
     <View style={styles.registerScreen}>
@@ -14,7 +16,8 @@ const Register = () => {
       <InputText DefaultText="Email" />
       <InputText DefaultText="Password" />
       <InputText DefaultText="Confirm Password" />
-      <Button buttonText="Register" style={styles.registerButton} />
+      <Button buttonText="Register" disable={disable} onPress={() => setDisable(true)}
+      style={styles.registerButton} styleButton={styles.buttonText}/>
       <View style={styles.haveAccount}>
         <Text style={styles.account}>Already have an account?</Text>
         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
@@ -54,6 +57,9 @@ const styles = StyleSheet.create({
   account: {
     color: 'black',
   },
+  buttonText:{
+    fontSize:15
+  }
 });
 
 export default Register;
