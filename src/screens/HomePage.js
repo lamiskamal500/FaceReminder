@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
-import { TouchableOpacity,Text,View,StyleSheet,Image } from 'react-native';
+import { TouchableOpacity,Text,View,StyleSheet,Image  } from 'react-native';
 import { useNavigation } from '@react-navigation/native'; 
 import Button from '../components/Button';
 const HomePage = ()=>{
+    const navigation = useNavigation();
     return(
         <View style={styles.HomePageMain}>
-             <View style={{width:'85%'}} style={styles.Image}>
+
+             < View style={styles.Image}  >
              <Image source={require('../assets/menu.png')} style={styles.Menu} />
-             <Image source={require('../assets/User2.png')} style={styles.User2} />
+             <TouchableOpacity style={{width:'90%', }}
+             onPress={()=> navigation.navigate('StaticProfile')}>
+             <Image source={require('../assets/User2big.png')} style={styles.User2} />
+             </TouchableOpacity>
              </View>
              <View style={{width:'85%'}}>
              
@@ -59,12 +64,14 @@ const styles = StyleSheet.create({
         height: 44,
          marginTop: 10,
         // // alignSelf:'flex-start',
-         marginLeft:200
+         marginLeft:230,
+         borderRadius:30,
 
     },
     Image:{
         // display:"flex",
-        flexDirection:'row'
+        flexDirection:'row',
+        width:'85%',
     }
 })
 export default HomePage;

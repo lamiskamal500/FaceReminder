@@ -8,6 +8,7 @@ import Register from './src/screens/Register';
 import ForgetPassword from './src/screens/ForgetPassword';
 import CreateNewPassword from './src/screens/CreateNewPassword';
 import HomePage from './src/screens/HomePage';
+import StaticProfile from './src/screens/StaticProfile';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +26,8 @@ const App = () =>{
           <Stack.Screen name="CreateNewPassword" component={CreateNewPassword}
          options={{headerShown:false}}/>
           <Stack.Screen name="HomePage" component={HomePage}
+         options={{headerShown:false}}/>
+          <Stack.Screen name="StaticProfile" component={StaticProfile}
          options={{headerShown:false}}/>
       </Stack.Navigator>
     </NavigationContainer>
