@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 import { TouchableOpacity,Text,View,StyleSheet,Image  } from 'react-native';
 import { useNavigation } from '@react-navigation/native'; 
+import { createDrawerNavigator } from '@react-navigation/drawer';
+
+
 import Button from '../components/Button';
 const HomePage = ()=>{
     const navigation = useNavigation();
     return(
         <View style={styles.HomePageMain}>
 
-             < View style={styles.Image}  >
+             <View style={styles.Image}>
+             <TouchableOpacity onPress={()=>navigation.toggleDrawer()}>
              <Image source={require('../assets/menu.png')} style={styles.Menu} />
+             </TouchableOpacity>
              <TouchableOpacity style={{width:'90%', }}
              onPress={()=> navigation.navigate('StaticProfile')}>
              <Image source={require('../assets/User2big.png')} style={styles.User2} />
