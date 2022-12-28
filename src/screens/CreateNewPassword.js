@@ -1,10 +1,20 @@
 import React from 'react';
-import {TouchableOpacity, Text, View, StyleSheet} from 'react-native';
+import {
+  TouchableOpacity,
+  Text,
+  View,
+  StyleSheet,
+  Modal,
+  Image,
+} from 'react-native';
 import BackIcon from '../components/BackIcon';
+import {useNavigation} from '@react-navigation/native';
 import Button from '../components/Button';
 import InputText from '../components/InputText';
 
-const ForgetPassword = () => {
+const CreateNewPassword = () => {
+  const navigation = useNavigation();
+  const [modalVisible, setModalVisible] = React.useState(false);
   return (
     <View style={styles.createPasswordScreen}>
       <BackIcon />
@@ -16,7 +26,33 @@ const ForgetPassword = () => {
       </Text>
       <InputText DefaultText="New Password" />
       <InputText DefaultText="Confirm Password" />
-      <Button buttonText="Reset Password" style={styles.resetButton} />
+      <Button
+        buttonText="Reset Password"
+        style={styles.resetButton}
+        onPress={() => setModalVisible(!modalVisible)}
+      />
+      <Modal
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(!modalVisible)}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modal}>
+            <Image
+              source={require('../assets/Successmark.png')}
+              style={styles.successmark}
+            />
+            <Text style={styles.passwordChanged}>Password Changed!</Text>
+            <Text style={styles.passwordText}>
+              Your password has been changed successfully
+            </Text>
+            <Button
+              buttonText="Back to Login"
+              style={styles.backButton}
+              onPress={()=>navigation.navigate('Login')}
+            />
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -45,5 +81,39 @@ const styles = StyleSheet.create({
   resetButton: {
     marginVertical: 30,
   },
+  modalContainer: {
+    backgroundColor: '#000000aa',
+    flex: 1,
+  },
+  modal: {
+    backgroundColor: '#ffffff',
+    margin: 40,
+    marginTop: 150,
+    padding: 25,
+    borderRadius: 10,
+    display: 'flex',
+    alignItems: 'center',
+    flex: 0.8,
+  },
+  successmark: {
+    width: 80,
+    height: 80,
+    marginTop: 45,
+    marginBottom: 20,
+  },
+  passwordChanged: {
+    color: '#1E232C',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  backButton: {
+    width: 230,
+  },
+  passwordText: {
+    color: '#8391A1',
+    marginBottom: 35,
+    width:'65%',
+  },
 });
-export default ForgetPassword;
+export default CreateNewPassword;

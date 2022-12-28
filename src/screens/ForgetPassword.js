@@ -1,57 +1,68 @@
-import React, { useState } from 'react';
-import { TouchableOpacity,Text,View,StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native'; 
+import React, {useState} from 'react';
+import {TouchableOpacity, Text, View, StyleSheet} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import Button from '../components/Button';
 import BackIcon from '../components/BackIcon';
 import InputText from '../components/InputText';
-const ForgetPassword = ()=>{
-    const [text, setText] = useState('');
-    
-    return(
-        <View style={styles.ForgetPasswordScreen}>
-           <BackIcon/>
-           <View style={{width:'100%',}}>
-            <Text style={styles.ForgetText}>Forget Password?</Text>
-            </View>
-            <View style={{width:'100%',}}>
-                <Text style={styles.ForgetBigText}> Don't worry! It occurs. Please enter the email address linked with your account.</Text>
-            </View>
-            <InputText DefaultText='Enter your email'  onChangeText={newText => setText(newText)}/>
-            <Button style={styles.SendMailButton} buttonText='Send Mail'/>
+const ForgetPassword = () => {
+  const [text, setText] = useState('');
+  const navigation = useNavigation();
 
-        </View>
-    );
+  function onPress() {
+    navigation.navigate('CreateNewPassword');
+  }
+  return (
+    <View style={styles.ForgetPasswordScreen}>
+      <BackIcon />
+      <View style={{width: '100%'}}>
+        <Text style={styles.ForgetText}>Forget Password?</Text>
+      </View>
+      <View style={{width: '100%'}}>
+        <Text style={styles.ForgetBigText}>
+          {' '}
+          Don't worry! It occurs. Please enter the email address linked with
+          your account.
+        </Text>
+      </View>
+      <InputText
+        DefaultText="Enter your email"
+        onChangeText={newText => setText(newText)}
+      />
+      <Button
+        style={styles.SendMailButton}
+        buttonText="Send Mail"
+        onPress={onPress}
+      />
+    </View>
+  );
 };
 const styles = StyleSheet.create({
-    ForgetPasswordScreen:{
-        display:'flex',
-        alignItems:'center',
-        backgroundColor:'#FFFFFF',
-        height:'100%',
-    },
-    ForgetText:{
-        color:"#1E232C",
-        fontSize:30,
-        fontWeight:'bold',
-        fontFamily:'Urbanist',
-        marginTop:20,
-        marginBottom:10,
-        marginHorizontal:30,
-        alignItems:'flex-start',
-
-    },
-    ForgetBigText:{
-        color:"#8391A1",
-        fontWeight:"medium",
-        fontSize:16,
-        fontFamily:'Urbanist',
-        marginBottom:20,
-        marginHorizontal:22
-        
-    },
-    SendMailButton:{
-        marginTop:30,
-
-    }
-})
+  ForgetPasswordScreen: {
+    display: 'flex',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+    height: '100%',
+  },
+  ForgetText: {
+    color: '#1E232C',
+    fontSize: 30,
+    fontWeight: 'bold',
+    fontFamily: 'Urbanist',
+    marginTop: 20,
+    marginBottom: 10,
+    marginHorizontal: 30,
+    alignItems: 'flex-start',
+  },
+  ForgetBigText: {
+    color: '#8391A1',
+    fontWeight: 'medium',
+    fontSize: 16,
+    fontFamily: 'Urbanist',
+    marginBottom: 20,
+    marginHorizontal: 22,
+  },
+  SendMailButton: {
+    marginTop: 30,
+  },
+});
 export default ForgetPassword;
