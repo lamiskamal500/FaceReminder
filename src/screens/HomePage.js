@@ -55,14 +55,15 @@ const styles = StyleSheet.create({
     Menu:{
         width: 20,
         height: 20,
-        marginTop: 20,
+        marginTop: 30,
         alignSelf:'flex-start',
         marginHorizontal:10,
+        marginLeft:60,
     },
     User2:{
         width: 44,
         height: 44,
-         marginTop: 10,
+         marginTop: 18,
         // // alignSelf:'flex-start',
          marginLeft:230,
          borderRadius:30,
@@ -70,8 +71,7 @@ const styles = StyleSheet.create({
     },
     Image:{
         // display:"flex",
-        flexDirection:'row',
-        width:'85%',
+        flexDirection:'row'
     }
 })
 export default HomePage;
