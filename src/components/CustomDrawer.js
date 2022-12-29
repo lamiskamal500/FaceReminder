@@ -12,7 +12,6 @@ return(
 };
 const CustomDrawer = () => {
   const navigation = useNavigation();
-  
   return (
     <View style={styles.customDrawer}>
       <Image source={require('../assets/Profile.png')} />

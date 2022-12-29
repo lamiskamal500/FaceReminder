@@ -8,7 +8,21 @@ import BackIcon from '../components/BackIcon';
 const Register = () => {
   const [disable, setDisable] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const [checkValidEmail, setCheckValidEmail] = React.useState('');
+  const [email, setEmail] = React.useState('');
   const navigation = useNavigation();
+
+  const handleEmail = text => {
+    let re = /\S+@\S+\.\S+/;
+    let regex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+
+    setEmail(text);
+    if (re.test(text) || regex.test(text)){
+      setCheckValidEmail(false);
+    } else {
+      setCheckValidEmail(true);
+    }
+  };
 
   function onPress() {
     setDisable(true);
@@ -19,7 +33,16 @@ const Register = () => {
     <View style={styles.registerScreen}>
       <BackIcon />
       <Text style={styles.registerMessage}>Hello!Register to get started</Text>
-      <InputText DefaultText="Email" />
+      <InputText
+        DefaultText="Email"
+        onChangeText={text => handleEmail(text)}
+        value={email}
+      />
+      {checkValidEmail ? (
+        <Text style={styles.emailFailed}>Wrong Email Format</Text>
+      ) : (
+        <Text style={styles.emailFailed}> </Text>
+      )}
       <InputText DefaultText="Password" />
       <InputText DefaultText="Confirm Password" />
 
@@ -76,6 +99,11 @@ const styles = StyleSheet.create({
     fontSize: 15,
     display: 'flex',
     flexDirection: 'row',
+  },
+  emailFailed: {
+    color: 'red',
+    width: '90%',
+    textAlign: 'right',
   },
 });
 
