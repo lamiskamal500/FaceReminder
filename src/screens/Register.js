@@ -4,35 +4,49 @@ import {useNavigation} from '@react-navigation/native';
 import Button from '../components/Button';
 import InputText from '../components/InputText';
 import BackIcon from '../components/BackIcon';
+import Axios from '../Network/Axios';
 
 const Register = () => {
   const [disable, setDisable] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const [fullname, setfullname] = React.useState();
+  const [email, setemail] = React.useState();
+  const [password, setpassword] = React.useState();
+  const [confirm_password, setconfirm_password] = React.useState();
   const [checkValidEmail, setCheckValidEmail] = React.useState('');
-  const [email, setEmail] = React.useState('');
-  const navigation = useNavigation();
 
+  const navigation = useNavigation();
   const handleEmail = text => {
     let re = /\S+@\S+\.\S+/;
     let regex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
 
-    setEmail(text);
-    if (re.test(text) || regex.test(text)){
+    setemail(text);
+    if (re.test(text) || regex.test(text)) {
       setCheckValidEmail(false);
     } else {
       setCheckValidEmail(true);
     }
   };
-
-  function onPress() {
+  const onPress = async () => {
     setDisable(true);
-    navigation.navigate('Login');
     setLoading(true);
-  }
+    const responce = await Axios.post('/register/', {
+      fullname,
+      email,
+      password,
+      confirm_password,
+    });
+    navigation.navigate('HomePage');
+    console.log('response', responce);
+  };
   return (
     <View style={styles.registerScreen}>
       <BackIcon />
       <Text style={styles.registerMessage}>Hello!Register to get started</Text>
+      <InputText
+        DefaultText="Full Name"
+        onChangeText={value => setfullname(value)}
+      />
       <InputText
         DefaultText="Email"
         onChangeText={text => handleEmail(text)}
@@ -43,8 +57,14 @@ const Register = () => {
       ) : (
         <Text style={styles.emailFailed}> </Text>
       )}
-      <InputText DefaultText="Password" />
-      <InputText DefaultText="Confirm Password" />
+      <InputText
+        DefaultText="Password"
+        onChangeText={value => setpassword(value)}
+      />
+      <InputText
+        DefaultText="Confirm Password"
+        onChangeText={value => setconfirm_password(value)}
+      />
 
       <Button
         buttonText="Register"
@@ -100,11 +120,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
   },
-  emailFailed: {
-    color: 'red',
-    width: '90%',
-    textAlign: 'right',
-  },
 });
 
 export default Register;
+

@@ -16,7 +16,7 @@ const CustomDrawer = () => {
     <View style={styles.customDrawer}>
       <Image source={require('../assets/Profile.png')} />
       <Text style={styles.profileName}>Nadoud</Text>
-       <DrawerItems item='Home' onpress={()=>navigation.navigate('Home')}/>
+       <DrawerItems item='HomePage' onpress={()=>navigation.navigate('HomePage')}/>
        <DrawerItems item='Profile' onpress={()=>navigation.navigate('StaticProfile')}/>
        <DrawerItems item='Edit Profile'/>
        <DrawerItems item='Network'/>

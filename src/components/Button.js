@@ -15,7 +15,8 @@ const Button = props => {
       <TouchableOpacity
         style={[styles.button, props.style, props.backgroundColor]}
         disabled={props.disable}
-        onPress={props.onPress}>
+        onPress={props.onPress}
+        >
         <Text style={props.styleButton}>
           {' '}
           {props.loading ? (

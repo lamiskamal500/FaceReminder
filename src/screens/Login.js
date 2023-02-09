@@ -3,27 +3,40 @@ import { TouchableOpacity,Text,View,StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native'; 
 import InputText from '../components/InputText';
 import Button from '../components/Button';
-
+import Axios from '../Network/Axios';
 
 const Login = ()=>{
     const navigation = useNavigation();
-    
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
 
+    const login = async () => {
+        console.log(email)
+        console.log(password)
+        const responce = await Axios.post('/login/',{
+            email,
+            password,
+        })
+        console.log('responce',responce)
+    }
+    
     return(
         <View style={styles.LoginScreen}>
             <View>
             <Text style={styles.WelcomeText}>Welcome back! Glad to see you, Again!</Text>
             </View>
             
-            <InputText DefaultText='Enter your email'/>
+            <InputText DefaultText='Enter your email'
+            onChangeText={value => setEmail(value)} value={email}/>
 
-            <InputText DefaultText='Enter your password'/>
+            <InputText DefaultText='Enter your password'
+            onChangeText={value => setPassword(value)} value={password}/>
 
             <TouchableOpacity style={{width:'90%', }}
              onPress={()=> navigation.navigate('ForgetPassword')}>
             <View ><Text style={styles.ForgetText} >Forget Password?</Text></View>
             </TouchableOpacity>
-            <Button style={styles.RegisterButton} buttonText='login' onPress={()=> navigation.navigate('HomePage')}/>
+            <Button style={styles.RegisterButton} buttonText='login' onPress={login}/>
 
         <View style={styles.DontHaveAccountfull}>
         <Text style={styles.DontHaveAccountText}>Dont have an account? </Text>

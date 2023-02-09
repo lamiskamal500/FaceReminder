@@ -13,7 +13,7 @@ const DrawerScreens = ()=>{
               width: 240,
             },
           }}>
-        <Drawer.Screen name="Home" component={HomePage} 
+        <Drawer.Screen name="HomePage" component={HomePage} 
         options={{headerShown:false}}/>
         <Drawer.Screen name="StaticProfile" component={StaticProfile} 
         options={{headerShown:false}}/>
