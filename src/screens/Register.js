@@ -5,6 +5,7 @@ import Button from '../components/Button';
 import InputText from '../components/InputText';
 import BackIcon from '../components/BackIcon';
 import Axios from '../Network/Axios';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const Register = () => {
   const [disable, setDisable] = React.useState(false);
@@ -36,10 +37,13 @@ const Register = () => {
       password,
       confirm_password,
     });
-    navigation.navigate('HomePage');
+    setDisable(false);
+    setLoading(false);
+    navigation.navigate('HomePage'); 
     console.log('response', responce);
   };
   return (
+    <ScrollView>
     <View style={styles.registerScreen}>
       <BackIcon />
       <Text style={styles.registerMessage}>Hello!Register to get started</Text>
@@ -52,11 +56,6 @@ const Register = () => {
         onChangeText={text => handleEmail(text)}
         value={email}
       />
-      {checkValidEmail ? (
-        <Text style={styles.emailFailed}>Wrong Email Format</Text>
-      ) : (
-        <Text style={styles.emailFailed}> </Text>
-      )}
       <InputText
         DefaultText="Password"
         onChangeText={value => setpassword(value)}
@@ -65,7 +64,11 @@ const Register = () => {
         DefaultText="Confirm Password"
         onChangeText={value => setconfirm_password(value)}
       />
-
+      {checkValidEmail ? (
+        <Text style={styles.emailFailed}>Wrong Email Format</Text>
+      ) : (
+        <Text style={styles.emailFailed}> </Text>
+      )}
       <Button
         buttonText="Register"
         disable={disable}
@@ -83,6 +86,7 @@ const Register = () => {
         </TouchableOpacity>
       </View>
     </View>
+    </ScrollView>
   );
 };
 const styles = StyleSheet.create({
@@ -102,9 +106,10 @@ const styles = StyleSheet.create({
   },
   haveAccount: {
     color: '#1E232C',
-    marginTop: 85,
+    marginTop: 6,
     display: 'flex',
     flexDirection: 'row',
+    marginBottom:2
   },
   loginNow: {
     color: '#35C2C1',
