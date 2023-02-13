@@ -4,7 +4,8 @@ const InputText = props => {
   return (
     <View style={styles.InputTextStyle}>
       <TextInput
-        style={styles.TextStyle}
+      onBlur={props.onBlur}
+        style={styles.TextStyle}  
         placeholder={props.DefaultText}
         placeholderTextColor="#8391A1"
         onChangeText={props.onChangeText}
