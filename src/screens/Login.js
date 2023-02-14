@@ -7,7 +7,7 @@ import Axios from '../Network/Axios';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useSelector, useDispatch} from 'react-redux';
 import {setDefaultUser} from '../store/slices/user';
-import { setToken } from '../store/slices/token';
+import {setToken} from '../store/slices/token';
 // import {setToken, setUser} from '../redux/actions';
 
 const Login = () => {
@@ -17,6 +17,7 @@ const Login = () => {
   const [disable, setDisable] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showPassword, setshowPassword] = useState(true);
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const onPress = async () => {
@@ -57,7 +58,7 @@ const Login = () => {
   };
 
   return (
-    <ScrollView>
+    <ScrollView style={styles.wholeScreen}>
       <View style={styles.LoginScreen}>
         <View>
           <Text style={styles.WelcomeText}>
@@ -78,8 +79,20 @@ const Login = () => {
           onBlur={onChecking}
           onChangeText={value => setPassword(value)}
           DefaultText="Enter your password"
-          Type="password"
-        />
+          secureTextEntry={showPassword}>
+          <TouchableOpacity
+            onPress={() => setshowPassword(!showPassword)}
+            style={styles.eye}>
+            <Image
+              style={styles.eyesImage}
+              source={
+                showPassword
+                  ? require('../assets/eye-solid.png')
+                  : require('../assets/eye-slash-solid.png')
+              }
+            />
+          </TouchableOpacity>
+        </InputText>
 
         <TouchableOpacity
           style={{width: '90%'}}
@@ -119,6 +132,9 @@ const Login = () => {
   );
 };
 const styles = StyleSheet.create({
+  wholeScreen: {
+    backgroundColor: '#FFFFFF',
+  },
   LoginScreen: {
     display: 'flex',
     alignItems: 'center',
@@ -142,10 +158,11 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
   DontHaveAccountfull: {
-    marginTop: 220,
-    marginBottom: 11,
+    color: '#1E232C',
+    marginTop: 200,
     display: 'flex',
     flexDirection: 'row',
+    marginBottom: 2,
   },
   DontHaveAccountText: {
     color: '#1E232C',
@@ -175,6 +192,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 30,
     // gap: '80px',
+  },
+  eyesImage: {
+    height: 20,
+    width: 25,
+  },
+  eye: {
+    height: '100%',
+    top: '35%',
+    position: 'absolute',
+    // transform: 'translateY(-50%)',
+    // translateY: '-50%',
+    right: '5%',
   },
 });
 

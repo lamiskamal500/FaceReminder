@@ -4,7 +4,8 @@ const InputText = props => {
   return (
     <View style={styles.InputTextStyle}>
       <TextInput
-      onBlur={props.onBlur}
+        onBlur={props.onBlur}
+        secureTextEntry={props.secureTextEntry}
         style={styles.TextStyle}
         placeholder={props.DefaultText}
         placeholderTextColor="#8391A1"
@@ -12,6 +13,7 @@ const InputText = props => {
         value={props.text}
         onFocus={props.onFocus}
       />
+      {props.children}
     </View>
   );
 };
@@ -28,6 +30,7 @@ const styles = StyleSheet.create({
     marginVertical: 12,
     placeholderTextColor: '#8391A1',
     paddingHorizontal: 20,
+    paddingRight: 50,
     paddingTop: 5,
   },
   TextStyle: {

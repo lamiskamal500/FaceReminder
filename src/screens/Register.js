@@ -8,7 +8,7 @@ import Axios from '../Network/Axios';
 import {useSelector, useDispatch} from 'react-redux';
 import {ScrollView} from 'react-native-gesture-handler';
 import {setDefaultUser} from '../store/slices/user';
-import { setToken } from '../store/slices/token';
+import {setToken} from '../store/slices/token';
 
 const Register = () => {
   const [disable, setDisable] = React.useState(true);
@@ -20,7 +20,8 @@ const Register = () => {
   const [checkValidEmail, setCheckValidEmail] = React.useState(false);
   const [checkValidName, setCheckValidName] = React.useState(false);
   const [checkValidPassword, setCheckValidPassword] = React.useState(false);
-  const [checkValidConfirmPassword, setCheckValidConfirmPassword] = React.useState(false);
+  const [checkValidConfirmPassword, setCheckValidConfirmPassword] =
+    React.useState(false);
   const [isFirstRender, setIsFirstRender] = useState(true);
   const [nameTouched, setNameTouched] = useState(false);
   const [emailTouched, setEmailTouched] = useState(false);
@@ -151,6 +152,7 @@ const Register = () => {
             setPasswordTouched(true);
             handlePassword();
           }}
+          secureTextEntry={true}
         />
         {!checkValidPassword && passwordTouched ? (
           <Text style={styles.emailFailed}>This field is required</Text>
@@ -164,6 +166,7 @@ const Register = () => {
             setConfirmPasswordTouched(true);
             handleConfirmPassword();
           }}
+          secureTextEntry={true}
         />
         {!checkValidConfirmPassword && confirmPasswordTouched ? (
           <Text style={styles.emailFailed}>Password must match</Text>
