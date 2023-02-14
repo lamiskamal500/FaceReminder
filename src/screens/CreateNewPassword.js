@@ -15,6 +15,17 @@ import InputText from '../components/InputText';
 const CreateNewPassword = () => {
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = React.useState(false);
+  const [password, setPassword] = useState('');
+  const [confirm_password, setconfirm_password] = useState('');
+
+  const onPress = async () => {
+    const response = await Axios.post('/auth/set-password/{token}', {
+      password,
+      confirm_password,
+    });
+    console.log(response);
+    // setModalVisible(!modalVisible)
+  };
   return (
     <View style={styles.createPasswordScreen}>
       <BackIcon />
@@ -24,12 +35,20 @@ const CreateNewPassword = () => {
       <Text style={styles.uniquePassword}>
         Your new password must be unique from those previously used.
       </Text>
-      <InputText DefaultText="New Password" />
-      <InputText DefaultText="Confirm Password" />
+      <InputText
+        DefaultText="New Password"
+        value={password}
+        onChangeText={value => setPassword(value)}
+      />
+      <InputText
+        DefaultText="Confirm Password"
+        value={confirm_password}
+        onChangeText={value => setconfirm_password(value)}
+      />
       <Button
         buttonText="Reset Password"
         style={styles.resetButton}
-        onPress={() => setModalVisible(!modalVisible)}
+        onPress={onPress}
       />
       <Modal
         transparent={true}
@@ -48,7 +67,7 @@ const CreateNewPassword = () => {
             <Button
               buttonText="Back to Login"
               style={styles.backButton}
-              onPress={()=>navigation.navigate('Login')}
+              onPress={() => navigation.navigate('Login')}
             />
           </View>
         </View>
@@ -113,7 +132,7 @@ const styles = StyleSheet.create({
   passwordText: {
     color: '#8391A1',
     marginBottom: 35,
-    width:'65%',
+    width: '65%',
   },
 });
 export default CreateNewPassword;
