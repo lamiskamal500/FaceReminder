@@ -2,12 +2,17 @@ import React, {useState} from 'react';
 import {TouchableOpacity, Text, View, StyleSheet, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-// import {useSelector, useDispatch} from 'react-redux';
-
+import {useSelector, useDispatch} from 'react-redux';
+import {defaultUser} from '../store/slices/user';
 import Button from '../components/Button';
 const HomePage = () => {
   const navigation = useNavigation();
-  // const user = useSelector(state => state.user);
+  const user = useSelector(defaultUser);
+  console.log('user', user);
+  // useEffect(() => {
+  //   console.log('user', user);
+  // });
+
   return (
     <View style={styles.HomePageMain}>
       <View style={styles.Image}>
@@ -25,7 +30,7 @@ const HomePage = () => {
       </View>
       <View style={{width: '85%'}}></View>
       <View style={{width: '100%'}}>
-        <Text style={styles.HiText}> Hi </Text>
+        <Text style={styles.HiText}> Hi {user.email} </Text>
       </View>
       <Button
         style={styles.Button}

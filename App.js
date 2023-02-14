@@ -11,7 +11,8 @@ import HomePage from './src/screens/HomePage';
 import StaticProfile from './src/screens/StaticProfile';
 import DrawerScreens from './src/components/DrawerScreens';
 import CustomDrawer from './src/components/CustomDrawer';
-import {store} from './src/redux/store';
+// import {store} from './src/redux/store';
+import store from './src/store/store.js';
 import {Provider} from 'react-redux';
 
 const Stack = createNativeStackNavigator();

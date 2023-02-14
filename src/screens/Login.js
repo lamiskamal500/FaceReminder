@@ -6,7 +6,8 @@ import Button from '../components/Button';
 import Axios from '../Network/Axios';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useSelector, useDispatch} from 'react-redux';
-import {setToken, setUser} from '../redux/actions';
+import {setDefaultUser} from '../store/slices/user';
+// import {setToken, setUser} from '../redux/actions';
 
 const Login = () => {
   const [email, setemail] = useState('');
@@ -23,8 +24,8 @@ const Login = () => {
     const response = await Axios.post('/login/', {email, password});
 
     if (response.status === 200) {
-      dispatch(setUser(response.data.account));
-      dispatch(setToken(response.data.token));
+      dispatch(setDefaultUser(response.data.account));
+      // dispatch(setToken(response.data.token));
       navigation.navigate('HomePage');
 
       setDisable(false);
