@@ -27,7 +27,6 @@ const Login = () => {
     if (response.status === 200) {
       dispatch(setDefaultUser(response.data.account));
       dispatch(setToken(response.data.token));
-      // console.log("token" , response.data.token);
       navigation.navigate('HomePage');
 
       setDisable(false);
@@ -40,6 +39,7 @@ const Login = () => {
     }
 
     console.log(response);
+    // console.log("token" , response.data.token);
   };
   useEffect(() => {
     console.log('isCredValid', isCredValid);

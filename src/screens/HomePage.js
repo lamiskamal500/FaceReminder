@@ -1,19 +1,27 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {TouchableOpacity, Text, View, StyleSheet, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 
 import {useSelector, useDispatch} from 'react-redux';
 import {defaultUser} from '../store/slices/user';
+import { defaultToken } from '../store/slices/token';
 import Button from '../components/Button';
+import Axios from '../Network/Axios';
+
+
 const HomePage = () => {
   const navigation = useNavigation();
   const user = useSelector(defaultUser);
+  const token = useSelector(defaultToken);
   console.log('user', user);
   // useEffect(() => {
   //   console.log('user', user);
   // });
-
+  useEffect(()=>{
+    console.log("token",token);
+    console.log("axios",Axios.defaults.headers.common["Authorization"])
+  },[token])
   return (
     <View style={styles.HomePageMain}>
       <View style={styles.Image}>

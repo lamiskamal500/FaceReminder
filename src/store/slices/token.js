@@ -13,5 +13,5 @@ export const tokenSlice = createSlice({
   },
 });
 export const {setToken} = tokenSlice.actions;
-export const defaultToken = state => state.user.token;
+export const defaultToken = state => state.token.token;
 export default tokenSlice.reducer;

@@ -98,6 +98,7 @@ const Register = () => {
     if (response.status === 200 || response.status === 201) {
       dispatch(setDefaultUser(response.data.account));
       dispatch(setToken(response.data.token));
+      Axios.defaults.headers.common['Authorization'] = `Token ${response.data.token}`;
       setDisable(false);
       setLoading(false);
       navigation.navigate('HomePage');
