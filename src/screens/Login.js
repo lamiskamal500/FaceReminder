@@ -7,6 +7,7 @@ import Axios from '../Network/Axios';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useSelector, useDispatch} from 'react-redux';
 import {setDefaultUser} from '../store/slices/user';
+import { setToken } from '../store/slices/token';
 // import {setToken, setUser} from '../redux/actions';
 
 const Login = () => {
@@ -25,7 +26,8 @@ const Login = () => {
 
     if (response.status === 200) {
       dispatch(setDefaultUser(response.data.account));
-      // dispatch(setToken(response.data.token));
+      dispatch(setToken(response.data.token));
+      // console.log("token" , response.data.token);
       navigation.navigate('HomePage');
 
       setDisable(false);

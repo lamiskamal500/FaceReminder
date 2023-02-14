@@ -1,13 +1,14 @@
-import React, { useState,useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {TouchableOpacity, Text, View, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Button from '../components/Button';
 import InputText from '../components/InputText';
 import BackIcon from '../components/BackIcon';
 import Axios from '../Network/Axios';
-import {ScrollView} from 'react-native-gesture-handler';
 import {useSelector, useDispatch} from 'react-redux';
-import {setToken, setUser} from '../redux/actions';
+import {ScrollView} from 'react-native-gesture-handler';
+import {setDefaultUser} from '../store/slices/user';
+import { setToken } from '../store/slices/token';
 
 const Register = () => {
   const [disable, setDisable] = React.useState(true);
@@ -15,16 +16,16 @@ const Register = () => {
   const [fullname, setfullname] = React.useState('');
   const [email, setemail] = React.useState('');
   const [password, setpassword] = React.useState('');
-  const [confirm_password, setconfirm_password] = React.useState("");
+  const [confirm_password, setconfirm_password] = React.useState('');
   const [checkValidEmail, setCheckValidEmail] = React.useState(false);
   const [checkValidName, setCheckValidName] = React.useState(false);
   const [checkValidPassword, setCheckValidPassword] = React.useState(false);
   const [checkValidConfirmPassword, setCheckValidConfirmPassword] = React.useState(false);
-  const [isFirstRender,setIsFirstRender] = useState(true)
-  const [nameTouched,setNameTouched] = useState(false)
-  const [emailTouched,setEmailTouched] = useState(false)
-  const [passwordTouched,setPasswordTouched] = useState(false)
-  const [confirmPasswordTouched,setConfirmPasswordTouched] = useState(false)
+  const [isFirstRender, setIsFirstRender] = useState(true);
+  const [nameTouched, setNameTouched] = useState(false);
+  const [emailTouched, setEmailTouched] = useState(false);
+  const [passwordTouched, setPasswordTouched] = useState(false);
+  const [confirmPasswordTouched, setConfirmPasswordTouched] = useState(false);
   const [error, setError] = React.useState('');
 
   const dispatch = useDispatch();
@@ -41,7 +42,7 @@ const Register = () => {
   };
   const handleName = text => {
     if (fullname) {
-      console.log("fullname",true)
+      console.log('fullname', true);
       setCheckValidName(true);
     } else {
       setCheckValidName(false);
@@ -55,24 +56,35 @@ const Register = () => {
     }
   };
   const handleConfirmPassword = text => {
-    console.log(confirm_password,password)
+    console.log(confirm_password, password);
     if (confirm_password === password) {
       setCheckValidConfirmPassword(true);
-      console.log(true)
+      console.log(true);
     } else {
       setCheckValidConfirmPassword(false);
-      console.log(false)
+      console.log(false);
     }
   };
   useEffect(() => {
-    console.log("isFirstRender",isFirstRender)
-    if(checkValidName && checkValidEmail && checkValidPassword && checkValidConfirmPassword && !isFirstRender){
-      setDisable(false)
+    console.log('isFirstRender', isFirstRender);
+    if (
+      checkValidName &&
+      checkValidEmail &&
+      checkValidPassword &&
+      checkValidConfirmPassword &&
+      !isFirstRender
+    ) {
+      setDisable(false);
     }
-    if(isFirstRender) {
-      setIsFirstRender(false)
+    if (isFirstRender) {
+      setIsFirstRender(false);
     }
-  },[checkValidName, checkValidEmail, checkValidPassword, checkValidConfirmPassword])
+  }, [
+    checkValidName,
+    checkValidEmail,
+    checkValidPassword,
+    checkValidConfirmPassword,
+  ]);
 
   const onPress = async () => {
     setDisable(true);
@@ -83,22 +95,23 @@ const Register = () => {
       password,
       confirm_password,
     });
-    if (response.status === 200) {
-      dispatch(setUser(response.data.account));
+    if (response.status === 200 || response.status === 201) {
+      dispatch(setDefaultUser(response.data.account));
       dispatch(setToken(response.data.token));
       setDisable(false);
       setLoading(false);
       navigation.navigate('HomePage');
     } else {
-      setError(response.data.error);
+      setError(response.data.message);
       setDisable(false);
       setLoading(false);
+      console.log('error', error);
     }
     console.log('response', response);
   };
 
   return (
-    <ScrollView>
+    <ScrollView style={styles.wholeScreen}>
       <View style={styles.registerScreen}>
         <BackIcon />
         <Text style={styles.registerMessage}>
@@ -107,9 +120,9 @@ const Register = () => {
         <InputText
           DefaultText="Full Name"
           onChangeText={text => setfullname(text)}
-          onBlur={()=>{
-            setNameTouched(true)
-            handleName()
+          onBlur={() => {
+            setNameTouched(true);
+            handleName();
           }}
         />
         {!checkValidName && nameTouched ? (
@@ -121,24 +134,22 @@ const Register = () => {
           DefaultText="Email"
           onChangeText={text => setemail(text)}
           value={email}
-          onBlur={() =>{
-            setEmailTouched(true)
-            handleEmail()
+          onBlur={() => {
+            setEmailTouched(true);
+            handleEmail();
           }}
         />
         {!checkValidEmail && emailTouched ? (
-          <Text style={styles.emailFailed}>
-            Wrong Email Format
-          </Text>
+          <Text style={styles.emailFailed}>Wrong Email Format</Text>
         ) : (
           ''
         )}
         <InputText
           DefaultText="Password"
           onChangeText={text => setpassword(text)}
-          onBlur={()=>{
-            setPasswordTouched(true)
-            handlePassword()
+          onBlur={() => {
+            setPasswordTouched(true);
+            handlePassword();
           }}
         />
         {!checkValidPassword && passwordTouched ? (
@@ -149,13 +160,17 @@ const Register = () => {
         <InputText
           DefaultText="Confirm Password"
           onChangeText={text => setconfirm_password(text)}
-          onBlur={()=>{
-            setConfirmPasswordTouched(true)
-            handleConfirmPassword()
+          onBlur={() => {
+            setConfirmPasswordTouched(true);
+            handleConfirmPassword();
           }}
         />
-        {!checkValidConfirmPassword && confirmPasswordTouched ? <Text style={styles.emailFailed}>Password must match</Text> : ''}
-        <Text style={styles.emailFailed}> {error ? error : ''} </Text>
+        {!checkValidConfirmPassword && confirmPasswordTouched ? (
+          <Text style={styles.emailFailed}>Password must match</Text>
+        ) : (
+          ''
+        )}
+        {error ? <Text style={styles.emailFailed}>{error}</Text> : ''}
         <Button
           buttonText="Register"
           disable={disable}
@@ -177,6 +192,9 @@ const Register = () => {
   );
 };
 const styles = StyleSheet.create({
+  wholeScreen: {
+    backgroundColor: '#FFFFFF',
+  },
   registerScreen: {
     display: 'flex',
     alignItems: 'center',
@@ -193,7 +211,7 @@ const styles = StyleSheet.create({
   },
   haveAccount: {
     color: '#1E232C',
-    marginTop: 6,
+    marginTop: 50,
     display: 'flex',
     flexDirection: 'row',
     marginBottom: 2,
@@ -202,7 +220,7 @@ const styles = StyleSheet.create({
     color: '#35C2C1',
   },
   registerButton: {
-    marginVertical: 30,
+    marginVertical: 7,
   },
   account: {
     color: 'black',

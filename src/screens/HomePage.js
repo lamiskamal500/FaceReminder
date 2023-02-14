@@ -31,7 +31,7 @@ const HomePage = () => {
       </View>
       <View style={{width: '85%'}}></View>
       <View style={{width: '100%'}}>
-        <Text style={styles.HiText}> Hi {user.email} </Text>
+        <Text style={styles.HiText}> Hi {user? user.email: 'Jessia'} </Text>
       </View>
       <Button
         style={styles.Button}
