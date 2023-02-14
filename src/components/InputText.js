@@ -4,11 +4,13 @@ const InputText = props => {
   return (
     <View style={styles.InputTextStyle}>
       <TextInput
+      onBlur={props.onBlur}
         style={styles.TextStyle}
         placeholder={props.DefaultText}
         placeholderTextColor="#8391A1"
         onChangeText={props.onChangeText}
         value={props.text}
+        onFocus={props.onFocus}
       />
     </View>
   );

@@ -12,8 +12,9 @@ const ForgetPassword = () => {
   const navigation = useNavigation();
 
   const onPress = async () => {
-    const response = await Axios.post('/auth/forget-password/', {email});
-    console.log(response);
+    // const response = await Axios.post('/auth/forget-password/', {email});
+    // console.log(response);
+    navigation.navigate('CreateNewPassword');
   };
 
   return (

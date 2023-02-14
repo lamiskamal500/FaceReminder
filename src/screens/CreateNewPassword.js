@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState,useEffect } from 'react';
 import {
   TouchableOpacity,
   Text,
@@ -11,13 +11,37 @@ import BackIcon from '../components/BackIcon';
 import {useNavigation} from '@react-navigation/native';
 import Button from '../components/Button';
 import InputText from '../components/InputText';
+import Axios from '../Network/Axios';
+
 
 const CreateNewPassword = () => {
+  const [disable, setDisable] = React.useState(true);
+  const [loading, setLoading] = React.useState(false);
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = React.useState(false);
   const [password, setPassword] = useState('');
   const [confirm_password, setconfirm_password] = useState('');
-
+  const [checkValidPassword, setCheckValidPassword] = React.useState(false);
+  const [checkValidConfirmPassword, setCheckValidConfirmPassword] = React.useState(false);
+  const [error, setError] = React.useState('');
+  
+  const handlePassword = text => {
+    if (password) {
+      setCheckValidPassword(true);
+    } else {
+      setCheckValidPassword(false);
+    }
+  };
+  const handleConfirmPassword = text => {
+    if (confirm_password === password) {
+      setCheckValidConfirmPassword(true);
+      console.log(true)
+    } else {
+      setCheckValidConfirmPassword(false);
+      console.log(false)
+    }
+  };
+  
   const onPress = async () => {
     const response = await Axios.post('/auth/set-password/{token}', {
       password,
@@ -26,6 +50,13 @@ const CreateNewPassword = () => {
     console.log(response);
     // setModalVisible(!modalVisible)
   };
+  useEffect(() => {
+    if (checkValidPassword && checkValidConfirmPassword) {
+      setDisable(false);}
+      else {
+        setDisable(true)
+      }
+  }, [checkValidPassword, checkValidConfirmPassword]);
   return (
     <View style={styles.createPasswordScreen}>
       <BackIcon />
@@ -39,16 +70,26 @@ const CreateNewPassword = () => {
         DefaultText="New Password"
         value={password}
         onChangeText={value => setPassword(value)}
+        onBlur={()=>{
+            handlePassword()
+          }}
       />
       <InputText
         DefaultText="Confirm Password"
         value={confirm_password}
         onChangeText={value => setconfirm_password(value)}
+        onBlur={()=>{
+            handleConfirmPassword()
+          }}
       />
+      {checkValidConfirmPassword ? <Text style={passwordFaild}>Password must match</Text> : ''}
       <Button
         buttonText="Reset Password"
         style={styles.resetButton}
         onPress={onPress}
+        disable={disable}
+        loading={loading}
+        backgroundColor={{backgroundColor: disable ? '#8391A1' : '#1E232C'}}
       />
       <Modal
         transparent={true}
@@ -133,6 +174,10 @@ const styles = StyleSheet.create({
     color: '#8391A1',
     marginBottom: 35,
     width: '65%',
+  },
+  passwordFaild: {
+    color: 'red',
+    fontSize: 15,
   },
 });
 export default CreateNewPassword;

@@ -6,7 +6,8 @@ import InputText from '../components/InputText';
 import BackIcon from '../components/BackIcon';
 import Axios from '../Network/Axios';
 import {ScrollView} from 'react-native-gesture-handler';
-import { faL } from '@fortawesome/free-solid-svg-icons';
+import {useSelector, useDispatch} from 'react-redux';
+import {setToken, setUser} from '../redux/actions';
 
 const Register = () => {
   const [disable, setDisable] = React.useState(true);
@@ -24,9 +25,9 @@ const Register = () => {
   const [emailTouched,setEmailTouched] = useState(false)
   const [passwordTouched,setPasswordTouched] = useState(false)
   const [confirmPasswordTouched,setConfirmPasswordTouched] = useState(false)
-  // const [isValid,setIsValid] = useState('');
   const [error, setError] = React.useState('');
 
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const handleEmail = () => {
     let re = /\S+@\S+\.\S+/;
@@ -72,44 +73,28 @@ const Register = () => {
       setIsFirstRender(false)
     }
   },[checkValidName, checkValidEmail, checkValidPassword, checkValidConfirmPassword])
-  // useEffect(()=>{
-  //   setIsFirstRender(false)
-  // },[])
-  // const checking = () => {
-  //   if (
-  //     checkValidName &&
-  //     checkValidPassword &&
-  //     checkValidEmail &&
-  //     checkValidConfirmPassword
-  //   ) {
-  //     setDisable(false);
-  //   } else {
-  //     setDisable(true);
-  //   }
-  //   // console.log(checkValidConfirmPassword,
-  //   //   checkValidEmail,
-  //   //   checkValidName,
-  //   //   checkValidPassword
-  //   //   )
+
   const onPress = async () => {
     setDisable(true);
     setLoading(true);
-    const responce = await Axios.post('/register/', {
+    const response = await Axios.post('/register/', {
       fullname,
       email,
       password,
       confirm_password,
     });
-    if (responce.status === 200) {
-      navigation.navigate('Login');
+    if (response.status === 200) {
+      dispatch(setUser(response.data.account));
+      dispatch(setToken(response.data.token));
       setDisable(false);
       setLoading(false);
+      navigation.navigate('HomePage');
     } else {
-      setError(responce.data.error);
+      setError(response.data.error);
       setDisable(false);
       setLoading(false);
     }
-    console.log('response', responce);
+    console.log('response', response);
   };
 
   return (
@@ -170,7 +155,7 @@ const Register = () => {
           }}
         />
         {!checkValidConfirmPassword && confirmPasswordTouched ? <Text style={styles.emailFailed}>Password must match</Text> : ''}
-        <Text style={styles.emailFailed}>{error ? error : ""}</Text>
+        <Text style={styles.emailFailed}> {error ? error : ''} </Text>
         <Button
           buttonText="Register"
           disable={disable}
