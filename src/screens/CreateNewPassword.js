@@ -11,6 +11,8 @@ import BackIcon from '../components/BackIcon';
 import {useNavigation} from '@react-navigation/native';
 import Button from '../components/Button';
 import InputText from '../components/InputText';
+import {useSelector, useDispatch} from 'react-redux';
+import {setToken, setUser} from '../redux/actions';
 import Axios from '../Network/Axios';
 
 
@@ -43,12 +45,21 @@ const CreateNewPassword = () => {
   };
   
   const onPress = async () => {
-    const response = await Axios.post('/auth/set-password/{token}', {
+    const response = await Axios.post(`/auth/set-password/${token}`, {
       password,
       confirm_password,
     });
+    if(response==200){
+      setDisable(false);
+      setLoading(false);
+      setModalVisible(!modalVisible)
+    }
+    else{
+      setError(response.data.error);
+      setDisable(false);
+      setLoading(false);
+    }
     console.log(response);
-    // setModalVisible(!modalVisible)
   };
   useEffect(() => {
     if (checkValidPassword && checkValidConfirmPassword) {
