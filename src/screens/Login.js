@@ -54,8 +54,6 @@ const Login = () => {
     }
   };
 
-  // const {user} = useSelector(state => state.userReducer);
-
   return (
     <ScrollView>
       <View style={styles.LoginScreen}>

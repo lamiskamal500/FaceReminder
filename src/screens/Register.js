@@ -1,91 +1,178 @@
-import React from 'react';
+import React, { useState,useEffect } from 'react';
 import {TouchableOpacity, Text, View, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Button from '../components/Button';
 import InputText from '../components/InputText';
 import BackIcon from '../components/BackIcon';
 import Axios from '../Network/Axios';
-import { ScrollView } from 'react-native-gesture-handler';
+import {ScrollView} from 'react-native-gesture-handler';
+import {useSelector, useDispatch} from 'react-redux';
+import {setToken, setUser} from '../redux/actions';
 
 const Register = () => {
-  const [disable, setDisable] = React.useState(false);
+  const [disable, setDisable] = React.useState(true);
   const [loading, setLoading] = React.useState(false);
-  const [fullname, setfullname] = React.useState();
-  const [email, setemail] = React.useState();
-  const [password, setpassword] = React.useState();
-  const [confirm_password, setconfirm_password] = React.useState();
-  const [checkValidEmail, setCheckValidEmail] = React.useState('');
+  const [fullname, setfullname] = React.useState('');
+  const [email, setemail] = React.useState('');
+  const [password, setpassword] = React.useState('');
+  const [confirm_password, setconfirm_password] = React.useState("");
+  const [checkValidEmail, setCheckValidEmail] = React.useState(false);
+  const [checkValidName, setCheckValidName] = React.useState(false);
+  const [checkValidPassword, setCheckValidPassword] = React.useState(false);
+  const [checkValidConfirmPassword, setCheckValidConfirmPassword] = React.useState(false);
+  const [isFirstRender,setIsFirstRender] = useState(true)
+  const [nameTouched,setNameTouched] = useState(false)
+  const [emailTouched,setEmailTouched] = useState(false)
+  const [passwordTouched,setPasswordTouched] = useState(false)
+  const [confirmPasswordTouched,setConfirmPasswordTouched] = useState(false)
+  const [error, setError] = React.useState('');
 
+  const dispatch = useDispatch();
   const navigation = useNavigation();
-  const handleEmail = text => {
+  const handleEmail = () => {
     let re = /\S+@\S+\.\S+/;
     let regex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
 
-    setemail(text);
-    if (re.test(text) || regex.test(text)) {
-      setCheckValidEmail(false);
-    } else {
+    if (re.test(email) || regex.test(email)) {
       setCheckValidEmail(true);
+    } else {
+      setCheckValidEmail(false);
     }
   };
+  const handleName = text => {
+    if (fullname) {
+      console.log("fullname",true)
+      setCheckValidName(true);
+    } else {
+      setCheckValidName(false);
+    }
+  };
+  const handlePassword = text => {
+    if (password) {
+      setCheckValidPassword(true);
+    } else {
+      setCheckValidPassword(false);
+    }
+  };
+  const handleConfirmPassword = text => {
+    console.log(confirm_password,password)
+    if (confirm_password === password) {
+      setCheckValidConfirmPassword(true);
+      console.log(true)
+    } else {
+      setCheckValidConfirmPassword(false);
+      console.log(false)
+    }
+  };
+  useEffect(() => {
+    console.log("isFirstRender",isFirstRender)
+    if(checkValidName && checkValidEmail && checkValidPassword && checkValidConfirmPassword && !isFirstRender){
+      setDisable(false)
+    }
+    if(isFirstRender) {
+      setIsFirstRender(false)
+    }
+  },[checkValidName, checkValidEmail, checkValidPassword, checkValidConfirmPassword])
+
   const onPress = async () => {
     setDisable(true);
     setLoading(true);
-    const responce = await Axios.post('/register/', {
+    const response = await Axios.post('/register/', {
       fullname,
       email,
       password,
       confirm_password,
     });
-    setDisable(false);
-    setLoading(false);
-    navigation.navigate('HomePage'); 
-    console.log('response', responce);
+    if (response.status === 200) {
+      dispatch(setUser(response.data.account));
+      dispatch(setToken(response.data.token));
+      setDisable(false);
+      setLoading(false);
+      navigation.navigate('HomePage');
+    } else {
+      setError(response.data.error);
+      setDisable(false);
+      setLoading(false);
+    }
+    console.log('response', response);
   };
+
   return (
     <ScrollView>
-    <View style={styles.registerScreen}>
-      <BackIcon />
-      <Text style={styles.registerMessage}>Hello!Register to get started</Text>
-      <InputText
-        DefaultText="Full Name"
-        onChangeText={value => setfullname(value)}
-      />
-      <InputText
-        DefaultText="Email"
-        onChangeText={text => handleEmail(text)}
-        value={email}
-      />
-      <InputText
-        DefaultText="Password"
-        onChangeText={value => setpassword(value)}
-      />
-      <InputText
-        DefaultText="Confirm Password"
-        onChangeText={value => setconfirm_password(value)}
-      />
-      {checkValidEmail ? (
-        <Text style={styles.emailFailed}>Wrong Email Format</Text>
-      ) : (
-        <Text style={styles.emailFailed}> </Text>
-      )}
-      <Button
-        buttonText="Register"
-        disable={disable}
-        onPress={onPress}
-        style={styles.registerButton}
-        styleButton={styles.buttonText}
-        loading={loading}
-        backgroundColor={{backgroundColor: loading ? '#8391A1' : '#1E232C'}}
-      />
+      <View style={styles.registerScreen}>
+        <BackIcon />
+        <Text style={styles.registerMessage}>
+          Hello! Register to get started
+        </Text>
+        <InputText
+          DefaultText="Full Name"
+          onChangeText={text => setfullname(text)}
+          onBlur={()=>{
+            setNameTouched(true)
+            handleName()
+          }}
+        />
+        {!checkValidName && nameTouched ? (
+          <Text style={styles.emailFailed}>This field is required</Text>
+        ) : (
+          ''
+        )}
+        <InputText
+          DefaultText="Email"
+          onChangeText={text => setemail(text)}
+          value={email}
+          onBlur={() =>{
+            setEmailTouched(true)
+            handleEmail()
+          }}
+        />
+        {!checkValidEmail && emailTouched ? (
+          <Text style={styles.emailFailed}>
+            Wrong Email Format
+          </Text>
+        ) : (
+          ''
+        )}
+        <InputText
+          DefaultText="Password"
+          onChangeText={text => setpassword(text)}
+          onBlur={()=>{
+            setPasswordTouched(true)
+            handlePassword()
+          }}
+        />
+        {!checkValidPassword && passwordTouched ? (
+          <Text style={styles.emailFailed}>This field is required</Text>
+        ) : (
+          ''
+        )}
+        <InputText
+          DefaultText="Confirm Password"
+          onChangeText={text => setconfirm_password(text)}
+          onBlur={()=>{
+            setConfirmPasswordTouched(true)
+            handleConfirmPassword()
+          }}
+        />
+        {!checkValidConfirmPassword && confirmPasswordTouched ? <Text style={styles.emailFailed}>Password must match</Text> : ''}
+        <Text style={styles.emailFailed}> {error ? error : ''} </Text>
+        <Button
+          buttonText="Register"
+          disable={disable}
+          onPress={onPress}
+          style={styles.registerButton}
+          styleButton={styles.buttonText}
+          loading={loading}
+          backgroundColor={{backgroundColor: disable ? '#8391A1' : '#1E232C'}}
+        />
 
-      <View style={styles.haveAccount}>
-        <Text style={styles.account}>Already have an account?</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-          <Text style={styles.loginNow}>Login Now</Text>
-        </TouchableOpacity>
+        <View style={styles.haveAccount}>
+          <Text style={styles.account}>Already have an account? </Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+            <Text style={styles.loginNow}>Login Now</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
     </ScrollView>
   );
 };
@@ -109,7 +196,7 @@ const styles = StyleSheet.create({
     marginTop: 6,
     display: 'flex',
     flexDirection: 'row',
-    marginBottom:2
+    marginBottom: 2,
   },
   loginNow: {
     color: '#35C2C1',
@@ -125,7 +212,10 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
   },
+  emailFailed: {
+    color: 'red',
+    fontSize: 15,
+  },
 });
 
 export default Register;
-

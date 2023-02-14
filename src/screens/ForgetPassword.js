@@ -4,13 +4,19 @@ import {useNavigation} from '@react-navigation/native';
 import Button from '../components/Button';
 import BackIcon from '../components/BackIcon';
 import InputText from '../components/InputText';
+import Axios from '../Network/Axios';
+
 const ForgetPassword = () => {
-  const [text, setText] = useState('');
+  // const [text, setText] = useState('');
+  const [email , setemail] = useState('')
   const navigation = useNavigation();
 
-  function onPress() {
+  const onPress = async () => {
+    // const response = await Axios.post('/auth/forget-password/', {email});
+    // console.log(response);
     navigation.navigate('CreateNewPassword');
-  }
+  };
+
   return (
     <View style={styles.ForgetPasswordScreen}>
       <BackIcon />
@@ -25,8 +31,9 @@ const ForgetPassword = () => {
         </Text>
       </View>
       <InputText
+        value={email}
         DefaultText="Enter your email"
-        onChangeText={newText => setText(newText)}
+        onChangeText={value => setemail(value)}
       />
       <Button
         style={styles.SendMailButton}
