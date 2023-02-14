@@ -86,19 +86,16 @@ const Login = () => {
             <Text style={styles.ForgetText}>Forget Password?</Text>
           </View>
         </TouchableOpacity>
-        {!isCredValid ? (
+        {error ? (
           <View style={styles.WrongMessageBorder}>
             <Image
               source={require('../assets/XIcon.png')}
               style={styles.XIcon}
             />
-            <Text style={styles.WrongMessage}>
-              {error ? error : ''}
-              {/* Something went wrong, Please enter a valid credentials{' '} */}
-            </Text>
+            <Text style={styles.WrongMessage}>{error}</Text>
           </View>
         ) : (
-          <Text> </Text>
+          ''
         )}
         <Button
           style={styles.RegisterButton}
@@ -162,18 +159,20 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: 'semibold',
     fontFamily: 'Urbanist',
-    marginLeft: 50,
   },
   XIcon: {
-    width: 25,
-    height: 25,
-    marginBottom: -28,
-    marginLeft: 14,
+    width: 20,
+    height: 20,
+    marginRight: 10,
   },
   WrongMessageBorder: {
     width: '95%',
-    marginBottom: 15,
-    marginTop: 15,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 30,
+    // gap: '80px',
   },
 });
 
