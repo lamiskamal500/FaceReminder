@@ -5,10 +5,9 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 
 import {useSelector, useDispatch} from 'react-redux';
 import {defaultUser} from '../store/slices/user';
-import { defaultToken } from '../store/slices/token';
+import {defaultToken} from '../store/slices/token';
 import Button from '../components/Button';
 import Axios from '../Network/Axios';
-
 
 const HomePage = () => {
   const navigation = useNavigation();
@@ -18,10 +17,10 @@ const HomePage = () => {
   // useEffect(() => {
   //   console.log('user', user);
   // });
-  useEffect(()=>{
-    console.log("token",token);
-    console.log("axios",Axios.defaults.headers.common["Authorization"])
-  },[token])
+  useEffect(() => {
+    console.log('token', token);
+    console.log('axios', Axios.defaults.headers.common['Authorization']);
+  }, [token]);
   return (
     <View style={styles.HomePageMain}>
       <View style={styles.Image}>
@@ -39,12 +38,13 @@ const HomePage = () => {
       </View>
       <View style={{width: '85%'}}></View>
       <View style={{width: '100%'}}>
-        <Text style={styles.HiText}> Hi {user? user.email: 'Jessia'} </Text>
+        <Text style={styles.HiText}> Hi {user ? user.email : 'Jessia'} </Text>
       </View>
       <Button
         style={styles.Button}
         styleButton={styles.buttonText}
         buttonText="Mobile Camera"
+        onPress={() => navigation.navigate('CameraScreen')}
       />
       <Button
         style={styles.Button}

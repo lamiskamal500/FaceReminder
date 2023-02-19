@@ -14,6 +14,8 @@ import CustomDrawer from './src/components/CustomDrawer';
 // import {store} from './src/redux/store';
 import store from './src/store/store.js';
 import {Provider} from 'react-redux';
+import {Camera} from 'react-native-vision-camera';
+import CameraScreen from './src/screens/CameraScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -55,6 +57,11 @@ const App = () => {
           <Stack.Screen
             name="CustomDrawer"
             component={CustomDrawer}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="CameraScreen"
+            component={CameraScreen}
             options={{headerShown: false}}
           />
         </Stack.Navigator>
