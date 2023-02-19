@@ -90,7 +90,7 @@ const Register = () => {
   const onPress = async () => {
     setDisable(true);
     setLoading(true);
-    const response = await Axios.post('/register/', {
+    const response = await Axios.post('/auth/register/', {
       fullname,
       email,
       password,

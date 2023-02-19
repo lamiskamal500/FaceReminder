@@ -9,11 +9,13 @@ import ForgetPassword from './src/screens/ForgetPassword';
 import CreateNewPassword from './src/screens/CreateNewPassword';
 import HomePage from './src/screens/HomePage';
 import StaticProfile from './src/screens/StaticProfile';
+import CameraScreen from './src/screens/CameraScreen';
 import DrawerScreens from './src/components/DrawerScreens';
 import CustomDrawer from './src/components/CustomDrawer';
 // import {store} from './src/redux/store';
 import store from './src/store/store.js';
 import {Provider} from 'react-redux';
+import EditProfile from './src/screens/EditProfile';
 
 const Stack = createNativeStackNavigator();
 
@@ -53,8 +55,18 @@ const App = () => {
             options={{headerShown: false}}
           />
           <Stack.Screen
+            name="EditProfile"
+            component={EditProfile}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
             name="CustomDrawer"
             component={CustomDrawer}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="CameraScreen"
+            component={CameraScreen}
             options={{headerShown: false}}
           />
         </Stack.Navigator>
