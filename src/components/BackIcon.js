@@ -15,6 +15,7 @@ const BackIcon = props => {
 
 const styles = StyleSheet.create({
   back: {
+    marginLeft:10,
     width: 40,
     height: 40,
     marginTop: 20,

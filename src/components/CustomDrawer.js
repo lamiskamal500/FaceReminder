@@ -18,7 +18,7 @@ const CustomDrawer = () => {
       <Text style={styles.profileName}>Nadoud</Text>
        <DrawerItems item='HomePage' onpress={()=>navigation.navigate('HomePage')}/>
        <DrawerItems item='Profile' onpress={()=>navigation.navigate('StaticProfile')}/>
-       <DrawerItems item='Edit Profile'/>
+       <DrawerItems item='Edit Profile' onpress={()=> navigation.navigate('EditProfile')}/>
        <DrawerItems item='Network'/>
        <DrawerItems item='Logout' onpress={()=>navigation.navigate('Login')}/>
     </View>

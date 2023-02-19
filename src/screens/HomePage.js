@@ -2,36 +2,59 @@ import React, {useEffect, useState} from 'react';
 import {TouchableOpacity, Text, View, StyleSheet, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-
 import {useSelector, useDispatch} from 'react-redux';
 import {defaultUser} from '../store/slices/user';
 import {defaultToken} from '../store/slices/token';
+import {setDefaultUser} from '../store/slices/user';
+import {setToken} from '../store/slices/token';
 import Button from '../components/Button';
 import Axios from '../Network/Axios';
+import  {useCallback} from 'react';
+import {Linking} from 'react-native';
+import {Camera, useCameraDevices} from 'react-native-vision-camera';
 
 const HomePage = () => {
   const navigation = useNavigation();
   const user = useSelector(defaultUser);
   const token = useSelector(defaultToken);
+  const dispatch = useDispatch();
   console.log('user', user);
-  // useEffect(() => {
-  //   console.log('user', user);
-  // });
   useEffect(() => {
     console.log('token', token);
-    console.log('axios', Axios.defaults.headers.common['Authorization']);
+    // console.log("axios",Axios.defaults.headers.common["Authorization"])
   }, [token]);
+
+  // const devices = useCameraDevices();
+  // const device = devices.back;
+  // const requestCameraPermission = useCallback(async () => {
+  //   const permissin = await Camera.requestCameraPermission();
+  //   navigation.navigate('CameraScreen');
+
+  //   if (permissin === 'denied') await Linking.openSettings();
+  // }, []);
+
+  const onPress = async () => {
+    const response = await Axios.get('/profiles/');
+    if (response.status === 200) {
+      dispatch(
+        setDefaultUser(
+          response.data
+        ),
+      );
+      dispatch(setToken(response.data.token));
+      navigation.navigate('StaticProfile');
+    }
+    console.log('response', response);
+  };
   return (
     <View style={styles.HomePageMain}>
       <View style={styles.Image}>
         <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
           <Image source={require('../assets/menu.png')} style={styles.Menu} />
         </TouchableOpacity>
-        <TouchableOpacity
-          style={{width: '90%'}}
-          onPress={() => navigation.navigate('StaticProfile')}>
+        <TouchableOpacity style={{width: '90%'}} onPress={onPress}>
           <Image
-            source={require('../assets/User2big.png')}
+            source= {user.image? user.image : require('../assets/User2.png')}
             style={styles.User2}
           />
         </TouchableOpacity>

@@ -8,7 +8,6 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {useSelector, useDispatch} from 'react-redux';
 import {setDefaultUser} from '../store/slices/user';
 import {setToken} from '../store/slices/token';
-// import {setToken, setUser} from '../redux/actions';
 
 const Login = () => {
   const [email, setemail] = useState('');
@@ -23,13 +22,13 @@ const Login = () => {
   const onPress = async () => {
     setDisable(true);
     setLoading(true);
-    const response = await Axios.post('/login/', {email, password});
+    const response = await Axios.post('/auth/login/', {email, password});
 
     if (response.status === 200) {
       dispatch(setDefaultUser(response.data.account));
       dispatch(setToken(response.data.token));
+      Axios.defaults.headers.common['Authorization'] = `Token ${response.data.token}`;
       navigation.navigate('HomePage');
-
       setDisable(false);
       setLoading(false);
     } else {
