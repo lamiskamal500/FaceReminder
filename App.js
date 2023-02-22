@@ -17,6 +17,7 @@ import store from './src/store/store.js';
 import {Provider} from 'react-redux';
 import {Camera} from 'react-native-vision-camera';
 import EditProfile from './src/screens/EditProfile';
+import UploadImage from './src/screens/UploadImage';
 
 const Stack = createNativeStackNavigator();
 
@@ -68,6 +69,11 @@ const App = () => {
           <Stack.Screen
             name="CameraScreen"
             component={CameraScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="UploadImage"
+            component={UploadImage}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

@@ -78,6 +78,7 @@ const HomePage = () => {
         style={styles.Button}
         styleButton={styles.buttonText}
         buttonText="Local Image"
+        onPress={() => navigation.navigate('UploadImage')}
       />
     </View>
   );

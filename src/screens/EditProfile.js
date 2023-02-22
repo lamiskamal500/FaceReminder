@@ -15,18 +15,23 @@ const EditProfile = () => {
   const [phone, setPhone] = React.useState('');
   const [address, setAddress] = React.useState('');
   const [image, setImage] = React.useState('');
+  const [link, setLink] = React.useState('');
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const onPress = async () => {
     setDisable(true);
     setLoading(true);
-    const response = await Axios.patch('/profiles/', {
-      fullname,
-      phone,
-      address,
-      image,
-    });
+    const obj = {}
+    if(fullname)
+    Object.assign(obj,{fullname})
+    if(phone)
+    Object.assign(obj,{phone})
+    if(address)
+    Object.assign(obj,{address})
+    if(image)
+    Object.assign(obj,{image})
+    const response = await Axios.patch('/profiles/', obj);
     if (response.status === 200) {
       dispatch(setDefaultUser(response.data));
       setDisable(false);
@@ -38,9 +43,12 @@ const EditProfile = () => {
   const handleImage = async () => {
     const options = {
       mediaType: 'photo',
+      includeBase64: true
     };
     const result = await launchImageLibrary(options);
-    setImage(result.assets[0].uri);
+    setImage(result.assets[0].base64);
+    setLink(result.assets[0].uri)
+    console.log('image', image);
   };
   useEffect(() => {
     console.log('image', image);
@@ -60,7 +68,7 @@ const EditProfile = () => {
             <Image
               style={styles.imageStyle}
               source={
-                image ? {uri: image} : require('../assets/defaultPhoto.png')
+                link ? {uri: link} : require('../assets/defaultPhoto.png')
               }
               alt="avatar"
             />
@@ -75,9 +83,6 @@ const EditProfile = () => {
       </InputText>
       <InputText value={address} onChangeText={text => setAddress(text)}>
         <Text style={styles.inputTitle}>Address</Text>
-      </InputText>
-      <InputText value={image} onChangeText={text => setImage(text)}>
-        <Text style={styles.inputTitle}>Image</Text>
       </InputText>
       <Button
         buttonText="Submit"
