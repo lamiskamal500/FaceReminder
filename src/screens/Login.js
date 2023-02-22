@@ -27,7 +27,11 @@ const Login = () => {
     if (response.status === 200) {
       dispatch(setDefaultUser(response.data.account));
       dispatch(setToken(response.data.token));
-      Axios.defaults.headers.common['Authorization'] = `Token ${response.data.token}`;
+      Axios.defaults.headers.common[
+        'Authorization'
+      ] = `Token ${response.data.token}`;
+      setemail('');
+      setPassword('');
       navigation.navigate('HomePage');
       setDisable(false);
       setLoading(false);
@@ -46,7 +50,17 @@ const Login = () => {
     if (!isCredValid) {
       setDisable(true);
     } else setDisable(false);
+    // return () => {
+    //   setemail('');
+    //   setPassword('');
+    // };
   }, [isCredValid]);
+  // useEffect(() => {
+  //   return () => {
+  //     setemail('');
+  //     setPassword('');
+  //   };
+  // }, []);
 
   const onChecking = () => {
     if (email === '' && password === '') {
