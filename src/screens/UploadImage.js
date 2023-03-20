@@ -1,10 +1,12 @@
 import React , {useEffect} from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import BackIcon from '../components/BackIcon';
+import {useNavigation} from '@react-navigation/native';
 import {launchImageLibrary} from 'react-native-image-picker';
 
 
 const UploadImage = () => {
+  const navigation = useNavigation();
     const [image, setImage] = React.useState('');
     const handleImage = async () => {
         const options = {
@@ -46,8 +48,8 @@ const UploadImage = () => {
         }
         </View>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.recognize} >
-        <Text style={styles.recognizeText}>Add OR Recognize </Text>
+      <TouchableOpacity style={styles.recognize} onPress={() => navigation.navigate('Recognize')}>
+        <Text style={styles.recognizeText}>Add OR Recognize</Text>
         <Image source={require('../assets/arrow.png')} style={styles.icon}/>
       </TouchableOpacity>
     </View>

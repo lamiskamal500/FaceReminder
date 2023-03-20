@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
   },
   DontHaveAccountfull: {
     color: '#1E232C',
-    marginTop: 200,
+    marginTop: 220,
     display: 'flex',
     flexDirection: 'row',
     marginBottom: 2,

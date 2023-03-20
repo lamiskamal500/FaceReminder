@@ -18,6 +18,9 @@ import {Provider} from 'react-redux';
 import {Camera} from 'react-native-vision-camera';
 import EditProfile from './src/screens/EditProfile';
 import UploadImage from './src/screens/UploadImage';
+import Recognize from './src/screens/Recognize';
+import RecognizedPerson from './src/screens/RecognizedPerson'
+import ExtraDetails from './src/screens/ExtraDetails';
 
 const Stack = createNativeStackNavigator();
 
@@ -74,6 +77,21 @@ const App = () => {
           <Stack.Screen
             name="UploadImage"
             component={UploadImage}
+            options={{headerShown: false}}
+          />
+           <Stack.Screen
+            name="Recognize"
+            component={Recognize}
+            options={{headerShown: false}}
+          />
+           <Stack.Screen
+            name="RecognizedPerson"
+            component={RecognizedPerson}
+            options={{headerShown: false}}
+          />
+           <Stack.Screen
+            name="ExtraDetails"
+            component={ExtraDetails}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

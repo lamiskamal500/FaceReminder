@@ -2,21 +2,15 @@ import React, {useState, useEffect} from 'react';
 import {Text, View, StyleSheet, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import BackIcon from '../components/BackIcon';
-import {useSelector} from 'react-redux';
-import {defaultUser} from '../store/slices/user';
+import Button from '../components/Button';
 
-const StaticProfile = () => {
+const ExtraDetails = () => {
   const navigation = useNavigation();
-  const user = useSelector(defaultUser);
-  useEffect(() => {
-    console.log('user', user);
-  });
-
   return (
-    <View style={styles.StaticProfileScreen}>
+    <View style={styles.ExtraDetailsScreen}>
       <View style={styles.Images}>
         <BackIcon />
-        <Text style={styles.ProfileText}>Profile</Text>
+        <Text style={styles.ExtraText}>ExtraDetails</Text>
         <Image
           source={require('../assets/Icon.png')}
           style={styles.ShareIcon}
@@ -25,39 +19,43 @@ const StaticProfile = () => {
 
       <View style={{alignItems: 'center'}}>
         <Image
-          source={user.image ? user.image : require('../assets/profilePhoto.png')}
-          style={styles.User2}
+          source={require('../assets/RecognizeDetails.png')}
+          style={styles.person}
         />
-        <Text style={styles.UserText}>
-          {user.fullname ? user.fullname : 'Jessia'}
+        <Text style={styles.PersonText}>
+         Parsley Montana
         </Text>
-        <Text style={styles.me}>me</Text>
+        <Text style={styles.PersonText}>Friend</Text>
       </View>
 
-      <Text style={styles.EmailText}>Email</Text>
-
+      <Text style={styles.infoText}>Biography</Text>
       <View style={styles.infoBox}>
         <Text style={styles.info}>
-          {user.email ? user.email : 'xxxx@xxxx.com'}
+          {'xxxxxxxxxxxxxxxxx'}
         </Text>
       </View>
 
-      <Text style={styles.EmailText}>Phone number</Text>
+      <Text style={styles.infoText}>Address</Text>
       <View style={styles.infoBox}>
-        <Text style={styles.info}>{user.phone ? user.phone : '0xxxxxxxx'}</Text>
+        <Text style={styles.info}>{'xxxxxxxx at xxxxx'}</Text>
       </View>
 
-      <Text style={styles.EmailText}>Address</Text>
+      <Text style={styles.infoText}>Created at</Text>
       <View style={styles.infoBox}>
         <Text style={styles.info}>
-          {user.address ? user.address : 'xxxxxxx at xxxxx'}
+          {'xx/xx/xxxx'}
         </Text>
       </View>
+      <Button
+        style={styles.Button}
+        styleButton={styles.buttonText}
+        buttonText="Done"
+      />
     </View>
   );
 };
 const styles = StyleSheet.create({
-  StaticProfileScreen: {
+    ExtraDetailsScreen: {
     display: 'flex',
     backgroundColor: '#FFFFFF',
     height: '100%',
@@ -73,32 +71,26 @@ const styles = StyleSheet.create({
     marginTop: 30,
     marginLeft: 130,
   },
-  User2: {
+  person: {
     width: 160,
     height: 160,
     marginTop: 10,
     borderRadius: 200,
     marginBottom: 5,
   },
-  ProfileText: {
+  ExtraText: {
     color: '#1D1838',
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
     marginTop: 25,
     marginLeft: -130,
   },
-  UserText: {
+  PersonText: {
     color: '#1D1838',
-    fontSize: 27,
-    fontWeight: 'semibold',
+    fontSize: 22,
+    fontWeight: 'bold',
   },
-  me: {
-    color: '#898794',
-    fontSize: 20,
-    fontWeight: 'semibold',
-    marginTop: -9,
-  },
-  EmailText: {
+  infoText: {
     color: '#1D1838',
     fontSize: 23,
     fontWeight: 'semibold',
@@ -122,5 +114,19 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#E8ECF4',
   },
+  buttonText: {
+    fontSize: 22,
+    fontWeight: 'semibold',
+    color: '#FFFFFF',
+  },
+  Button: {
+    width: 230,
+    paddingVertical: 15,
+    marginTop:15,
+    marginLeft:65
+    
+    
+    
+  },
 });
-export default StaticProfile;
+export default ExtraDetails;

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const Axios = axios.create({
-    baseURL: 'http://gp.uniparticle.com/accounts', 
+    baseURL: 'https://gp.uniparticle.com/accounts', 
 });
 
 Axios.interceptors.response.use(

@@ -23,7 +23,7 @@ const CameraScreen = () => {
   const [torch, setTorch] = useState(false);
   const devices = useCameraDevices();
   const [viewImage, setViewImage] = useState(false);
-  const device = devices.front;
+  const device = devices.back;
 
   // const [device, setDevice] = useState(devices.back);
 
@@ -104,7 +104,7 @@ const CameraScreen = () => {
             <Image source={require('../assets/exit.png')} style={styles.exit} />
           </TouchableOpacity>
 
-          <Button buttonText="Send" style={styles.sendButton} />
+          <Button buttonText="Send" style={styles.sendButton}/>
         </>
       )}
 
@@ -205,8 +205,8 @@ const styles = StyleSheet.create({
   },
   sendButton: {
     position: 'absolute',
-
-    color: '#054578',
+    color: 'black',
+    fontSize:25,
     bottom: 50,
     left: '35%',
     backgroundColor: '#FFFFFF',
