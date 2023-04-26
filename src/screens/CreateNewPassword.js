@@ -11,7 +11,6 @@ import BackIcon from '../components/BackIcon';
 import {useNavigation} from '@react-navigation/native';
 import Button from '../components/Button';
 import InputText from '../components/InputText';
-import {useSelector, useDispatch} from 'react-redux';
 import {setToken, setUser} from '../redux/actions';
 import Axios from '../Network/Axios';
 
@@ -185,6 +184,7 @@ const styles = StyleSheet.create({
     color: '#8391A1',
     marginBottom: 35,
     width: '65%',
+    textAlign:'center'
   },
   passwordFaild: {
     color: 'red',

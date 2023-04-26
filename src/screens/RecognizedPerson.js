@@ -2,7 +2,7 @@ import React from 'react';
 import BackIcon from '../components/BackIcon';
 import Button from '../components/Button';
 import {useNavigation} from '@react-navigation/native';
-import {TouchableOpacity, Text, View, StyleSheet, Image} from 'react-native';
+import {TouchableOpacity, Text, View, StyleSheet, Image, Modal} from 'react-native';
 
 const RecognizedPerson = () => {
   const navigation = useNavigation();
