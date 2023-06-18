@@ -21,6 +21,7 @@ import UploadImage from './src/screens/UploadImage';
 import Recognize from './src/screens/Recognize';
 import RecognizedPerson from './src/screens/RecognizedPerson'
 import ExtraDetails from './src/screens/ExtraDetails';
+import Add from './src/screens/Add';
 
 const Stack = createNativeStackNavigator();
 
@@ -92,6 +93,11 @@ const App = () => {
            <Stack.Screen
             name="ExtraDetails"
             component={ExtraDetails}
+            options={{headerShown: false}}
+          />
+            <Stack.Screen
+            name="Add"
+            component={Add}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

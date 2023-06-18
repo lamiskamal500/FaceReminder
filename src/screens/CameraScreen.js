@@ -117,7 +117,7 @@ const CameraScreen = () => {
             isActive={true}
             ref={cameraRef}
 
-            // fps={240}
+         
           />
 
           <View style={styles.shuttercontainer}>

@@ -31,6 +31,8 @@ const Recognize = () => {
         style={styles.Button}
         styleButton={styles.buttonText}
         buttonText="Add new person"
+        onPress={() => navigation.navigate('Add')}
+
       />
       <Button
         style={styles.Button}

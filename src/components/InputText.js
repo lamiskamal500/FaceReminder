@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
   TextStyle: {
     color: '#1E232C',
     fontWeight: 'bold',
+    
   },
 });
 
