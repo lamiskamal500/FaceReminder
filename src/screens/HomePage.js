@@ -9,9 +9,6 @@ import {setDefaultUser} from '../store/slices/user';
 import {setToken} from '../store/slices/token';
 import Button from '../components/Button';
 import Axios from '../Network/Axios';
-import  {useCallback} from 'react';
-import {Linking} from 'react-native';
-import {Camera, useCameraDevices} from 'react-native-vision-camera';
 
 const HomePage = () => {
   const navigation = useNavigation();
@@ -54,7 +51,7 @@ const HomePage = () => {
         </TouchableOpacity>
         <TouchableOpacity style={{width: '90%'}} onPress={onPress}>
           <Image
-            source= {user.image? user.image : require('../assets/User2.png')}
+            // source= {user.image? user.image : require('../assets/User2.png')}
             style={styles.User2}
           />
         </TouchableOpacity>

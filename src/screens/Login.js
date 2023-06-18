@@ -22,6 +22,7 @@ const Login = () => {
   const onPress = async () => {
     setDisable(true);
     setLoading(true);
+    navigation.navigate('HomePage');
     const response = await Axios.post('/auth/login/', {email, password});
 
     if (response.status === 200) {
@@ -221,3 +222,4 @@ const styles = StyleSheet.create({
 });
 
 export default Login;
+
