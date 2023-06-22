@@ -79,6 +79,7 @@ const CreateNewPassword = () => {
       <InputText
         DefaultText="New Password"
         value={password}
+        style={styles.passwordInput}
         onChangeText={value => setPassword(value)}
         onBlur={()=>{
             handlePassword()
@@ -87,6 +88,7 @@ const CreateNewPassword = () => {
       <InputText
         DefaultText="Confirm Password"
         value={confirm_password}
+        style={styles.confirmInput}
         onChangeText={value => setconfirm_password(value)}
         onBlur={()=>{
             handleConfirmPassword()
@@ -134,19 +136,19 @@ const styles = StyleSheet.create({
     fontFamily: 'Urbanist',
     height: '100%',
   },
-  createPasswordMessage: {
+  createPasswordMessage:{
     color: '#1E232C',
     fontSize: 30,
     fontWeight: 'bold',
     marginTop: 30,
-    marginBottom: 15,
+    marginBottom: 10,
     alignItems: 'flex-start',
   },
   uniquePassword: {
-    color: '#8391A1',
+    color: '#6A7281',
     marginHorizontal: 10,
     fontSize: 15,
-    marginBottom: 20,
+    marginBottom: 30,
   },
   resetButton: {
     marginVertical: 30,
@@ -190,5 +192,11 @@ const styles = StyleSheet.create({
     color: 'red',
     fontSize: 15,
   },
+  passwordInput:{
+    right:205
+  },
+  confirmInput:{
+    right:185
+  }
 });
 export default CreateNewPassword;

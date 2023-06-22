@@ -5,6 +5,7 @@ import HomePage from '../screens/HomePage';
 import CustomDrawer from '../components/CustomDrawer'
 import StaticProfile from '../screens/StaticProfile';
 import EditProfile from '../screens/EditProfile';
+import Network from '../screens/Network';
 
 const Drawer = createDrawerNavigator();
 const DrawerScreens = ()=>{
@@ -21,6 +22,8 @@ const DrawerScreens = ()=>{
         <Drawer.Screen name="Login" component={Login} 
         options={{headerShown:false}}/>
         <Drawer.Screen name="EditProfile" component={EditProfile} 
+        options={{headerShown:false}}/>
+        <Drawer.Screen name="Network" component={Network} 
         options={{headerShown:false}}/>
 
 

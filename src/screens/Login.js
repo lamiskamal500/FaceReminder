@@ -8,6 +8,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {useSelector, useDispatch} from 'react-redux';
 import {setDefaultUser} from '../store/slices/user';
 import {setToken} from '../store/slices/token';
+import BackIcon from '../components/BackIcon';
 
 const Login = () => {
   const [email, setemail] = useState('');
@@ -74,17 +75,19 @@ const Login = () => {
   return (
     <ScrollView style={styles.wholeScreen}>
       <View style={styles.LoginScreen}>
+      <BackIcon/>
         <View>
           <Text style={styles.WelcomeText}>
-            Welcome back! Glad to see you, Again!
+            Welcome back!
           </Text>
+          <Text style={styles.WelcomeText2}>Glad to see you again.</Text>
         </View>
 
         <InputText
           value={email}
           onBlur={onChecking}
           onChangeText={value => setemail(value)}
-          DefaultText="Enter your email"
+          DefaultText="Email Address"
           Type="email-address"
         />
 
@@ -92,8 +95,9 @@ const Login = () => {
           value={password}
           onBlur={onChecking}
           onChangeText={value => setPassword(value)}
-          DefaultText="Enter your password"
-          secureTextEntry={showPassword}>
+          DefaultText="Password"
+          secureTextEntry={showPassword}
+          style={styles.passwordInput}>
           <TouchableOpacity
             onPress={() => setshowPassword(!showPassword)}
             style={styles.eye}>
@@ -136,9 +140,9 @@ const Login = () => {
         />
 
         <View style={styles.DontHaveAccountfull}>
-          <Text style={styles.DontHaveAccountText}>Dont have an account? </Text>
+          <Text style={styles.DontHaveAccountText}>Dont have an account?</Text>
           <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-            <Text style={styles.RegisterNowText}>Register Now</Text>
+            <Text style={styles.RegisterNowText}>Sign Up</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -157,12 +161,11 @@ const styles = StyleSheet.create({
   },
   WelcomeText: {
     color: '#1E232C',
-    fontSize: 30,
+    fontSize: 28,
     fontWeight: 'bold',
     fontFamily: 'Urbanist',
-    marginTop: 50,
-    marginBottom: 30,
-    marginHorizontal: 30,
+    marginTop: 15,
+    marginRight: 112,
   },
   ForgetText: {
     color: '#6A707C',
@@ -185,7 +188,7 @@ const styles = StyleSheet.create({
     color: '#35C2C1',
   },
   RegisterButton: {
-    marginTop: 30,
+    marginTop: 40,
   },
   WrongMessage: {
     color: '#ff0000',
@@ -219,6 +222,16 @@ const styles = StyleSheet.create({
     // translateY: '-50%',
     right: '5%',
   },
+  WelcomeText2:{
+    color: '#1E232C',
+    fontSize: 16,
+    fontFamily: 'Urbanist',
+    marginBottom:25
+  },
+  passwordInput:{
+    bottom:45,
+    right:230,
+  }
 });
 
 export default Login;

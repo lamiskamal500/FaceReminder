@@ -23,16 +23,15 @@ const ForgetPassword = () => {
       <View style={{width: '100%'}}>
         <Text style={styles.ForgetText}>Forget Password?</Text>
       </View>
-      <View style={{width: '100%'}}>
+      <View >
         <Text style={styles.ForgetBigText}>
-          {' '}
-          Don't worry! It occurs. Please enter the email address linked with
-          your account.
+          Please enter the email address linked with your account.
         </Text>
       </View>
       <InputText
         value={email}
         DefaultText="Enter your email"
+        style={styles.emailInput}
         onChangeText={value => setemail(value)}
       />
       <Button
@@ -61,15 +60,18 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   ForgetBigText: {
-    color: '#8391A1',
     fontWeight: 'medium',
+    marginHorizontal: 22,
+    color: '#6A7281',
     fontSize: 16,
     fontFamily: 'Urbanist',
-    marginBottom: 20,
-    marginHorizontal: 22,
+    marginBottom:35
   },
   SendMailButton: {
     marginTop: 30,
   },
+  emailInput:{
+    right:200
+  }
 });
 export default ForgetPassword;

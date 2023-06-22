@@ -5,7 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 const BackIcon = props => {
   const navigation = useNavigation();
   return (
-    <View style={[{width: '85%'},props.style]}>
+    <View style={[{width: '85%'}, props.style]}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <Image source={require('../assets/back.png')} style={styles.back} />
       </TouchableOpacity>
@@ -15,7 +15,7 @@ const BackIcon = props => {
 
 const styles = StyleSheet.create({
   back: {
-    marginLeft:10,
+    marginLeft:0,
     width: 40,
     height: 40,
     marginTop: 20,

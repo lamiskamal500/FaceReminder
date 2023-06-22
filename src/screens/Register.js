@@ -117,10 +117,11 @@ const Register = () => {
       <View style={styles.registerScreen}>
         <BackIcon />
         <Text style={styles.registerMessage}>
-          Hello! Register to get started
+          Sign Up
         </Text>
         <InputText
           DefaultText="Full Name"
+          style={styles.nameInput}
           onChangeText={text => setfullname(text)}
           onBlur={() => {
             setNameTouched(true);
@@ -133,7 +134,8 @@ const Register = () => {
           ''
         )}
         <InputText
-          DefaultText="Email"
+          DefaultText="Email Address"
+          style={styles.emailInput}
           onChangeText={text => setemail(text)}
           value={email}
           onBlur={() => {
@@ -148,6 +150,7 @@ const Register = () => {
         )}
         <InputText
           DefaultText="Password"
+          style={styles.passwordInput}
           onChangeText={text => setpassword(text)}
           onBlur={() => {
             setPasswordTouched(true);
@@ -162,6 +165,7 @@ const Register = () => {
         )}
         <InputText
           DefaultText="Confirm Password"
+          style={styles.confirmInput}
           onChangeText={text => setconfirm_password(text)}
           onBlur={() => {
             setConfirmPasswordTouched(true);
@@ -176,7 +180,7 @@ const Register = () => {
         )}
         {error ? <Text style={styles.emailFailed}>{error}</Text> : ''}
         <Button
-          buttonText="Register"
+          buttonText="Sign Up"
           disable={disable}
           onPress={onPress}
           style={styles.registerButton}
@@ -186,9 +190,9 @@ const Register = () => {
         />
 
         <View style={styles.haveAccount}>
-          <Text style={styles.account}>Already have an account? </Text>
+          <Text style={styles.account}>Already have an account?</Text>
           <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-            <Text style={styles.loginNow}>Login Now</Text>
+            <Text style={styles.loginNow}>Login</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -208,10 +212,13 @@ const styles = StyleSheet.create({
   },
   registerMessage: {
     color: '#1E232C',
-    fontSize: 30,
+    fontSize: 28,
     fontWeight: 'bold',
-    marginTop: 30,
+    marginTop: 20,
     marginBottom: 30,
+    // position:'absolute',
+    right:95,
+
   },
   haveAccount: {
     color: '#1E232C',
@@ -224,7 +231,7 @@ const styles = StyleSheet.create({
     color: '#35C2C1',
   },
   registerButton: {
-    marginVertical: 7,
+    marginVertical: 18,
   },
   account: {
     color: 'black',
@@ -238,6 +245,18 @@ const styles = StyleSheet.create({
     color: 'red',
     fontSize: 15,
   },
+  nameInput:{
+    right:230,
+  },
+  emailInput:{
+    right:205,
+  },
+  passwordInput:{
+    right:230,
+  },
+  confirmInput:{
+    right:180,
+  }
 });
 
 export default Register;
