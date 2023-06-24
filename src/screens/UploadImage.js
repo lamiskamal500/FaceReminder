@@ -1,6 +1,7 @@
 import React , {useEffect} from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import BackIcon from '../components/BackIcon';
+import Button from '../components/Button';
 import {useNavigation} from '@react-navigation/native';
 import {launchImageLibrary} from 'react-native-image-picker';
 
@@ -48,10 +49,11 @@ const UploadImage = () => {
         }
         </View>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.recognize} onPress={() => navigation.navigate('Recognize')}>
-        <Text style={styles.recognizeText}>Add OR Recognize</Text>
-        <Image source={require('../assets/arrow.png')} style={styles.icon}/>
-      </TouchableOpacity>
+      <Button
+          style={styles.recognize}
+          buttonText="Recognize"
+          onPress={() => navigation.navigate('Recognize')}
+        />
     </View>
   );
 };
@@ -83,7 +85,7 @@ const styles = StyleSheet.create({
   },
   upload: {
     alignItems: 'center',
-    marginVertical: 70,
+    marginVertical: 60,
   },
   clickText: {
     color: '#242634',
@@ -97,17 +99,9 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   recognize:{
-    display:'flex',
-    flexDirection:'row',
-    justifyContent:'center'
-  },
-  icon:{
-    width:35,
-    height:38,
-    top:'-2.5%'
-  },
-  recognizeText:{
-    color: '#1E232C',
+    width: 200,
+    paddingVertical: 15,
+    alignSelf:'center'
   }
 });
 export default UploadImage;

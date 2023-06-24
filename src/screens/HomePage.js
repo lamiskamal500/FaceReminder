@@ -63,7 +63,7 @@ const HomePage = () => {
       <TouchableOpacity onPress={() => navigation.navigate('CameraScreen')} style={styles.cameraButton}>
       <View style={styles.iconCircle}>
           <Image
-            source={require('../assets/cameraa.png')}
+            source={require('../assets/mobile.png')}
           />
         </View>
       <View>
@@ -75,7 +75,7 @@ const HomePage = () => {
       <TouchableOpacity style={styles.cameraButton}>
       <View style={styles.iconCircle}>
           <Image
-            source={require('../assets/mobile.png')}
+            source={require('../assets/cameraa.png')}
           />
         </View>
       <View>

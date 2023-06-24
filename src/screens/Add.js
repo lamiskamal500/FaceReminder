@@ -50,94 +50,94 @@ const Add = () => {
     console.log('image', image);
   };
 
-  useEffect(() => {
-    const requestLocationPermission = async () => {
-      try {
-        const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-          {
-            title: 'Location Permission',
-            message: 'This app needs access to your location.',
-            buttonPositive: 'OK',
-          },
-        );
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          Geolocation.getCurrentPosition(
-            position => {
-              const {latitude, longitude} = position.coords;
-              setLocation({latitude, longitude});
-            },
-            error => {
-              console.log(error.code, error.message);
-            },
-            {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
-          );
-        } else {
-          console.log('Location permission denied');
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  // useEffect(() => {
+  //   const requestLocationPermission = async () => {
+  //     try {
+  //       const granted = await PermissionsAndroid.request(
+  //         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+  //         {
+  //           title: 'Location Permission',
+  //           message: 'This app needs access to your location.',
+  //           buttonPositive: 'OK',
+  //         },
+  //       );
+  //       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+  //         Geolocation.getCurrentPosition(
+  //           position => {
+  //             const {latitude, longitude} = position.coords;
+  //             setLocation({latitude, longitude});
+  //           },
+  //           error => {
+  //             console.log(error.code, error.message);
+  //           },
+  //           {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+  //         );
+  //       } else {
+  //         console.log('Location permission denied');
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
 
-    requestLocationPermission();
+  //   requestLocationPermission();
 
-    if (isCheckedLocation) {
-      console.log('latitude :', location?.latitude);
-      console.log('longitude :', location?.longitude);
-    }
-  });
+  //   if (isCheckedLocation) {
+  //     console.log('latitude :', location?.latitude);
+  //     console.log('longitude :', location?.longitude);
+  //   }
+  // });
   return (
     <View style={styles.StaticProfileScreen}>
-      <View style={styles.Images}>
+      {/* <View style={styles.Images}> */}
+      <View style={{display: 'flex'}}>
         <BackIcon />
-        <Text style={styles.ProfileText}>New</Text>
-        <View style={styles.imageNetwork}>
-        <TouchableOpacity
-            onPress={() => {
-              console.log('kkkkkk');
-              handleImage();
-            }}>
-            <View style={styles.iconContainer}><Image source={require('../assets/camera.png')} style={styles.icon}/></View>
-            <Image
-              style={styles.imageStyle}
-              source={require('../assets/defaultPhoto.png')}
-              alt="avatar"
-            />
-          </TouchableOpacity>
-          </View>
+        <Text style={styles.ProfileText}>Add new person</Text>
       </View>
-      {/* <Image
-        style={styles.imageStyle}
-        source={require('../assets/defaultPhoto.png')}
-      /> */}
-      <View style={styles.inputs}>
+      <View style={styles.imageNetwork}>
+        <TouchableOpacity
+          onPress={() => {
+            console.log('kkkkkk');
+            handleImage();
+          }}>
+          <View style={styles.iconContainer}>
+            <Image
+              source={require('../assets/camera.png')}
+              style={styles.icon}
+            />
+          </View>
+          <Image
+            style={styles.imageStyle}
+            source={require('../assets/defaultPhoto.png')}
+            alt="avatar"
+          />
+        </TouchableOpacity>
+      </View>
+      {/* </View> */}
+      <View style={styles.infoBox}>
         <InputText
-          style={styles.infoBox}
           DefaultText="Name"
           value={name}
           onChangeText={text => setName(text)}
+          style={styles.nameInput}
         />
-
         <InputText
-          style={styles.infoBox1}
-          DefaultText="Biography"
-          value={biography}
-          onChangeText={text => setBiography(text)}
-        />
-
-        <InputText
-          style={styles.infoBox}
           DefaultText="Relation"
           value={relation}
           onChangeText={text => setRelation(text)}
+          style={styles.relationInput}
         />
-
         <InputText
-          style={styles.infoBox}
+          DefaultText="Biography"
+          value={biography}
+          onChangeText={text => setBiography(text)}
+          style={styles.biographyInput}
+        />
+        <InputText
           DefaultText="Age"
           value={age}
           onChangeText={text => setAge(text)}
+          style={styles.ageInput}
         />
       </View>
 
@@ -145,7 +145,8 @@ const Add = () => {
         <BouncyCheckbox
           isChecked={isCheckedLocation}
           onPress={() => setIsCheckedLocation(!isCheckedLocation)}
-          text="Adress"
+          text="Add current address via maps"
+          fillColor="blue"
         />
       </View>
 
@@ -163,12 +164,13 @@ const styles = StyleSheet.create({
     display: 'flex',
     backgroundColor: '#FFFFFF',
     height: '100%',
+    // alignItems:'center',
+    // justifyContent:'center'
   },
-  Images: {
-    display: 'flex',
-    flexDirection: 'row',
-    width: '90%',
-  },
+  // Images: {
+  //   display: 'flex',
+  //   width: '90%',
+  // },
   ShareIcon: {
     width: 14,
     height: 16,
@@ -184,10 +186,10 @@ const styles = StyleSheet.create({
   },
   ProfileText: {
     color: '#1D1838',
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 'bold',
-    marginTop: 25,
-    marginLeft: -110,
+    alignSelf: 'center',
+    bottom: 30,
   },
   UserText: {
     color: '#1D1838',
@@ -215,38 +217,25 @@ const styles = StyleSheet.create({
     top: '30%',
     paddingLeft: 12,
   },
-  infoBox1: {
-    width: '90%',
-    height: 190,
-    backgroundColor: '#F7F8F9',
-    marginLeft: 18,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#E8ECF4',
-    margin: 10,
-  },
   infoBox: {
-    width: '90%',
-    height: 60,
-    backgroundColor: '#F7F8F9',
-    marginLeft: 18,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#E8ECF4',
-    margin: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   CheckBox: {
     marginLeft: 20,
     marginBottom: 10,
   },
   buttonText: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: 'semibold',
     color: '#FFFFFF',
   },
   Button: {
     marginLeft: 15,
-    marginTop: 25,
+    marginTop: 18,
+    width: 270,
+    paddingVertical: 15,
+    alignSelf: 'center',
   },
   inputs: {
     marginLeft: 20,
@@ -260,22 +249,36 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     position: 'relative',
   },
-  icon:{
-    width:25,
-    height:25,
+  icon: {
+    width: 25,
+    height: 25,
   },
-  iconContainer:{
-    position:'absolute',
-    bottom:0,
-    right:0,
-    backgroundColor:'white',
-    padding:5,
-    borderRadius:100,
-    resizeMode:'contain',
-    zIndex:10
+  iconContainer: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    backgroundColor: 'white',
+    padding: 5,
+    borderRadius: 100,
+    resizeMode: 'contain',
+    zIndex: 10,
   },
   imageNetwork: {
-    alignItems:'center'
-  }
+    alignItems: 'center',
+    justifyContent: 'center',
+    bottom: 10,
+  },
+  nameInput: {
+    right: 250,
+  },
+  relationInput: {
+    right: 240,
+  },
+  biographyInput: {
+    right: 230,
+  },
+  ageInput: {
+    right: 265,
+  },
 });
 export default Add;
