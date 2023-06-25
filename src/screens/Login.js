@@ -22,7 +22,7 @@ const Login = () => {
   const onPress = async () => {
     setDisable(true);
     setLoading(true);
-    navigation.navigate('HomePage');
+  
     const response = await Axios.post('/auth/login/', {email, password});
 
     if (response.status === 200) {
@@ -37,7 +37,8 @@ const Login = () => {
       setDisable(false);
       setLoading(false);
     } else {
-      console.log(response);
+      // console.log(response);
+      console.log(error)
       setError(response.data.error);
       setDisable(false);
       setLoading(false);

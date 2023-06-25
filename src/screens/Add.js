@@ -9,7 +9,7 @@ import BouncyCheckbox from 'react-native-bouncy-checkbox';
 const Add = () => {
   const navigation = useNavigation();
   const user = useSelector(defaultUser);
- 
+
   const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
@@ -43,9 +43,7 @@ const Add = () => {
       {/* <Text style={styles.EmailText}>Email</Text> */}
 
       <View style={styles.infoBox}>
-        <Text style={styles.info}>
-          Name
-        </Text>
+        <Text style={styles.info}>name</Text>
       </View>
 
       {/* <Text style={styles.EmailText}>Phone number</Text> */}
@@ -55,33 +53,29 @@ const Add = () => {
 
       {/* <Text style={styles.EmailText}>Address</Text> */}
       <View style={styles.infoBox}>
-        <Text style={styles.info}>
-           Relation
-        </Text>
+        <Text style={styles.info}>Relation</Text>
       </View>
-  
 
       <View style={styles.CheckBox}>
-  <BouncyCheckbox
-    isChecked={isChecked}
-    onPress={() => setIsChecked(!isChecked)}
-    text="Created at"
-  />
-</View>
-<View style={styles.CheckBox}>
-  <BouncyCheckbox
-    isChecked={isChecked}
-    onPress={() => setIsChecked(!isChecked)}
-    text="Adress"
-  />
-</View>
+        <BouncyCheckbox
+          isChecked={isChecked}
+          onPress={() => setIsChecked(!isChecked)}
+          text="Created at"
+        />
+      </View>
+      <View style={styles.CheckBox}>
+        <BouncyCheckbox
+          isChecked={isChecked}
+          onPress={() => setIsChecked(!isChecked)}
+          text="Adress"
+        />
+      </View>
 
-<Button
+      <Button
         style={styles.Button}
         styleButton={styles.buttonText}
         buttonText="Save "
       />
-      
     </View>
   );
 };
@@ -150,7 +144,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#E8ECF4',
-    margin:10,
+    margin: 10,
   },
   infoBox: {
     width: '90%',
@@ -160,19 +154,19 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#E8ECF4',
-    margin:10,
+    margin: 10,
   },
-  CheckBox:{
-    margin:10,
-
+  CheckBox: {
+    margin: 10,
+    marginLeft: 15,
   },
   buttonText: {
     fontSize: 20,
     fontWeight: 'semibold',
     color: '#FFFFFF',
   },
-  Button:{
-marginLeft:15,
+  Button: {
+    marginLeft: 15,
   },
 });
 export default Add;
