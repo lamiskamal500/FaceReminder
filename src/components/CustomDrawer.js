@@ -2,7 +2,6 @@ import React from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
-
 const DrawerItems = (props) =>{
 return(
     <TouchableOpacity onPress={props.onpress}>
@@ -14,12 +13,12 @@ const CustomDrawer = () => {
   const navigation = useNavigation();
   return (
     <View style={styles.customDrawer}>
-      <Image source={require('../assets/Profile.png')} />
+      <Image source={require('../assets/Profile.png')}/>
       <Text style={styles.profileName}>Jessica</Text>
        <DrawerItems item='HomePage' onpress={()=>navigation.navigate('HomePage')}/>
        <DrawerItems item='Profile' onpress={()=>navigation.navigate('StaticProfile')}/>
        <DrawerItems item='Edit Profile' onpress={()=> navigation.navigate('EditProfile')}/>
-       <DrawerItems item='Network'/>
+       <DrawerItems item='Network' onpress={()=> navigation.navigate('Network')}/>
        <DrawerItems item='Logout' onpress={()=>navigation.navigate('Login')}/>
     </View>
   );

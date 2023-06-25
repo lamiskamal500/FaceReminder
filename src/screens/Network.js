@@ -2,12 +2,25 @@ import React, {useState, useEffect} from 'react';
 import {Text, View, StyleSheet, Image, TextInput, FlatList} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import BackIcon from '../components/BackIcon';
-import Button from '../components/Button';
 import InputText from '../components/InputText';
+import Axios from '../Network/Axios';
 
 const Network = () => {
   const [search, setSearch] = useState('');
+  const [data, setData] = useState([]);
   const navigation = useNavigation();
+  
+  useEffect(() => {
+    Axios.get('/connections/')
+      .then(response => {
+        setData(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }, []);
+
+
   return (
     <View style={styles.networkScreen}>
     <BackIcon style={styles.back} />
@@ -16,10 +29,12 @@ const Network = () => {
       DefaultText="Search Here"
     />
     <FlatList
-          data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+          data={data}
           horizontal
-          renderItem={_ => (
-            <View style={styles.networkScroll}/>
+          renderItem={(item) => (
+            <View style={styles.networkScroll}>
+              
+            </View>
           )}
         />
     </View>

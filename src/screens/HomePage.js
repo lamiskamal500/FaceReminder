@@ -60,23 +60,41 @@ const HomePage = () => {
       <View style={{width: '100%'}}>
         <Text style={styles.HiText}> Hi {user ? user.email : 'Jessia'} </Text>
       </View>
-      <Button
-        style={styles.Button}
-        styleButton={styles.buttonText}
-        buttonText="Mobile Camera"
-        onPress={() => navigation.navigate('CameraScreen')}
-      />
-      <Button
-        style={styles.Button}
-        styleButton={styles.buttonText}
-        buttonText="External Camera"
-      />
-      <Button
-        style={styles.Button}
-        styleButton={styles.buttonText}
-        buttonText="Local Image"
-        onPress={() => navigation.navigate('UploadImage')}
-      />
+      <TouchableOpacity onPress={() => navigation.navigate('CameraScreen')} style={styles.cameraButton}>
+      <View style={styles.iconCircle}>
+          <Image
+            source={require('../assets/mobile.png')}
+          />
+        </View>
+      <View>
+        <Text style={styles.mobile}>Mobile Camera</Text>
+        <Text style={styles.mobileText}>Take a photo for a person in front of you.</Text>
+        </View>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.cameraButton}>
+      <View style={styles.iconCircle}>
+          <Image
+            source={require('../assets/cameraa.png')}
+          />
+        </View>
+      <View>
+        <Text style={styles.mobile}>External Camera</Text>
+        <Text style={styles.mobileText}>Make sure to open bluetooth before using{'\n'}your external camera.</Text>
+        </View>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => navigation.navigate('UploadImage')} style={styles.cameraButton}>
+      <View style={styles.iconCircle}>
+          <Image
+            source={require('../assets/Group.png')}
+          />
+        </View>
+      <View>
+        <Text style={styles.mobile}>Local Image</Text>
+        <Text style={styles.mobileText}>Choose a photo from your mobile photos.</Text>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -125,5 +143,40 @@ const styles = StyleSheet.create({
     // display:"flex",
     flexDirection: 'row',
   },
+  cameraButton:{
+    backgroundColor:'#F4F4F4',
+    borderRadius:15,
+    borderColor:'#DCDCDC',
+    borderWidth: 1,
+    padding:20,
+    flexDirection: 'row',
+    marginTop:15,
+    marginBottom:15,
+    width:330,
+   
+  },
+  mobile:{
+    color:'#000001',
+    fontSize:20,
+    fontWeight:'500',
+    marginBottom:3
+  },
+  mobileText:{
+    color:'#000001',
+    fontSize:13,
+  },
+  cameraText:{
+    display:'flex'
+  },
+  iconCircle:{
+    backgroundColor:'#FFFFFF',
+    width:50,
+    height:50,
+    borderRadius:50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight:15
+
+  }
 });
 export default HomePage;
