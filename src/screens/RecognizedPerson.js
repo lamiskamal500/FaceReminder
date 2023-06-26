@@ -2,7 +2,14 @@ import React from 'react';
 import BackIcon from '../components/BackIcon';
 import Button from '../components/Button';
 import {useNavigation} from '@react-navigation/native';
-import {TouchableOpacity, Text, View, StyleSheet, Image, Modal} from 'react-native';
+import {
+  TouchableOpacity,
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  Modal,
+} from 'react-native';
 
 const RecognizedPerson = () => {
   const navigation = useNavigation();
@@ -16,12 +23,18 @@ const RecognizedPerson = () => {
       />
       <Text style={styles.info}>Parsley Montana</Text>
       <Text style={styles.info2}>My Friend</Text>
-      <Button
-        style={styles.Button}
-        styleButton={styles.buttonText}
-        buttonText="Extra Details"
-        onPress={()=>navigation.navigate('ExtraDetails')}
-      />
+
+      <View style={styles.extraDetails}>
+        <Text style={styles.about}>About</Text>
+        <Text style={styles.aboutText}>
+          Nostrud deserunt sit anim ea. Duis tempor duis adipisicing culpa
+          ullamco in cupidatat. Ut laboris consectetur labore fugiat laboris
+          fugiat laboris eu minim cillum. Anim id magna excepteur eiusmod
+          eiusmod.
+        </Text>
+        <Text style={styles.about}>Address</Text>
+        <Text style={styles.aboutText}>Maadi, Cairo, Street 260</Text>
+      </View>
     </View>
   );
 };
@@ -43,8 +56,8 @@ const styles = StyleSheet.create({
     bottom: '-100%',
   },
   image: {
-    width: 220,
-    height: 220,
+    width: 200,
+    height: 200,
     marginBottom: 18,
   },
   details: {
@@ -53,7 +66,7 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     fontFamily: 'Urbanist',
     top: '-5.5%',
-    marginBottom: 30,
+    marginBottom: 18,
   },
   info: {
     color: '#1E232C',
@@ -62,12 +75,31 @@ const styles = StyleSheet.create({
     fontFamily: 'Urbanist',
     marginBottom: 7,
   },
-  info2:{
-    color:'#35C2C1',
+  info2: {
+    color: '#35C2C1',
     fontSize: 20,
+    marginBottom: 20,
   },
   back: {
     marginRight: 20,
+  },
+  about: {
+    fontSize: 16,
+    color: '#000001',
+    fontWeight: '900',
+  },
+  extraDetails: {
+    backgroundColor: '#F4F4F4',
+    borderRadius: 10,
+    borderColor: '#DCDCDC',
+    borderWidth: 1,
+    padding: 15,
+    width: 300,
+  },
+  aboutText: {
+    color: 'black',
+    marginBottom: 7,
+    marginTop: 7,
   },
 });
 export default RecognizedPerson;
