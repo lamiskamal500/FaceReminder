@@ -9,8 +9,8 @@ const Recognize = () => {
   const navigation = useNavigation();
 
   const onPress = async () => {
-    // navigation.navigate('RecognizedPerson');
-    setModalVisible(!modalVisible)
+    navigation.navigate('RecognizedPerson');
+    // setModalVisible(!modalVisible)
   }
  
   return (
@@ -57,7 +57,7 @@ const Recognize = () => {
             <Button
               buttonText="Add"
               style={styles.addButton}
-              onPress={() => navigation.navigate('Login')}
+              onPress={() => navigation.navigate('Add')}
             />
           </View>
         </View>
