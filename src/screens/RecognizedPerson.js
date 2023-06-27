@@ -15,7 +15,7 @@ const RecognizedPerson = () => {
         style={styles.image}
       />
       <Text style={styles.info}>Parsley Montana</Text>
-      <Text style={styles.info}>Friend</Text>
+      <Text style={styles.info2}>My Friend</Text>
       <Button
         style={styles.Button}
         styleButton={styles.buttonText}
@@ -61,6 +61,10 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     fontFamily: 'Urbanist',
     marginBottom: 7,
+  },
+  info2:{
+    color:'#35C2C1',
+    fontSize: 20,
   },
   back: {
     marginRight: 20,

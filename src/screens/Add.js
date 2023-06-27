@@ -1,80 +1,160 @@
 import React, {useState, useEffect} from 'react';
-import {Text, View, StyleSheet, Image} from 'react-native';
+import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import BackIcon from '../components/BackIcon';
 import {useSelector} from 'react-redux';
 import {defaultUser} from '../store/slices/user';
 import Button from '../components/Button';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
+import Geolocation from 'react-native-geolocation-service';
+import Axios from '../Network/Axios';
+import InputText from '../components/InputText';
+import {PermissionsAndroid} from 'react-native';
+import {launchImageLibrary} from 'react-native-image-picker';
+
 const Add = () => {
   const navigation = useNavigation();
   const user = useSelector(defaultUser);
+  const [isCheckedLocation, setIsCheckedLocation] = useState(false);
+  const [location, setLocation] = useState(null);
+  const [name, setName] = React.useState('');
+  const [relation, setRelation] = React.useState('');
+  const [age, setAge] = React.useState('');
+  const [biography, setBiography] = React.useState('');
+  const [address, setAddress] = React.useState('');
+  const [image, setImage] = React.useState('');
+  const [link, setLink] = React.useState('');
 
-  const [isChecked, setIsChecked] = useState(false);
+  const onPress = async () => {
+    const response = await Axios.post('/connections/', {
+      image,
+      name,
+      relation,
+      age,
+      biography,
+      address,
+    });
+    if (response.status === 200) {
+      navigation.navigate('Network');
+    }
+    console.log('response:', response);
+  };
+  const handleImage = async () => {
+    const options = {
+      mediaType: 'photo',
+      includeBase64: true,
+    };
+    const result = await launchImageLibrary(options);
+    setImage(result.assets[0].base64);
+    setLink(result.assets[0].uri);
+    console.log('image', image);
+  };
 
-  useEffect(() => {
-    console.log('user', user);
-  });
+  // useEffect(() => {
+  //   const requestLocationPermission = async () => {
+  //     try {
+  //       const granted = await PermissionsAndroid.request(
+  //         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+  //         {
+  //           title: 'Location Permission',
+  //           message: 'This app needs access to your location.',
+  //           buttonPositive: 'OK',
+  //         },
+  //       );
+  //       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+  //         Geolocation.getCurrentPosition(
+  //           position => {
+  //             const {latitude, longitude} = position.coords;
+  //             setLocation({latitude, longitude});
+  //           },
+  //           error => {
+  //             console.log(error.code, error.message);
+  //           },
+  //           {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+  //         );
+  //       } else {
+  //         console.log('Location permission denied');
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
 
+  //   requestLocationPermission();
+
+  //   if (isCheckedLocation) {
+  //     console.log('latitude :', location?.latitude);
+  //     console.log('longitude :', location?.longitude);
+  //   }
+  // });
   return (
     <View style={styles.StaticProfileScreen}>
-      <View style={styles.Images}>
+      {/* <View style={styles.Images}> */}
+      <View style={{display: 'flex'}}>
         <BackIcon />
-        <Text style={styles.ProfileText}>New</Text>
-        <Image
-          source={require('../assets/Icon.png')}
-          style={styles.ShareIcon}
-        />
+        <Text style={styles.ProfileText}>Add new person</Text>
       </View>
-
-      <View style={{alignItems: 'center'}}>
-        <Image
-          source={
-            user.image ? user.image : require('../assets/RecognizeDetails.png')
-          }
-          style={styles.User2}
-        />
-        {/* <Text style={styles.UserText}>
-          {user.fullname ? user.fullname : 'Jessia'}
-        </Text>
-        <Text style={styles.me}>me</Text> */}
+      <View style={styles.imageNetwork}>
+        <TouchableOpacity
+          onPress={() => {
+            console.log('kkkkkk');
+            handleImage();
+          }}>
+          <View style={styles.iconContainer}>
+            <Image
+              source={require('../assets/camera.png')}
+              style={styles.icon}
+            />
+          </View>
+          <Image
+            style={styles.imageStyle}
+            source={require('../assets/defaultPhoto.png')}
+            alt="avatar"
+          />
+        </TouchableOpacity>
       </View>
-
-      {/* <Text style={styles.EmailText}>Email</Text> */}
-
+      {/* </View> */}
       <View style={styles.infoBox}>
-        <Text style={styles.info}>Name</Text>
-      </View>
-
-      {/* <Text style={styles.EmailText}>Phone number</Text> */}
-      <View style={styles.infoBox1}>
-        <Text style={styles.info}>Biography</Text>
-      </View>
-
-      {/* <Text style={styles.EmailText}>Address</Text> */}
-      <View style={styles.infoBox}>
-        <Text style={styles.info}>Relation</Text>
+        <InputText
+          DefaultText="Name"
+          value={name}
+          onChangeText={text => setName(text)}
+          style={styles.nameInput}
+        />
+        <InputText
+          DefaultText="Relation"
+          value={relation}
+          onChangeText={text => setRelation(text)}
+          style={styles.relationInput}
+        />
+        <InputText
+          DefaultText="Biography"
+          value={biography}
+          onChangeText={text => setBiography(text)}
+          style={styles.biographyInput}
+        />
+        <InputText
+          DefaultText="Age"
+          value={age}
+          onChangeText={text => setAge(text)}
+          style={styles.ageInput}
+        />
       </View>
 
       <View style={styles.CheckBox}>
         <BouncyCheckbox
-          isChecked={isChecked}
-          onPress={() => setIsChecked(!isChecked)}
-          text="Created at"
-        />
-      </View>
-      <View style={styles.CheckBox}>
-        <BouncyCheckbox
-          isChecked={isChecked}
-          onPress={() => setIsChecked(!isChecked)}
-          text="Adress"
+          isChecked={isCheckedLocation}
+          onPress={() => setIsCheckedLocation(!isCheckedLocation)}
+          text="Add current address via maps"
+          fillColor="blue"
         />
       </View>
 
       <Button
         style={styles.Button}
         styleButton={styles.buttonText}
-        buttonText="Save "
+        buttonText="Save"
+        onPress={onPress}
       />
     </View>
   );
@@ -84,12 +164,13 @@ const styles = StyleSheet.create({
     display: 'flex',
     backgroundColor: '#FFFFFF',
     height: '100%',
+    // alignItems:'center',
+    // justifyContent:'center'
   },
-  Images: {
-    display: 'flex',
-    flexDirection: 'row',
-    width: '90%',
-  },
+  // Images: {
+  //   display: 'flex',
+  //   width: '90%',
+  // },
   ShareIcon: {
     width: 14,
     height: 16,
@@ -105,10 +186,10 @@ const styles = StyleSheet.create({
   },
   ProfileText: {
     color: '#1D1838',
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 'bold',
-    marginTop: 25,
-    marginLeft: -110,
+    alignSelf: 'center',
+    bottom: 30,
   },
   UserText: {
     color: '#1D1838',
@@ -136,37 +217,68 @@ const styles = StyleSheet.create({
     top: '30%',
     paddingLeft: 12,
   },
-  infoBox1: {
-    width: '90%',
-    height: 90,
-    backgroundColor: '#F7F8F9',
-    marginLeft: 18,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#E8ECF4',
-    margin: 10,
-  },
   infoBox: {
-    width: '90%',
-    height: 60,
-    backgroundColor: '#F7F8F9',
-    marginLeft: 18,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#E8ECF4',
-    margin: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   CheckBox: {
-    margin: 10,
-    marginLeft: 15,
+    marginLeft: 20,
+    marginBottom: 10,
   },
   buttonText: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: 'semibold',
     color: '#FFFFFF',
   },
   Button: {
     marginLeft: 15,
+    marginTop: 18,
+    width: 270,
+    paddingVertical: 15,
+    alignSelf: 'center',
+  },
+  inputs: {
+    marginLeft: 20,
+    marginBottom: 20,
+    marginTop: 25,
+  },
+  imageStyle: {
+    width: 130,
+    height: 130,
+    borderWidth: 1,
+    borderRadius: 100,
+    position: 'relative',
+  },
+  icon: {
+    width: 25,
+    height: 25,
+  },
+  iconContainer: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    backgroundColor: 'white',
+    padding: 5,
+    borderRadius: 100,
+    resizeMode: 'contain',
+    zIndex: 10,
+  },
+  imageNetwork: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    bottom: 10,
+  },
+  nameInput: {
+    right: 250,
+  },
+  relationInput: {
+    right: 240,
+  },
+  biographyInput: {
+    right: 230,
+  },
+  ageInput: {
+    right: 265,
   },
 });
 export default Add;
