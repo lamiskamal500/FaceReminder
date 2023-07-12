@@ -7,7 +7,6 @@ import {defaultUser} from '../store/slices/user';
 import {defaultToken} from '../store/slices/token';
 import {setDefaultUser} from '../store/slices/user';
 import {setToken} from '../store/slices/token';
-import Button from '../components/Button';
 import Axios from '../Network/Axios';
 
 const HomePage = () => {
@@ -21,15 +20,6 @@ const HomePage = () => {
     // console.log("axios",Axios.defaults.headers.common["Authorization"])
   }, [token]);
 
-  // const devices = useCameraDevices();
-  // const device = devices.back;
-  // const requestCameraPermission = useCallback(async () => {
-  //   const permissin = await Camera.requestCameraPermission();
-  //   navigation.navigate('CameraScreen');
-
-  //   if (permissin === 'denied') await Linking.openSettings();
-  // }, []);
-
   const onPress = async () => {
     const response = await Axios.get('/profiles/');
     if (response.status === 200) {
@@ -39,26 +29,26 @@ const HomePage = () => {
         ),
       );
       dispatch(setToken(response.data.token));
-      navigation.navigate('StaticProfile');
+      navigation.toggleDrawer()
     }
     console.log('response', response);
   };
   return (
     <View style={styles.HomePageMain}>
       <View style={styles.Image}>
-        <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
+        <TouchableOpacity onPress={onPress}>
           <Image source={require('../assets/menu.png')} style={styles.Menu} />
         </TouchableOpacity>
         <TouchableOpacity style={{width: '90%'}} onPress={onPress}>
           <Image
-            // source= {user.image? user.image : require('../assets/User2.png')}
+            source= {user.image? user.image : require('../assets/User2.png')}
             style={styles.User2}
           />
         </TouchableOpacity>
       </View>
       <View style={{width: '85%'}}></View>
       <View style={{width: '100%'}}>
-        <Text style={styles.HiText}> Hi {user ? user.email : 'Jessia'} </Text>
+        <Text style={styles.HiText}> Hi {user.fullname ? user.fullname : 'Jessia'} </Text>
       </View>
       <TouchableOpacity onPress={() => navigation.navigate('CameraScreen')} style={styles.cameraButton}>
       <View style={styles.iconCircle}>

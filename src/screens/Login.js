@@ -23,9 +23,7 @@ const Login = () => {
   const onPress = async () => {
     setDisable(true);
     setLoading(true);
-  
     const response = await Axios.post('/auth/login/', {email, password});
-
     if (response.status === 200) {
       dispatch(setDefaultUser(response.data.account));
       dispatch(setToken(response.data.token));
@@ -44,7 +42,6 @@ const Login = () => {
       setDisable(false);
       setLoading(false);
     }
-
     console.log(response);
     // console.log("token" , response.data.token);
   };
