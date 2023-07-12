@@ -32,11 +32,11 @@ const Login = () => {
       Axios.defaults.headers.common[
         'Authorization'
       ] = `Token ${response.data.token}`;
-      setemail('');
-      setPassword('');
       navigation.navigate('HomePage');
       setDisable(false);
       setLoading(false);
+      setemail('');
+      setPassword('');
     } else {
       // console.log(response);
       console.log(error)
