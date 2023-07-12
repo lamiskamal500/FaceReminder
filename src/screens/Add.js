@@ -28,9 +28,11 @@ const Add = () => {
   const onPress = async () => {
     const response = await Axios.post('/connections/', {
       image,
+      rep,
       name,
       relation,
       age,
+      phone_number,
       biography,
       address,
     });
@@ -108,7 +110,7 @@ const Add = () => {
           </View>
           <Image
             style={styles.imageStyle}
-            source={require('../assets/defaultPhoto.png')}
+            source={link ? {uri: link} : require('../assets/defaultPhoto.png')}
             alt="avatar"
           />
         </TouchableOpacity>

@@ -4,28 +4,46 @@ import BackIcon from '../components/BackIcon';
 import Button from '../components/Button';
 import {useNavigation} from '@react-navigation/native';
 import {launchImageLibrary} from 'react-native-image-picker';
+import Axios from '../Network/Axios';
 
 
 const UploadImage = () => {
   const navigation = useNavigation();
     const [image, setImage] = React.useState('');
+    const [images, setImages] = React.useState('');
     const handleImage = async () => {
         const options = {
           mediaType: 'photo',
         };
         const result = await launchImageLibrary(options);
-        setImage(result.assets[0].uri);
+        setImages(result.assets[0].uri);
         console.log('result', result)
-        const data = new FormData()
-        data.append(result.assets[0])
-        console.log('data', data)
+        // const image = new FormData()
+        // image.append(result.assets[0])
+        // console.log('data', image)
+        const imageData = new FormData();
+        imageData.append(result.assets[0]);
+      
+        console.log('imageData', imageData);
+        setImage(imageData);      
       };
       useEffect(() => {
-        console.log('image', image);
+        console.log('image', images);
       }, []);
-
+    const onPress = async () => {
+      const response = await Axios.post('/recognize/', image);
       
-
+      if (response.status === 200) {
+        navigation.navigate('RecognizedPerson');
+      }
+      else if(response.status === 201) {
+        navigation.navigate('Add');
+      }
+      else if(response.status === 400){
+        navigation.navigate('HomePage');
+      }
+      console.log('response', response)
+    }
   return (
     <View style={styles.uploadScreen}>
       <BackIcon style={styles.back} />
@@ -34,15 +52,15 @@ const UploadImage = () => {
               console.log('lamis');
               handleImage();
             }}>
-        <View style={[{borderColor: image ? 'white' : '#E2E6EA' }, styles.uploadFrame]}>
-        {image &&
+        <View style={[{borderColor: images ? 'white' : '#E2E6EA' }, styles.uploadFrame]}>
+        {images &&
         <Image
               style={styles.imageStyle}
-              source={{uri: image}}
+              source={{uri: images}}
               alt="avatar"
             />
         }
-        {!image ? (
+        {!images ? (
           <Text style={styles.clickText}>
             Click to browse {'\n'} your files
           </Text>) : ''
@@ -52,7 +70,7 @@ const UploadImage = () => {
       <Button
           style={styles.recognize}
           buttonText="Recognize"
-          onPress={() => navigation.navigate('Recognize')}
+          onPress={onPress}
         />
     </View>
   );
