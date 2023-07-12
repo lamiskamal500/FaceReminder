@@ -79,6 +79,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
     borderRadius: 200,
     marginBottom: 5,
+    borderWidth:2,
+    borderColor:'red'
   },
   ProfileText: {
     color: '#1D1838',
