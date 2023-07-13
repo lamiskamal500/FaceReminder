@@ -4,6 +4,7 @@ import {useNavigation} from '@react-navigation/native';
 import BackIcon from '../components/BackIcon';
 import {useSelector} from 'react-redux';
 import {defaultUser} from '../store/slices/user';
+import {defaultNetwork} from '../store/slices/network';
 import Button from '../components/Button';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Geolocation from 'react-native-geolocation-service';
@@ -22,16 +23,29 @@ const Add = () => {
   const [age, setAge] = React.useState('');
   const [biography, setBiography] = React.useState('');
   const [address, setAddress] = React.useState('');
+  const [phone_number, setPhone_number] = React.useState('');
   const [image, setImage] = React.useState('');
   const [link, setLink] = React.useState('');
 
+  const network = useSelector(defaultNetwork);
+
+  useEffect(() => {
+    console.log('network', network);
+  });
+  const handleAgeChange = (text) => {
+    const numericValue = text.replace(/[^0-9]/g, '');
+
+    if (numericValue !== '') {
+      setAge(numericValue);
+    }
+  }
   const onPress = async () => {
     const response = await Axios.post('/connections/', {
-      image,
-      rep,
+      image: network.image,
+      rep: network.rep,
       name,
-      relation,
       age,
+      relation,
       phone_number,
       biography,
       address,
@@ -40,16 +54,6 @@ const Add = () => {
       navigation.navigate('Network');
     }
     console.log('response:', response);
-  };
-  const handleImage = async () => {
-    const options = {
-      mediaType: 'photo',
-      includeBase64: true,
-    };
-    const result = await launchImageLibrary(options);
-    setImage(result.assets[0].base64);
-    setLink(result.assets[0].uri);
-    console.log('image', image);
   };
 
   // useEffect(() => {
@@ -96,7 +100,7 @@ const Add = () => {
         <BackIcon />
         <Text style={styles.ProfileText}>Add new person</Text>
       </View>
-      <View style={styles.imageNetwork}>
+      {/* <View style={styles.imageNetwork}>
         <TouchableOpacity
           onPress={() => {
             console.log('kkkkkk');
@@ -114,8 +118,15 @@ const Add = () => {
             alt="avatar"
           />
         </TouchableOpacity>
-      </View>
+      </View> */}
       {/* </View> */}
+      <View style={styles.imageNetwork}>
+      <Image
+            style={styles.imageStyle}
+            source={network.image ? { uri: network.image } : require('../assets/defaultPhoto.png')}
+            alt="avatar"
+        />
+        </View>
       <View style={styles.infoBox}>
         <InputText
           DefaultText="Name"
@@ -138,7 +149,8 @@ const Add = () => {
         <InputText
           DefaultText="Age"
           value={age}
-          onChangeText={text => setAge(text)}
+          keyboardType="numeric"
+          onChangeText={handleAgeChange}
           style={styles.ageInput}
         />
       </View>
