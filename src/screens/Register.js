@@ -123,6 +123,7 @@ const Register = () => {
           DefaultText="Full Name"
           style={styles.nameInput}
           onChangeText={text => setfullname(text)}
+          
           onBlur={() => {
             setNameTouched(true);
             handleName();

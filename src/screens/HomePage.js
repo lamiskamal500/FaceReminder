@@ -14,12 +14,20 @@ const HomePage = () => {
   const user = useSelector(defaultUser);
   const token = useSelector(defaultToken);
   const dispatch = useDispatch();
-  console.log('user', user);
+  // console.log('user', user);
   useEffect(() => {
     console.log('token', token);
     // console.log("axios",Axios.defaults.headers.common["Authorization"])
   }, [token]);
+  useEffect(() => {
+    console.log('user', user);
+    onPress()
+    // console.log("axios",Axios.defaults.headers.common["Authorization"])
+  }, []);
+  const onPressMove=()=>{
+    navigation.toggleDrawer()
 
+  }
   const onPress = async () => {
     const response = await Axios.get('/profiles/');
     if (response.status === 200) {
@@ -29,14 +37,13 @@ const HomePage = () => {
         ),
       );
       dispatch(setToken(response.data.token));
-      navigation.toggleDrawer()
     }
     console.log('response', response);
   };
   return (
     <View style={styles.HomePageMain}>
       <View style={styles.Image}>
-        <TouchableOpacity onPress={onPress}>
+        <TouchableOpacity onPress={onPressMove}>
           <Image source={require('../assets/menu.png')} style={styles.Menu} />
         </TouchableOpacity>
         <TouchableOpacity style={{width: '90%'}} onPress={onPress}>
@@ -46,7 +53,7 @@ const HomePage = () => {
           />
         </TouchableOpacity>
       </View>
-      <View style={{width: '85%'}}></View>
+       <View style={{width: '85%'}}></View>
       <View style={{width: '100%'}}>
         <Text style={styles.HiText}> Hi {user.fullname ? user.fullname : 'Jessia'} </Text>
       </View>
