@@ -1,7 +1,11 @@
 import React from 'react';
 import BackIcon from '../components/BackIcon';
+import {useState, useEffect} from 'react';
 import Button from '../components/Button';
+import {defaultNetwork, setDefaultNetwork} from '../store/slices/network';
+import {useSelector, useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
+import Axios from '../Network/Axios';
 import {
   TouchableOpacity,
   Text,
@@ -13,24 +17,36 @@ import {
 
 const RecognizedPerson = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const network = useSelector(defaultNetwork);
+
+  const connection_id = network.result
+ const onPress = async () => {
+    const response = await Axios.get(`/connections/${connection_id}`);
+    dispatch(setDefaultNetwork(response.data));
+    console.log('response', response);
+    }
+  useEffect(() => {
+    onPress();
+    console.log('network', network);
+  },[]);
   return (
     <View style={styles.RecognizeScreen}>
       <BackIcon style={styles.back} />
       <Text style={styles.details}>Details</Text>
       <Image
-        source={require('../assets/RecognizedPerson.png')}
+        source={network.image
+            ? { uri: network.image }
+            : require('../assets/RecognizedPerson.png')}
         style={styles.image}
       />
-      <Text style={styles.info}>Parsley Montana</Text>
-      <Text style={styles.info2}>My Friend</Text>
+      <Text style={styles.info}>{network.name}</Text>
+      <Text style={styles.info2}>{network.relation}</Text>
 
       <View style={styles.extraDetails}>
         <Text style={styles.about}>About</Text>
         <Text style={styles.aboutText}>
-          Nostrud deserunt sit anim ea. Duis tempor duis adipisicing culpa
-          ullamco in cupidatat. Ut laboris consectetur labore fugiat laboris
-          fugiat laboris eu minim cillum. Anim id magna excepteur eiusmod
-          eiusmod.
+          {network.biography}
         </Text>
         <Text style={styles.about}>Address</Text>
         <Text style={styles.aboutText}>Maadi, Cairo, Street 260</Text>

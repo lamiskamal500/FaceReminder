@@ -1,43 +1,92 @@
-import React , {useEffect} from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import React , {useEffect, useState} from 'react';
+import {View, Text, StyleSheet, Image, TouchableOpacity, Modal} from 'react-native';
+import RNFS from 'react-native-fs';
 import BackIcon from '../components/BackIcon';
 import Button from '../components/Button';
 import {useNavigation} from '@react-navigation/native';
 import {launchImageLibrary} from 'react-native-image-picker';
+import {setDefaultNetwork} from '../store/slices/network';
+import {defaultNetwork} from '../store/slices/user';
+import {useDispatch} from 'react-redux';
 import Axios from '../Network/Axios';
 
 
 const UploadImage = () => {
   const navigation = useNavigation();
-    const [image, setImage] = React.useState('');
-    const [images, setImages] = React.useState('');
+  const dispatch = useDispatch();
+  // const network = useSelector(defaultNetwork);
+    // const [image, setImage] = React.useState('');
+    // const [images, setImages] = React.useState('');
+    const [disable, setDisable] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [imageData, setImageData] = useState('');
+    const [imageUri, setImageUri] = useState('');
+    const [modalVisible, setModalVisible] = React.useState(false);
+    // const handleImage = async () => {
+    //     const options = {
+    //       mediaType: 'photo',
+    //     };
+    //     const result = await launchImageLibrary(options);
+    //     setImages(result.assets[0].uri);
+    //     console.log('result', result)
+    //     const imageData = new FormData();
+    //     imageData.append(result.assets[0]);
+    //     console.log('imageData', imageData);
+    //     setImage(imageData);      
+    //   };
+    //   useEffect(() => {
+    //     console.log('image', images);
+    //   }, []);
     const handleImage = async () => {
-        const options = {
-          mediaType: 'photo',
-        };
-        const result = await launchImageLibrary(options);
-        setImages(result.assets[0].uri);
-        console.log('result', result)
-        // const image = new FormData()
-        // image.append(result.assets[0])
-        // console.log('data', image)
-        const imageData = new FormData();
-        imageData.append(result.assets[0]);
-      
-        console.log('imageData', imageData);
-        setImage(imageData);      
+      const options = {
+        mediaType: 'photo',
       };
-      useEffect(() => {
-        console.log('image', images);
-      }, []);
+  
+      try {
+        const result = await launchImageLibrary(options);
+  
+        if (result.didCancel) {
+          console.log('User cancelled image picker');
+          return;
+        }
+  
+        const selectedImageUri = result.assets[0].uri;
+        setImageUri(selectedImageUri);
+        console.log('result', result)
+        const base64Image = await convertImageToBase64(selectedImageUri);
+        setImageData(base64Image);
+      } catch (error) {
+        console.log('Image picker error:', error);
+      }
+    };
+  
+    const convertImageToBase64 = async (imageUri) => {
+      try {
+        const fileUri = `file://${imageUri}`;
+        const base64Data = await RNFS.readFile(fileUri, 'base64');
+        const mimeType = 'image/jpeg'; 
+  
+        return `data:${mimeType};base64,${base64Data}`;
+      } catch (error) {
+        console.log('Error converting image to Base64:', error);
+      }
+    };
     const onPress = async () => {
-      const response = await Axios.post('/recognize/', image);
-      
+      setDisable(true);
+      setLoading(true);
+      const response = await Axios.post('/recognize/', { image: imageData });
       if (response.status === 200) {
+        dispatch(setDefaultNetwork(response.data));
         navigation.navigate('RecognizedPerson');
+        setDisable(false);
+        setLoading(false);
       }
       else if(response.status === 201) {
-        navigation.navigate('Add');
+        dispatch(setDefaultNetwork(response.data));
+        setModalVisible(!modalVisible)
+        setDisable(false);
+        setLoading(false);
+        // navigation.navigate('Add');
       }
       else if(response.status === 400){
         navigation.navigate('HomePage');
@@ -52,15 +101,15 @@ const UploadImage = () => {
               console.log('lamis');
               handleImage();
             }}>
-        <View style={[{borderColor: images ? 'white' : '#E2E6EA' }, styles.uploadFrame]}>
-        {images &&
+        <View style={[{borderColor: imageUri ? 'white' : '#E2E6EA' }, styles.uploadFrame]}>
+        {imageUri &&
         <Image
               style={styles.imageStyle}
-              source={{uri: images}}
+              source={{uri: imageUri}}
               alt="avatar"
             />
         }
-        {!images ? (
+        {!imageUri ? (
           <Text style={styles.clickText}>
             Click to browse {'\n'} your files
           </Text>) : ''
@@ -71,7 +120,31 @@ const UploadImage = () => {
           style={styles.recognize}
           buttonText="Recognize"
           onPress={onPress}
+          loading={loading}
+          backgroundColor={{backgroundColor: disable ? '#8391A1' : '#1E232C'}}
         />
+        <Modal
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(!modalVisible)}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modal}>
+            <Image
+              source={require('../assets/confused.png')}
+              style={styles.confused}
+            />
+            <Text style={styles.notRecognized}>This Person doesn't exist</Text>
+            <Text style={styles.notRecognizedText}>
+              You can add information about this person
+            </Text>
+            <Button
+              buttonText="Add"
+              style={styles.addButton}
+              onPress={() => navigation.navigate('Add')}
+            />
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -120,6 +193,41 @@ const styles = StyleSheet.create({
     width: 200,
     paddingVertical: 15,
     alignSelf:'center'
-  }
+  },
+  modalContainer: {
+    backgroundColor: '#000000aa',
+    flex: 1,
+  },
+  modal: {
+    backgroundColor: '#ffffff',
+    margin: 40,
+    marginTop: 150,
+    padding: 25,
+    borderRadius: 10,
+    display: 'flex',
+    alignItems: 'center',
+    flex: 0.8,
+  },
+  confused: {
+    width: 100,
+    height: 100,
+    marginTop: 45,
+    marginBottom: 20,
+  },
+  notRecognized: {
+    color: '#1E232C',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  notRecognizedText: {
+    color: '#8391A1',
+    marginBottom: 35,
+    width: '65%',
+    textAlign:'center'
+  },
+  addButton: {
+    width: 210,
+  },
 });
 export default UploadImage;
