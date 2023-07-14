@@ -64,7 +64,7 @@ const HomePage = () => {
         <TouchableOpacity onPress={onPressMove}>
           <Image source={require('../assets/menu.png')} style={styles.Menu} />
         </TouchableOpacity>
-        <TouchableOpacity style={{width: '90%'}} onPress={onPress}>
+        <TouchableOpacity style={{width: '90%'}}>
           <Image
             source={user.image ? {uri: `http://3.120.37.202${user.image}`} : require('../assets/User2.png')}
             style={styles.User2}

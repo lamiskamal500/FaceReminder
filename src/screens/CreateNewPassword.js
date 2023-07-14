@@ -5,7 +5,7 @@ import {
   View,
   StyleSheet,
   Modal,
-  Image,
+  Image,Alert
 } from 'react-native';
 import BackIcon from '../components/BackIcon';
 import {useNavigation} from '@react-navigation/native';
@@ -44,16 +44,25 @@ const CreateNewPassword = () => {
   };
   
   const onPress = async () => {
-    const response = await Axios.post(`/auth/set-password/${token}`, {
+    
+      if (password !==  confirm_password) {
+        Alert.alert('Error', 'Passwords do not match.');
+        return;
+      }
+    const response = await Axios.post('/auth/set-password' ,{
       password,
       confirm_password,
+      token:"",
     });
     if(response==200){
       setDisable(false);
       setLoading(false);
-      setModalVisible(!modalVisible)
+      Alert.alert('Success', 'Password reset successfully.');
+      // Navigate to the login screen or any other desired screen
+      navigation.navigate('Login');
     }
     else{
+      Alert.alert('Error', 'Failed to reset password.');
       setError(response.data.error);
       setDisable(false);
       setLoading(false);

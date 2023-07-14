@@ -12,19 +12,38 @@ import React, {useCallback, useEffect, useState, useRef} from 'react';
 import {Camera, useCameraDevices} from 'react-native-vision-camera';
 import {useNavigation} from '@react-navigation/native';
 import Button from '../components/Button';
+import {setDefaultNetwork} from '../store/slices/network';
+import {defaultNetwork} from '../store/slices/user';
+import {useDispatch} from 'react-redux';
+import Axios from '../Network/Axios';
+
 const fullWindowHeight = Dimensions.get('window').height;
 const CameraScreen = () => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const [loading, setLoading] = useState(null);
-  // const [flashToggle, setFlashToggle] = useState(false);
+  const [disable, setDisable] = useState(false);
+  const [loadings, setLoadings] = useState(false);
+  const [imageData, setImageData] = useState('');
+  const [imageUri, setImageUri] = useState('');
   const cameraRef = useRef(Camera);
   const [photoPath, setPhotoPath] = useState('');
-
+  const [base64Image, setBase64Image] = useState('');
   const [torch, setTorch] = useState(false);
   const devices = useCameraDevices();
   const [viewImage, setViewImage] = useState(false);
-  const device = devices.back;
+  const device = devices.front;
+  const convertImageToBase64 = async imageUri => {
+    try {
+      const fileUri = `file://${imageUri}`;
+      const base64Data = await RNFS.readFile(fileUri, 'base64');
+      const mimeType = 'image/jpeg'; // Change the mimeType if necessary
 
+      return `data:${mimeType};base64,${base64Data}`;
+    } catch (error) {
+      console.log('Error converting image to Base64:', error);
+    }
+  };
   // const [device, setDevice] = useState(devices.back);
 
   // // const device = camView === 'back' ? devices.back : devices.front;
@@ -56,6 +75,7 @@ const CameraScreen = () => {
 
   const takePhoto = async () => {
     setLoading(true);
+
     // setViewImage(!viewImage);
 
     try {
@@ -67,6 +87,7 @@ const CameraScreen = () => {
         qualityPrioritization: 'quality',
         flash: `${torch ? 'on' : 'off'}`,
         enableAutoRedEyeReduction: true,
+        base64Image:true,
       });
       const photoName = photo.path.split('/')[photo.path.split('/').length - 1];
       // Create pictureDirectory if it does not exist
@@ -75,6 +96,8 @@ const CameraScreen = () => {
       //<Image> views the correct image.
 
       await RNFS.moveFile(photo.path, path);
+      const base64Image = await convertImageToBase64(path);
+      setBase64Image(base64Image);
       setPhotoPath('file://' + path);
       console.log(' photopath', photoPath);
       console.log(' path', path);
@@ -88,6 +111,28 @@ const CameraScreen = () => {
   if (device == null) {
     return <ActivityIndicator style={{flex: 1}} size={50} color="red" />;
   }
+
+  const onPress = async () => {
+    setDisable(true);
+    setLoadings(true);
+    const response = await Axios.post('/recognize/', {image: base64Image});
+    if (response.status === 200) {
+      dispatch(setDefaultNetwork(response.data));
+      navigation.navigate('RecognizedPerson');z
+      setDisable(false);
+      setLoadings(false);
+    } else if (response.status === 201) {
+      dispatch(setDefaultNetwork(response.data));
+      setModalVisible(!modalVisible);
+      setDisable(false);
+      setLoadings(false);
+      // navigation.navigate('Add');
+    } else if (response.status === 400) {
+      navigation.navigate('HomePage');
+      Alert.alert('Error', 'take another photo ');
+    }
+    console.log('response', response);
+  };
   return (
     <>
       {viewImage && (
@@ -104,7 +149,13 @@ const CameraScreen = () => {
             <Image source={require('../assets/exit.png')} style={styles.exit} />
           </TouchableOpacity>
 
-          <Button buttonText="Send" style={styles.sendButton}/>
+          <Button
+            buttonText="recognize"
+            style={styles.sendButton}
+            onPress={onPress}
+            loading={loadings}
+            backgroundColor={{backgroundColor: disable ? '#8391A1' : '#1E232C'}}
+          />
         </>
       )}
 
@@ -116,8 +167,6 @@ const CameraScreen = () => {
             photo={true}
             isActive={true}
             ref={cameraRef}
-
-         
           />
 
           <View style={styles.shuttercontainer}>
@@ -206,12 +255,13 @@ const styles = StyleSheet.create({
   sendButton: {
     position: 'absolute',
     color: 'black',
-    fontSize:25,
+    fontSize: 25,
     bottom: 50,
     left: '35%',
-    backgroundColor: '#FFFFFF',
-    width: 100,
+    backgroundColor: '#000000',
+    width: 90,
     position: 'absolute',
+    fontWeight: 'bold',
   },
 });
 export default CameraScreen;

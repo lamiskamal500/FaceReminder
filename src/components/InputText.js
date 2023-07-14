@@ -15,6 +15,7 @@ const InputText = props => {
         onChangeText={props.onChangeText}
         value={props.text}
         onFocus={props.onFocus}
+        
       />
       {props.children}
     </View>
