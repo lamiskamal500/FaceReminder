@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import BackIcon from '../components/BackIcon';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {defaultUser} from '../store/slices/user';
 import {defaultNetwork} from '../store/slices/network';
 import Button from '../components/Button';
@@ -12,9 +12,12 @@ import Axios from '../Network/Axios';
 import InputText from '../components/InputText';
 import {PermissionsAndroid} from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
+import {setDefaultNetwork} from '../store/slices/network';
+
 
 const Add = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const user = useSelector(defaultUser);
   const [isCheckedLocation, setIsCheckedLocation] = useState(false);
   const [location, setLocation] = useState(null);
@@ -50,7 +53,8 @@ const Add = () => {
       biography,
       address,
     });
-    if (response.status === 200) {
+    if (response.status === 200 || 201) {
+      dispatch(setDefaultNetwork(response.data));
       navigation.navigate('Network');
     }
     console.log('response:', response);

@@ -6,17 +6,14 @@ import Button from '../components/Button';
 import {useNavigation} from '@react-navigation/native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {setDefaultNetwork} from '../store/slices/network';
-import {defaultNetwork} from '../store/slices/user';
+import {defaultNetwork} from '../store/slices/network';
 import {useDispatch} from 'react-redux';
 import Axios from '../Network/Axios';
 
-
+3
 const UploadImage = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  // const network = useSelector(defaultNetwork);
-    // const [image, setImage] = React.useState('');
-    // const [images, setImages] = React.useState('');
     const [disable, setDisable] = useState(false);
     const [loading, setLoading] = useState(false);
     const [imageData, setImageData] = useState('');

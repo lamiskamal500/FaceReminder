@@ -20,7 +20,7 @@ const RecognizedPerson = () => {
   const dispatch = useDispatch();
   const network = useSelector(defaultNetwork);
 
-  const connection_id = network.result
+ const connection_id = network.result
  const onPress = async () => {
     const response = await Axios.get(`/connections/${connection_id}`);
     dispatch(setDefaultNetwork(response.data));
@@ -36,7 +36,7 @@ const RecognizedPerson = () => {
       <Text style={styles.details}>Details</Text>
       <Image
         source={network.image
-            ? { uri: network.image }
+            ? { uri: `http://3.120.37.202${network.image}` }
             : require('../assets/RecognizedPerson.png')}
         style={styles.image}
       />
@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     marginBottom: 18,
+    borderRadius:100
   },
   details: {
     color: '#1E232C',
