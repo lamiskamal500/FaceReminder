@@ -65,7 +65,7 @@ const Network = () => {
         horizontal
         keyExtractor={item => item.id.toString()}
         renderItem={({item}) => (
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('RecognizedPerson', { connectionId: item.id })}>
           <View style={styles.networkScroll}>
             <LinearGradient
               colors={['#F5F8FA', '#BABDBF']}

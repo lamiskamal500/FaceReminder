@@ -4,7 +4,7 @@ import {useState, useEffect} from 'react';
 import Button from '../components/Button';
 import {defaultNetwork, setDefaultNetwork} from '../store/slices/network';
 import {useSelector, useDispatch} from 'react-redux';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import Axios from '../Network/Axios';
 import {
   TouchableOpacity,
@@ -17,6 +17,9 @@ import {
 
 const RecognizedPerson = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const {connectionId} = route.params;
+
   const dispatch = useDispatch();
   const network = useSelector(defaultNetwork);
 
@@ -29,6 +32,7 @@ const RecognizedPerson = () => {
   useEffect(() => {
     onPress();
     console.log('network', network);
+    console.log(connectionId);
   }, []);
   return (
     <View style={styles.RecognizeScreen}>
@@ -83,8 +87,9 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 100, // Half of the width and height
     overflow: 'hidden',
-    borderColor: '#E8ECF4',
-    borderWidth: 3,
+    borderColor: 'gray',
+  
+    borderWidth: 4,
   },
   details: {
     color: '#1E232C',
