@@ -31,7 +31,6 @@ const RecognizedPerson = () => {
   useEffect(() => {
     onPress();
     console.log('network', network);
-    console.log(connectionId);
   }, []);
   return (
     <View style={styles.RecognizeScreen}>
@@ -41,7 +40,7 @@ const RecognizedPerson = () => {
         <Image
           source={
             network.image
-              ? {uri: `http://3.120.37.202/${network.image} `}
+              ? {uri: `http://3.120.37.202/${network.image}`}
               : require('../assets/RecognizedPerson.png')
           }
           style={styles.image}

@@ -41,9 +41,7 @@ const ExternalCamera = () => {
       <View style={styles.uploadFrame}>
       <Image
           source={
-            network.image
-              ? {uri: `http://3.120.37.202/${network.image} `}
-              : require('../assets/RecognizedPerson.png')
+            {uri: 'http://3.120.37.202/media/ESP32CAMCap.jpg'}
           }
           style={styles.image}
         />
@@ -93,6 +91,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     marginVertical: 20,
+  },
+  image:{
+    borderRadius: 20,
+    width: 290,
+    height: 360,
   },
   upload: {
     alignItems: 'center',
