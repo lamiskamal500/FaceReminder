@@ -19,13 +19,12 @@ const RecognizedPerson = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const {connectionId} = route.params;
-
   const dispatch = useDispatch();
   const network = useSelector(defaultNetwork);
 
   const connection_id = network.result;
   const onPress = async () => {
-    const response = await Axios.get(`/connections/${connection_id}`);
+    const response = await Axios.get(`/connections/${connectionId ? connectionId: connection_id}`);
     dispatch(setDefaultNetwork(response.data));
     console.log('response', response);
   };
@@ -88,7 +87,6 @@ const styles = StyleSheet.create({
     borderRadius: 100, // Half of the width and height
     overflow: 'hidden',
     borderColor: 'gray',
-  
     borderWidth: 4,
   },
   details: {
