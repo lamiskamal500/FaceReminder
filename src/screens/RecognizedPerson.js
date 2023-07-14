@@ -81,11 +81,10 @@ const styles = StyleSheet.create({
   circle: {
     width: 200,
     height: 200,
-    borderRadius: '50%', // Half of the width and height
+    borderRadius: 100, // Half of the width and height
     overflow: 'hidden',
-    borderColor: 'gray',
-  
-    borderWidth: 4,
+    borderColor: '#E8ECF4',
+    borderWidth: 3,
   },
   details: {
     color: '#1E232C',
@@ -100,7 +99,7 @@ const styles = StyleSheet.create({
     fontSize: 26,
     fontWeight: '900',
     fontFamily: 'Urbanist',
-    marginBottom: 7,
+    marginBottom: 4,
   },
   info2: {
     color: '#35C2C1',

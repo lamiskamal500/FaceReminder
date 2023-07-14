@@ -22,6 +22,7 @@ import Recognize from './src/screens/Recognize';
 import RecognizedPerson from './src/screens/RecognizedPerson';
 import ExtraDetails from './src/screens/ExtraDetails';
 import Add from './src/screens/Add';
+import ExternalCamera from './src/screens/ExternalCamera';
 import SplashScreen from './src/screens/SplashScreen';
 const Stack = createNativeStackNavigator();
 
@@ -103,6 +104,11 @@ const App = () => {
           <Stack.Screen
             name="Add"
             component={Add}
+            options={{headerShown: false}}
+          />
+            <Stack.Screen
+            name="ExternalCamera"
+            component={ExternalCamera}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

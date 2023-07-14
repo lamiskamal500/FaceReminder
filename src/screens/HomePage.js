@@ -90,7 +90,7 @@ const HomePage = () => {
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.cameraButton}>
+      <TouchableOpacity style={styles.cameraButton} onPress={() => navigation.navigate('ExternalCamera')}>
         <View style={styles.iconCircle}>
           <Image source={require('../assets/cameraa.png')} />
         </View>
