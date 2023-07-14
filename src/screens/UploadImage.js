@@ -73,7 +73,7 @@ const UploadImage = () => {
     };
     const onPress = async () => {
       setDisable(true);
-      setLoading(true);
+      setLoading(true); 
       const response = await Axios.post('/recognize/', { image: imageData });
       if (response.status === 200) {
         dispatch(setDefaultNetwork(response.data));

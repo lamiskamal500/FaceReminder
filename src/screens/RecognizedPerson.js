@@ -20,34 +20,36 @@ const RecognizedPerson = () => {
   const dispatch = useDispatch();
   const network = useSelector(defaultNetwork);
 
-  const connection_id = network.result
- const onPress = async () => {
+  const connection_id = network.result;
+  const onPress = async () => {
     const response = await Axios.get(`/connections/${connection_id}`);
     dispatch(setDefaultNetwork(response.data));
     console.log('response', response);
-    }
+  };
   useEffect(() => {
     onPress();
     console.log('network', network);
-  },[]);
+  }, []);
   return (
     <View style={styles.RecognizeScreen}>
       <BackIcon style={styles.back} />
       <Text style={styles.details}>Details</Text>
-      <Image
-        source={network.image
-            ? { uri: network.image }
-            : require('../assets/RecognizedPerson.png')}
-        style={styles.image}
-      />
+      <View style={styles.circle}>
+        <Image
+          source={
+            network.image
+              ? {uri: `http://3.120.37.202/${network.image} `}
+              : require('../assets/RecognizedPerson.png')
+          }
+          style={styles.image}
+        />
+      </View>
       <Text style={styles.info}>{network.name}</Text>
       <Text style={styles.info2}>{network.relation}</Text>
 
       <View style={styles.extraDetails}>
         <Text style={styles.about}>About</Text>
-        <Text style={styles.aboutText}>
-          {network.biography}
-        </Text>
+        <Text style={styles.aboutText}>{network.biography}</Text>
         <Text style={styles.about}>Address</Text>
         <Text style={styles.aboutText}>Maadi, Cairo, Street 260</Text>
       </View>
@@ -75,6 +77,15 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     marginBottom: 18,
+  },
+  circle: {
+    width: 200,
+    height: 200,
+    borderRadius: '50%', // Half of the width and height
+    overflow: 'hidden',
+    borderColor: 'gray',
+  
+    borderWidth: 4,
   },
   details: {
     color: '#1E232C',

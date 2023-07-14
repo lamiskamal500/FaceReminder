@@ -18,8 +18,19 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [showPassword, setshowPassword] = useState(true);
+  const user = useSelector(state => state.user);
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  // useEffect(() => {
+  //   if (user) {
+  //     if (Object.keys(user).length === 0) {
+  //       navigation.navigate('Login');
+  //     } else {
+  //       navigation.navigate('HomePage');
+  //     }
+  //   }
+  // }, [user, navigation]);
+
   const onPress = async () => {
     setDisable(true);
     setLoading(true);
@@ -45,6 +56,7 @@ const Login = () => {
     console.log(response);
     // console.log("token" , response.data.token);
   };
+  
   useEffect(() => {
     console.log('isCredValid', isCredValid);
     if (!isCredValid) {
@@ -95,7 +107,7 @@ const Login = () => {
           onChangeText={value => setPassword(value)}
           DefaultText="Password"
           secureTextEntry={showPassword}
-          style={styles.passwordInput}>
+          style={styles.passwordInput} >
           <TouchableOpacity
             onPress={() => setshowPassword(!showPassword)}
             style={styles.eye}>

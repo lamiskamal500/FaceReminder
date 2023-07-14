@@ -21,21 +21,16 @@ const HomePage = () => {
   }, [token]);
   useEffect(() => {
     console.log('user', user);
-    onPress()
+    onPress();
     // console.log("axios",Axios.defaults.headers.common["Authorization"])
   }, []);
-  const onPressMove=()=>{
-    navigation.toggleDrawer()
-
-  }
+  const onPressMove = () => {
+    navigation.toggleDrawer();
+  };
   const onPress = async () => {
     const response = await Axios.get('/profiles/');
     if (response.status === 200) {
-      dispatch(
-        setDefaultUser(
-          response.data
-        ),
-      );
+      dispatch(setDefaultUser(response.data));
       dispatch(setToken(response.data.token));
     }
     console.log('response', response);
@@ -46,50 +41,57 @@ const HomePage = () => {
         <TouchableOpacity onPress={onPressMove}>
           <Image source={require('../assets/menu.png')} style={styles.Menu} />
         </TouchableOpacity>
-        <TouchableOpacity style={{width: '90%'}} onPress={onPress}>
+        <TouchableOpacity style={{width: '90%'}}>
           <Image
-            source= {user.image? user.image : require('../assets/User2.png')}
+            source={user.image ? user.image : require('../assets/User2.png')}
             style={styles.User2}
           />
         </TouchableOpacity>
       </View>
-       <View style={{width: '85%'}}></View>
+      <View style={{width: '85%'}}></View>
       <View style={{width: '100%'}}>
-        <Text style={styles.HiText}> Hi {user.fullname ? user.fullname : 'Jessia'} </Text>
+        <Text style={styles.HiText}>
+          {' '}
+          Hi {user.fullname ? user.fullname : 'Jessia'}{' '}
+        </Text>
       </View>
-      <TouchableOpacity onPress={() => navigation.navigate('CameraScreen')} style={styles.cameraButton}>
-      <View style={styles.iconCircle}>
-          <Image
-            source={require('../assets/mobile.png')}
-          />
+      <TouchableOpacity
+        onPress={() => navigation.navigate('CameraScreen')}
+        style={styles.cameraButton}>
+        <View style={styles.iconCircle}>
+          <Image source={require('../assets/mobile.png')} />
         </View>
-      <View>
-        <Text style={styles.mobile}>Mobile Camera</Text>
-        <Text style={styles.mobileText}>Take a photo for a person in front of you.</Text>
+        <View>
+          <Text style={styles.mobile}>Mobile Camera</Text>
+          <Text style={styles.mobileText}>
+            Take a photo for a person in front of you.
+          </Text>
         </View>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.cameraButton}>
-      <View style={styles.iconCircle}>
-          <Image
-            source={require('../assets/cameraa.png')}
-          />
+        <View style={styles.iconCircle}>
+          <Image source={require('../assets/cameraa.png')} />
         </View>
-      <View>
-        <Text style={styles.mobile}>External Camera</Text>
-        <Text style={styles.mobileText}>Make sure to open bluetooth before using{'\n'}your external camera.</Text>
+        <View>
+          <Text style={styles.mobile}>External Camera</Text>
+          <Text style={styles.mobileText}>
+            Make sure to open bluetooth before using{'\n'}your external camera.
+          </Text>
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.navigate('UploadImage')} style={styles.cameraButton}>
-      <View style={styles.iconCircle}>
-          <Image
-            source={require('../assets/Group.png')}
-          />
+      <TouchableOpacity
+        onPress={() => navigation.navigate('UploadImage')}
+        style={styles.cameraButton}>
+        <View style={styles.iconCircle}>
+          <Image source={require('../assets/Group.png')} />
         </View>
-      <View>
-        <Text style={styles.mobile}>Local Image</Text>
-        <Text style={styles.mobileText}>Choose a photo from your mobile photos.</Text>
+        <View>
+          <Text style={styles.mobile}>Local Image</Text>
+          <Text style={styles.mobileText}>
+            Choose a photo from your mobile photos.
+          </Text>
         </View>
       </TouchableOpacity>
     </View>
@@ -140,40 +142,38 @@ const styles = StyleSheet.create({
     // display:"flex",
     flexDirection: 'row',
   },
-  cameraButton:{
-    backgroundColor:'#F4F4F4',
-    borderRadius:15,
-    borderColor:'#DCDCDC',
+  cameraButton: {
+    backgroundColor: '#F4F4F4',
+    borderRadius: 15,
+    borderColor: '#DCDCDC',
     borderWidth: 1,
-    padding:20,
+    padding: 20,
     flexDirection: 'row',
-    marginTop:15,
-    marginBottom:15,
-    width:330,
-   
+    marginTop: 15,
+    marginBottom: 15,
+    width: 330,
   },
-  mobile:{
-    color:'#000001',
-    fontSize:20,
-    fontWeight:'500',
-    marginBottom:3
+  mobile: {
+    color: '#000001',
+    fontSize: 20,
+    fontWeight: '500',
+    marginBottom: 3,
   },
-  mobileText:{
-    color:'#000001',
-    fontSize:13,
+  mobileText: {
+    color: '#000001',
+    fontSize: 13,
   },
-  cameraText:{
-    display:'flex'
+  cameraText: {
+    display: 'flex',
   },
-  iconCircle:{
-    backgroundColor:'#FFFFFF',
-    width:50,
-    height:50,
-    borderRadius:50,
+  iconCircle: {
+    backgroundColor: '#FFFFFF',
+    width: 50,
+    height: 50,
+    borderRadius: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight:15
-
-  }
+    marginRight: 15,
+  },
 });
 export default HomePage;
