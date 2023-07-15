@@ -31,11 +31,13 @@ const ExternalCamera = () => {
     dispatch(setDefaultNetwork(response.data));
     console.log('response', response);
   };
+  useEffect(() => {
+    GetImage();
+    console.log('network', network)
+  }, []);
   const onPress = async () => {
     setDisable(true);
     setLoading(true);
-    const imageURL = await GetImage();
-
     const response = await Axios.post('/recognize/', {image: network.image});
     if (response.status === 200) {
       dispatch(setDefaultNetwork(response.data));
@@ -53,9 +55,6 @@ const ExternalCamera = () => {
     }
     console.log('response', response);
   };
-  useEffect(() => {
-    console.log('network', network)
-  }, []);
   const onPressAdd = () => {
     navigation.navigate('Add');
     setModalVisible(false)
