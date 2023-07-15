@@ -131,7 +131,7 @@ const Add = () => {
       <View style={styles.imageNetwork}>
       <Image
             style={styles.imageStyle}
-            source={network.image ? { uri: network.image } : {uri: 'http://3.120.37.202/media/ESP32CAMCap.jpg?timestamp=16263625820936'}}
+            source={network.image ? { uri: network.image } : {uri: 'http://52.58.150.200/media/ESP32CAMCap.jpg?timestamp=16263625820936'}}
             alt="avatar"
         />
         </View>

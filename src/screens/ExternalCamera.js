@@ -66,7 +66,7 @@ const ExternalCamera = () => {
       <Text style={styles.uploadText}>Review Camera Image</Text>
       <View style={styles.uploadFrame}>
         <Image
-          source={{uri: 'http://3.120.37.202/media/ESP32CAMCap.jpg?timestamp=16263625820936'}}
+          source={{uri: 'http://52.58.150.200/media/ESP32CAMCap.jpg?timestamp=16263625820937'}}
           // source={require('../assets/kenzy.jpeg')}
           style={styles.image}
         />

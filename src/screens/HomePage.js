@@ -58,7 +58,7 @@ const HomePage = () => {
         </TouchableOpacity>
         <TouchableOpacity style={{width: '90%'}}>
           <Image
-            source={user.image ? {uri: `http://3.120.37.202${user.image}`} : require('../assets/User2.png')}
+            source={user.image ? {uri: `http://52.58.150.200${user.image}`} : require('../assets/User2.png')}
             style={styles.User2}
           />
         </TouchableOpacity>

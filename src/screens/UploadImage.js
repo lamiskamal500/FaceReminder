@@ -18,7 +18,6 @@ import {useDispatch} from 'react-redux';
 import ImageResizer from 'react-native-image-resizer';
 import Axios from '../Network/Axios';
 
-3;
 const UploadImage = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();

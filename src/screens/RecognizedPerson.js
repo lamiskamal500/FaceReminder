@@ -40,7 +40,7 @@ const RecognizedPerson = () => {
         <Image
           source={
             network.image
-              ? {uri: `http://3.120.37.202/${network.image}`}
+              ? {uri: `http://52.58.150.200/${network.image}`}
               : require('../assets/RecognizedPerson.png')
           }
           style={styles.image}

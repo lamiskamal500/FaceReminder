@@ -32,7 +32,7 @@ const CustomDrawer = () => {
   }
   return (
     <View style={styles.customDrawer}>
-      <Image source={user.image ? {uri: `http://3.120.37.202${user.image}`} : require('../assets/User2.png')} style={styles.user}/>
+      <Image source={user.image ? {uri: `http://52.58.150.200${user.image}`} : require('../assets/User2.png')} style={styles.user}/>
       <Text style={styles.profileName}>{user.fullname}</Text>
        <DrawerItems item='HomePage' onpress={()=>navigation.navigate('HomePage')}/>
        <DrawerItems item='Profile' onpress={()=>navigation.navigate('StaticProfile')}/>
