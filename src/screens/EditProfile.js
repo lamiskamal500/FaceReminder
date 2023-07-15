@@ -56,7 +56,6 @@ const EditProfile = () => {
   return (
     <View style={styles.editProfileScreen}>
      <BackIcon style={styles.back} />
-
       <Text style={styles.editProfileTitle}>Edit Profile</Text>
       <View style={styles.ProfilePhoto}>
         {
@@ -66,6 +65,7 @@ const EditProfile = () => {
               handleImage();
             }}
             style={styles.ProfilePhoto}>
+            
             <View style={styles.iconContainer}><Image source={require('../assets/camera.png')} style={styles.icon}/></View>
             <Image
               style={styles.imageStyle}
@@ -77,7 +77,7 @@ const EditProfile = () => {
           </TouchableOpacity>
         }
       </View>
-      <InputText value={fullname} onChangeText={text => setfullname(text)}>
+      <InputText value={fullname} onChangeText={text => setfullname(text)} style={styles.nameInput}>
         <Text style={styles.inputTitle}>Full Name</Text>
       </InputText>
       <InputText value={phone} onChangeText={text => setPhone(text)}>
@@ -118,6 +118,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 40,
     marginBottom: 20,
+    top:'-10%'
   },
   uploadButton: {
     width: 150,
@@ -131,6 +132,9 @@ const styles = StyleSheet.create({
   ProfilePhoto: {
     width: 130,
     height: 130,
+  },
+  ProfilePhoto:{
+    top:'-8%'
   },
   imageStyle: {
     width: 130,
@@ -154,6 +158,9 @@ const styles = StyleSheet.create({
     zIndex:10
   },back: {
     marginLeft: 15,
+  },
+  nameInput:{
+    right:230,
   },
 });
 export default EditProfile;

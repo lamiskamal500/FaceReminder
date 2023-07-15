@@ -27,8 +27,8 @@ const Add = () => {
   const [biography, setBiography] = React.useState('');
   const [address, setAddress] = React.useState('');
   const [phone_number, setPhone_number] = React.useState('');
-  const [image, setImage] = React.useState('');
-  const [link, setLink] = React.useState('');
+  const [disable, setDisable] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const network = useSelector(defaultNetwork);
 
@@ -43,6 +43,8 @@ const Add = () => {
     }
   }
   const onPress = async () => {
+    setDisable(true);
+    setLoading(true);
     const response = await Axios.post('/connections/', {
       image: network.image,
       rep: network.rep,
@@ -56,6 +58,8 @@ const Add = () => {
     if (response.status === 200 || 201) {
       dispatch(setDefaultNetwork(response.data));
       navigation.navigate('Network');
+      setDisable(false);
+      setLoading(false);
     }
     console.log('response:', response);
   };
@@ -127,7 +131,7 @@ const Add = () => {
       <View style={styles.imageNetwork}>
       <Image
             style={styles.imageStyle}
-            source={network.image ? { uri: network.image } : require('../assets/defaultPhoto.png')}
+            source={network.image ? { uri: network.image } : {uri: 'http://3.120.37.202/media/ESP32CAMCap.jpg?timestamp=16263625820936'}}
             alt="avatar"
         />
         </View>

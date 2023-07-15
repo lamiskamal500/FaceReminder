@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {TouchableOpacity, Text, View, StyleSheet, Image} from 'react-native';
+import {TouchableOpacity, Text, View, StyleSheet, Image, Modal} from 'react-native';
+import Button from '../components/Button';
 import {useNavigation} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {useSelector, useDispatch} from 'react-redux';
@@ -15,32 +16,19 @@ const HomePage = () => {
   const user = useSelector(defaultUser);
   const token = useSelector(defaultToken);
   const network = useSelector(defaultNetwork);
+  const [modalVisible, setModalVisible] = React.useState(false);
 
   const dispatch = useDispatch();
   // console.log('user', user);
   useEffect(() => {
     onPress();
     console.log('user', user);
-    // console.log("axios",Axios.defaults.headers.common["Authorization"])
   }, []);
 
   useEffect(() => {
     console.log('token', token);
-    // console.log("axios",Axios.defaults.headers.common["Authorization"])
   }, [token]);
  
-  // useEffect(() => {
-  //   onPressNetwork();
-  //   console.log('network', network);
-  //   // console.log("axios",Axios.defaults.headers.common["Authorization"])
-  // }, []);
-  // const onPressNetwork = async () => {
-  //   const response = await Axios.get('/connections/');
-  //   if (response.status === 200) {
-  //     dispatch(setDefaultNetwork(response.data));
-  //   }
-  //   console.log('response', response);
-  // };
   const onPressMove = () => {
     navigation.toggleDrawer();
   };
@@ -57,6 +45,10 @@ const HomePage = () => {
       dispatch(setDefaultNetwork(responce.data));
     }
     console.log('responce', responce);
+  };
+  const onPressCamera = () => {
+    navigation.navigate('ExternalCamera');
+    setModalVisible(false)
   };
   return (
     <View style={styles.HomePageMain}>
@@ -90,14 +82,14 @@ const HomePage = () => {
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.cameraButton} onPress={() => navigation.navigate('ExternalCamera')}>
+      <TouchableOpacity style={styles.cameraButton} onPress={() => setModalVisible(!modalVisible)}>
         <View style={styles.iconCircle}>
           <Image source={require('../assets/cameraa.png')} />
         </View>
         <View>
           <Text style={styles.mobile}>External Camera</Text>
           <Text style={styles.mobileText}>
-            Make sure to open bluetooth before using{'\n'}your external camera.
+            Make sure to open WiFi before using{'\n'}your external camera.
           </Text>
         </View>
       </TouchableOpacity>
@@ -115,6 +107,28 @@ const HomePage = () => {
           </Text>
         </View>
       </TouchableOpacity>
+      <Modal
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(!modalVisible)}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modal}>
+            <Image
+              source={require('../assets/instruction.png')}
+              style={styles.confused}
+            />
+            <Text style={styles.notRecognized}>Instruction</Text>
+            <Text style={styles.notRecognizedText}>
+              Please put the face you want to recognize in front of the camera after that press the button in your camera.
+            </Text>
+            <Button
+              buttonText="OK"
+              style={styles.addButton}
+              onPress={onPressCamera}
+            />
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -152,8 +166,8 @@ const styles = StyleSheet.create({
     marginLeft: 63,
   },
   User2: {
-    width: 70,
-    height: 70,
+    width: 55,
+    height: 55,
     marginTop: 20,
     marginBottom:15,
     // // alignSelf:'flex-start',
@@ -196,6 +210,41 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 15,
+  },
+  modalContainer: {
+    backgroundColor: '#000000aa',
+    flex: 1,
+  },
+  modal: {
+    backgroundColor: '#ffffff',
+    margin: 42,
+    marginTop: 140,
+    padding: 12,
+    borderRadius: 10,
+    display: 'flex',
+    alignItems: 'center',
+    flex: 0.8,
+  },
+  confused: {
+    width: 100,
+    height: 100,
+    marginTop: 45,
+    marginBottom: 20,
+  },
+  notRecognized: {
+    color: '#1E232C',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  notRecognizedText: {
+    color: '#696F76',
+    marginBottom: 35,
+    width: '80%',
+    textAlign: 'center',
+  },
+  addButton: {
+    width: 200,
   },
 });
 export default HomePage;

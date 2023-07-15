@@ -6,7 +6,7 @@ import {
   ActivityIndicator,
   Linking,
   Dimensions,
-  Modal,Text
+  Modal,Text,Alert
 } from 'react-native';
 var RNFS = require('react-native-fs');
 import React, {useCallback, useEffect, useState, useRef} from 'react';
@@ -131,7 +131,7 @@ const CameraScreen = () => {
       // navigation.navigate('Add');
     } else if (response.status === 400) {
       navigation.navigate('HomePage');
-      Alert.alert('Error', 'take');
+      Alert.alert('Face could not be detected' , 'Please take another photo');
     }
     console.log('response', response);
   };
@@ -315,7 +315,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   notRecognizedText: {
-    color: '#8391A1',
+    color: '#696F76',
     marginBottom: 35,
     width: '65%',
     textAlign: 'center',

@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   Modal,
+  Alert
 } from 'react-native';
 import RNFS from 'react-native-fs';
 import BackIcon from '../components/BackIcon';
@@ -13,8 +14,8 @@ import Button from '../components/Button';
 import {useNavigation} from '@react-navigation/native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {setDefaultNetwork} from '../store/slices/network';
-import {defaultNetwork} from '../store/slices/network';
 import {useDispatch} from 'react-redux';
+import ImageResizer from 'react-native-image-resizer';
 import Axios from '../Network/Axios';
 
 3;
@@ -55,6 +56,14 @@ const UploadImage = () => {
       }
 
       const selectedImageUri = result.assets[0].uri;
+      // const resizedImage = await ImageResizer.createResizedImage(
+      //   imageUri,  // path to the original image
+      //   newWidth,  // desired width
+      //   newHeight, // desired height
+      //   'JPEG',    // image format (optional, default is 'JPEG')
+      //   quality,   // image quality (optional, default is 100)
+      //   rotation,  // image rotation (optional, default is 0)
+      // );
       setImageUri(selectedImageUri);
       console.log('result', result);
       const base64Image = await convertImageToBase64(selectedImageUri);
@@ -92,8 +101,13 @@ const UploadImage = () => {
       // navigation.navigate('Add');
     } else if (response.status === 400) {
       navigation.navigate('HomePage');
+      Alert.alert('Face could not be detected' , 'Please take another photo');
     }
     console.log('response', response);
+  };
+  const onPressAdd = () => {
+    navigation.navigate('Add');
+    setModalVisible(false)
   };
   return (
     <View style={styles.uploadScreen}>
@@ -150,7 +164,7 @@ const UploadImage = () => {
             <Button
               buttonText="Add"
               style={styles.addButton}
-              onPress={() => navigation.navigate('Add')}
+              onPress={onPressAdd}
             />
           </View>
         </View>
@@ -225,7 +239,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   notRecognized: {
-    color: '#1E232C',
+    color: '#696F76',
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,

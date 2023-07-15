@@ -25,23 +25,21 @@ const ExternalCamera = () => {
   const [disable, setDisable] = useState(false);
   const [loading, setLoading] = useState(false);
   const network = useSelector(defaultNetwork);
-  const [imageURL, setImageURL] = useState(null);
   const [modalVisible, setModalVisible] = React.useState(false);
   const GetImage = async () => {
     const response = await Axios.get('/preview-image/');
     dispatch(setDefaultNetwork(response.data));
-    // console.log('response', response);
-    return response.data.imageUrl;
+    console.log('response', response);
   };
   const onPress = async () => {
     setDisable(true);
     setLoading(true);
     const imageURL = await GetImage();
-    const response = await Axios.post('/recognize/', {image: imageURL});
+
+    const response = await Axios.post('/recognize/', {image: network.image});
     if (response.status === 200) {
       dispatch(setDefaultNetwork(response.data));
       navigation.navigate('RecognizedPerson', {connectionId: null});
-      z;
       setDisable(false);
       setLoading(false);
     } else if (response.status === 201) {
@@ -49,25 +47,27 @@ const ExternalCamera = () => {
       setModalVisible(!modalVisible);
       setDisable(false);
       setLoading(false);
-      // navigation.navigate('Add');
     } else if (response.status === 400) {
       navigation.navigate('HomePage');
-      Alert.alert('Error', 'take another photo ');
+      Alert.alert('Face could not be detected' , 'Please take another photo');
     }
     console.log('response', response);
   };
-  // useEffect(() => {
-  //   // GetImage();
-  //   // onPress();
-  // }, []);
+  useEffect(() => {
+    console.log('network', network)
+  }, []);
+  const onPressAdd = () => {
+    navigation.navigate('Add');
+    setModalVisible(false)
+  };
   return (
     <View style={styles.uploadScreen}>
       <BackIcon style={styles.back} />
       <Text style={styles.uploadText}>Review Camera Image</Text>
       <View style={styles.uploadFrame}>
         <Image
-          source={{uri: 'http://3.120.37.202/media/ESP32CAMCap.jpg'}}
-          // source={imageURL ? { uri: imageURL } : null}
+          source={{uri: 'http://3.120.37.202/media/ESP32CAMCap.jpg?timestamp=16263625820936'}}
+          // source={require('../assets/kenzy.jpeg')}
           style={styles.image}
         />
       </View>
@@ -103,7 +103,7 @@ const ExternalCamera = () => {
             <Button
               buttonText="Add"
               style={styles.addButton}
-              onPress={() => navigation.navigate('Add')}
+              onPress={onPressAdd}
             />
           </View>
         </View>
@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   notRecognized: {
-    color: '#1E232C',
+    color: '#696F76',
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
