@@ -85,7 +85,7 @@ const Login = () => {
   return (
     <ScrollView style={styles.wholeScreen}>
       <View style={styles.LoginScreen}>
-      <BackIcon/>
+      {/* <BackIcon style /> */}
         <View>
           <Text style={styles.WelcomeText}>
             Welcome back!
@@ -150,9 +150,9 @@ const Login = () => {
         />
 
         <View style={styles.DontHaveAccountfull}>
-          <Text style={styles.DontHaveAccountText}>Dont have an account?</Text>
+          <Text style={styles.DontHaveAccountText}>Dont have an account? </Text>
           <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-            <Text style={styles.RegisterNowText}>Sign Up</Text>
+            <Text style={styles.RegisterNowText}> Sign Up</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: 'bold',
     fontFamily: 'Urbanist',
-    marginTop: 15,
+    marginTop: 60,
     marginRight: 112,
   },
   ForgetText: {

@@ -6,6 +6,7 @@ import {
   ActivityIndicator,
   Linking,
   Dimensions,
+  Modal,Text
 } from 'react-native';
 var RNFS = require('react-native-fs');
 import React, {useCallback, useEffect, useState, useRef} from 'react';
@@ -32,6 +33,7 @@ const CameraScreen = () => {
   const [torch, setTorch] = useState(false);
   const devices = useCameraDevices();
   const [viewImage, setViewImage] = useState(false);
+  const [modalVisible, setModalVisible] = React.useState(false);
   const device = devices.front;
   const convertImageToBase64 = async imageUri => {
     try {
@@ -87,7 +89,7 @@ const CameraScreen = () => {
         qualityPrioritization: 'quality',
         flash: `${torch ? 'on' : 'off'}`,
         enableAutoRedEyeReduction: true,
-        base64Image:true,
+        base64Image: true,
       });
       const photoName = photo.path.split('/')[photo.path.split('/').length - 1];
       // Create pictureDirectory if it does not exist
@@ -118,7 +120,7 @@ const CameraScreen = () => {
     const response = await Axios.post('/recognize/', {image: base64Image});
     if (response.status === 200) {
       dispatch(setDefaultNetwork(response.data));
-      navigation.navigate('RecognizedPerson');z
+      navigation.navigate('RecognizedPerson', {connectionId: null});
       setDisable(false);
       setLoadings(false);
     } else if (response.status === 201) {
@@ -129,7 +131,7 @@ const CameraScreen = () => {
       // navigation.navigate('Add');
     } else if (response.status === 400) {
       navigation.navigate('HomePage');
-      Alert.alert('Error', 'take another photo ');
+      Alert.alert('Error', 'take');
     }
     console.log('response', response);
   };
@@ -156,6 +158,30 @@ const CameraScreen = () => {
             loading={loadings}
             backgroundColor={{backgroundColor: disable ? '#8391A1' : '#1E232C'}}
           />
+          <Modal
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => setModalVisible(!modalVisible)}>
+            <View style={styles.modalContainer}>
+              <View style={styles.modal}>
+                <Image
+                  source={require('../assets/confused.png')}
+                  style={styles.confused}
+                />
+                <Text style={styles.notRecognized}>
+                  This Person doesn't exist
+                </Text>
+                <Text style={styles.notRecognizedText}>
+                  You can add information about this person
+                </Text>
+                <Button
+                  buttonText="Add"
+                  style={styles.addButton}
+                  onPress={() => navigation.navigate('Add')}
+                />
+              </View>
+            </View>
+          </Modal>
         </>
       )}
 
@@ -262,6 +288,40 @@ const styles = StyleSheet.create({
     width: 90,
     position: 'absolute',
     fontWeight: 'bold',
+  }, modalContainer: {
+    backgroundColor: '#000000aa',
+    flex: 1,
+  },
+  modal: {
+    backgroundColor: '#ffffff',
+    margin: 40,
+    marginTop: 150,
+    padding: 25,
+    borderRadius: 10,
+    display: 'flex',
+    alignItems: 'center',
+    flex: 0.8,
+  },
+  confused: {
+    width: 100,
+    height: 100,
+    marginTop: 45,
+    marginBottom: 20,
+  },
+  notRecognized: {
+    color: '#1E232C',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  notRecognizedText: {
+    color: '#8391A1',
+    marginBottom: 35,
+    width: '65%',
+    textAlign: 'center',
+  },
+  addButton: {
+    width: 210,
   },
 });
 export default CameraScreen;

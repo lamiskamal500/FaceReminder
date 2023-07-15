@@ -7,7 +7,7 @@ import {useDispatch} from 'react-redux';
 import {setDefaultUser} from '../store/slices/user';
 import Axios from '../Network/Axios';
 import {launchImageLibrary} from 'react-native-image-picker';
-
+import BackIcon from '../components/BackIcon';
 const EditProfile = () => {
   const [disable, setDisable] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
@@ -55,6 +55,8 @@ const EditProfile = () => {
   }, []);
   return (
     <View style={styles.editProfileScreen}>
+     <BackIcon style={styles.back} />
+
       <Text style={styles.editProfileTitle}>Edit Profile</Text>
       <View style={styles.ProfilePhoto}>
         {
@@ -150,6 +152,8 @@ const styles = StyleSheet.create({
     borderRadius:100,
     resizeMode:'contain',
     zIndex:10
-  }
+  },back: {
+    marginLeft: 15,
+  },
 });
 export default EditProfile;

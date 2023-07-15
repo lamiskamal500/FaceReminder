@@ -191,7 +191,7 @@ const Register = () => {
         />
 
         <View style={styles.haveAccount}>
-          <Text style={styles.account}>Already have an account?</Text>
+          <Text style={styles.account}>Already have an account? </Text>
           <TouchableOpacity onPress={() => navigation.navigate('Login')}>
             <Text style={styles.loginNow}>Login</Text>
           </TouchableOpacity>

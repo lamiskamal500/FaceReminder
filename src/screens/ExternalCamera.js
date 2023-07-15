@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   Modal,
+  Alert,
 } from 'react-native';
 import RNFS from 'react-native-fs';
 import BackIcon from '../components/BackIcon';
@@ -24,32 +25,56 @@ const ExternalCamera = () => {
   const [disable, setDisable] = useState(false);
   const [loading, setLoading] = useState(false);
   const network = useSelector(defaultNetwork);
-
-  const onPress = async () => {
+  const [imageURL, setImageURL] = useState(null);
+  const [modalVisible, setModalVisible] = React.useState(false);
+  const GetImage = async () => {
     const response = await Axios.get('/preview-image/');
     dispatch(setDefaultNetwork(response.data));
+    // console.log('response', response);
+    return response.data.imageUrl;
+  };
+  const onPress = async () => {
+    setDisable(true);
+    setLoading(true);
+    const imageURL = await GetImage();
+    const response = await Axios.post('/recognize/', {image: imageURL});
+    if (response.status === 200) {
+      dispatch(setDefaultNetwork(response.data));
+      navigation.navigate('RecognizedPerson', {connectionId: null});
+      z;
+      setDisable(false);
+      setLoading(false);
+    } else if (response.status === 201) {
+      dispatch(setDefaultNetwork(response.data));
+      setModalVisible(!modalVisible);
+      setDisable(false);
+      setLoading(false);
+      // navigation.navigate('Add');
+    } else if (response.status === 400) {
+      navigation.navigate('HomePage');
+      Alert.alert('Error', 'take another photo ');
+    }
     console.log('response', response);
   };
-  useEffect(() => {
-    console.log('network', network);
-    onPress();
-  }, []);
+  // useEffect(() => {
+  //   // GetImage();
+  //   // onPress();
+  // }, []);
   return (
     <View style={styles.uploadScreen}>
       <BackIcon style={styles.back} />
       <Text style={styles.uploadText}>Review Camera Image</Text>
       <View style={styles.uploadFrame}>
-      <Image
-          source={
-            {uri: 'http://3.120.37.202/media/ESP32CAMCap.jpg'}
-          }
+        <Image
+          source={{uri: 'http://3.120.37.202/media/ESP32CAMCap.jpg'}}
+          // source={imageURL ? { uri: imageURL } : null}
           style={styles.image}
         />
       </View>
       <Button
         style={styles.recognize}
         buttonText="Recognize"
-        //   onPress={onPress}
+        onPress={onPress}
         loading={loading}
         backgroundColor={{backgroundColor: disable ? '#8391A1' : '#1E232C'}}
       />
@@ -57,10 +82,32 @@ const ExternalCamera = () => {
       <Button
         style={styles.recognize}
         buttonText="Take Photo Again"
-        //   onPress={onPress}
-        loading={loading}
+        // onPress={onPress}
+        // loading={loading}
         backgroundColor={{backgroundColor: disable ? '#8391A1' : '#1E232C'}}
       />
+      <Modal
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(!modalVisible)}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modal}>
+            <Image
+              source={require('../assets/confused.png')}
+              style={styles.confused}
+            />
+            <Text style={styles.notRecognized}>This Person doesn't exist</Text>
+            <Text style={styles.notRecognizedText}>
+              You can add information about this person
+            </Text>
+            <Button
+              buttonText="Add"
+              style={styles.addButton}
+              onPress={() => navigation.navigate('Add')}
+            />
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -92,7 +139,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginVertical: 20,
   },
-  image:{
+  image: {
     borderRadius: 20,
     width: 290,
     height: 360,
@@ -159,6 +206,41 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     alignSelf: 'center',
     marginVertical: 10,
+  },
+  modalContainer: {
+    backgroundColor: '#000000aa',
+    flex: 1,
+  },
+  modal: {
+    backgroundColor: '#ffffff',
+    margin: 40,
+    marginTop: 150,
+    padding: 25,
+    borderRadius: 10,
+    display: 'flex',
+    alignItems: 'center',
+    flex: 0.8,
+  },
+  confused: {
+    width: 100,
+    height: 100,
+    marginTop: 45,
+    marginBottom: 20,
+  },
+  notRecognized: {
+    color: '#1E232C',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  notRecognizedText: {
+    color: '#8391A1',
+    marginBottom: 35,
+    width: '65%',
+    textAlign: 'center',
+  },
+  addButton: {
+    width: 210,
   },
 });
 export default ExternalCamera;

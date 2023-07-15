@@ -15,7 +15,7 @@ const StaticProfile = () => {
   return (
     <View style={styles.StaticProfileScreen}>
       <View style={styles.Images}>
-        <BackIcon />
+        <BackIcon style={styles.backIcon} />
         <Text style={styles.ProfileText}>Profile</Text>
         <Image
           source={require('../assets/Icon.png')}
@@ -121,6 +121,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#E8ECF4',
-  },
+  }, 
+  backIcon:{
+    marginLeft: 15,
+  }
 });
 export default StaticProfile;
