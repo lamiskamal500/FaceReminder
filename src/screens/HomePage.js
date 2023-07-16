@@ -1,5 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {TouchableOpacity, Text, View, StyleSheet, Image, Modal} from 'react-native';
+import {useIsFocused} from '@react-navigation/native';
+
+import {
+  TouchableOpacity,
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  Modal,
+} from 'react-native';
 import Button from '../components/Button';
 import {useNavigation} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
@@ -17,20 +26,47 @@ const HomePage = () => {
   const token = useSelector(defaultToken);
   const network = useSelector(defaultNetwork);
   const [modalVisible, setModalVisible] = React.useState(false);
-
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const dispatch = useDispatch();
-  // console.log('user', user);
+  const isFocused = useIsFocused();
   useEffect(() => {
-    onPress();
+    console.log('user', user);
+    if (user) {
+      onPress();
+    } else {
+      navigation.navigate('Login');
+    }
     console.log('user', user);
   }, []);
+  useEffect(() => {
+    if (isDrawerOpen) {
+      onPressMove();
+    }
+    if (isFocused) {
+      console.log('user', user);
+      if (user) {
+        onPress();
+      } else {
+        navigation.navigate('Login');
+      }
+      console.log('user', user);
+    }
+  }, [isFocused]);
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     if (user) {
+  //       onPress();
+  //     }
+  //   }, []),
+  // );
 
   useEffect(() => {
     console.log('token', token);
   }, [token]);
- 
+
   const onPressMove = () => {
     navigation.toggleDrawer();
+    setIsDrawerOpen(!isDrawerOpen);
   };
   const onPress = async () => {
     const response = await Axios.get('/profiles/');
@@ -39,7 +75,7 @@ const HomePage = () => {
       dispatch(setToken(response.data.token));
     }
     console.log('response', response);
-    
+
     const responce = await Axios.get('/connections/');
     if (responce.status === 200) {
       dispatch(setDefaultNetwork(responce.data));
@@ -48,7 +84,7 @@ const HomePage = () => {
   };
   const onPressCamera = () => {
     navigation.navigate('ExternalCamera');
-    setModalVisible(false)
+    setModalVisible(false);
   };
   return (
     <View style={styles.HomePageMain}>
@@ -58,15 +94,20 @@ const HomePage = () => {
         </TouchableOpacity>
         <TouchableOpacity style={{width: '90%'}}>
           <Image
-            source={user.image ? {uri: `http://52.58.150.200${user.image}`} : require('../assets/User2.png')}
+            source={
+              user
+                ? {uri: `http://52.58.150.200${user.image}`}
+                : require('../assets/User2.png')
+            }
             style={styles.User2}
           />
         </TouchableOpacity>
       </View>
       <View style={{width: '85%'}}></View>
       <View style={{width: '100%'}}>
-      <Text style={styles.HiText}> 
-      Hi {user.fullname ? user.fullname : 'Jessia'} </Text>
+        <Text style={styles.HiText}>
+          Hi {user ? (user.fullname ? user.fullname : 'Jessia') : 'Jessia'}{' '}
+        </Text>
       </View>
       <TouchableOpacity
         onPress={() => navigation.navigate('CameraScreen')}
@@ -82,7 +123,9 @@ const HomePage = () => {
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.cameraButton} onPress={() => setModalVisible(!modalVisible)}>
+      <TouchableOpacity
+        style={styles.cameraButton}
+        onPress={() => setModalVisible(!modalVisible)}>
         <View style={styles.iconCircle}>
           <Image source={require('../assets/cameraa.png')} />
         </View>
@@ -119,7 +162,8 @@ const HomePage = () => {
             />
             <Text style={styles.notRecognized}>Instruction</Text>
             <Text style={styles.notRecognizedText}>
-              Please put the face you want to recognize in front of the camera after that press the button in your camera.
+              Please put the face you want to recognize in front of the camera
+              after that press the button in your camera.
             </Text>
             <Button
               buttonText="OK"
@@ -145,8 +189,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontFamily: 'Urbanist',
     marginTop: 50,
-    marginBottom:10,
-    marginHorizontal:20,
+    marginBottom: 10,
+    marginHorizontal: 20,
     // alignItems:'flex-start'
   },
   Button: {
@@ -169,7 +213,7 @@ const styles = StyleSheet.create({
     width: 55,
     height: 55,
     marginTop: 20,
-    marginBottom:15,
+    marginBottom: 15,
     // // alignSelf:'flex-start',
     marginLeft: 220,
     borderRadius: 100,

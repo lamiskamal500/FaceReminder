@@ -5,7 +5,7 @@ const SplashScreen = ({navigation}) => {
   useEffect(() => {
     // Simulate a delay before navigating to the main screen
     const timeout = setTimeout(() => {
-      navigation.replace('Login'); // Replace 'Main' with the name of your main screen component
+      navigation.replace('HomePage'); // Replace 'Main' with the name of your main screen component
     }, 2000); // Specify the duration of the splash screen in milliseconds
 
     // Clean up the timeout on component unmount

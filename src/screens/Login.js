@@ -7,8 +7,10 @@ import Axios from '../Network/Axios';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useSelector, useDispatch} from 'react-redux';
 import {setDefaultUser} from '../store/slices/user';
+import {defaultUser} from '../store/slices/user';
 import {setToken} from '../store/slices/token';
 import BackIcon from '../components/BackIcon';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = () => {
   const [email, setemail] = useState('');
@@ -18,7 +20,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [showPassword, setshowPassword] = useState(true);
-  const user = useSelector(state => state.user);
+  const user = useSelector(defaultUser);
   const dispatch = useDispatch();
   const navigation = useNavigation();
   // useEffect(() => {
@@ -30,6 +32,34 @@ const Login = () => {
   //     }
   //   }
   // }, [user, navigation]);
+  useEffect(() => {
+    console.log('user in login', user);
+    fetchData();
+    if (user) {
+      navigation.navigate('HomePage');
+    }
+    // onPress();
+    // console.log('user', user);
+  }, []);
+  const fetchData = async () => {
+    try {
+      // Retrieve the data from AsyncStorage
+      const user = await AsyncStorage.getItem('defaultUser');
+      const token = await AsyncStorage.getItem('token');
+      console.log('user', user);
+      console.log('token', token);
+      if (user && token) {
+        console.log('in');
+        dispatch(setDefaultUser(JSON.parse(user)));
+        dispatch(setToken(token));
+        Axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+        navigation.navigate('HomePage');
+      }
+      // return JSON.parse(storedData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const onPress = async () => {
     setDisable(true);
@@ -38,6 +68,8 @@ const Login = () => {
     if (response.status === 200) {
       dispatch(setDefaultUser(response.data.account));
       dispatch(setToken(response.data.token));
+      await saveData('defaultUser', JSON.stringify(response.data.account));
+      await saveData('token', response.data.token);
       Axios.defaults.headers.common[
         'Authorization'
       ] = `Token ${response.data.token}`;
@@ -48,7 +80,7 @@ const Login = () => {
       setPassword('');
     } else {
       // console.log(response);
-      console.log(error)
+      console.log(error);
       setError(response.data.error);
       setDisable(false);
       setLoading(false);
@@ -56,7 +88,7 @@ const Login = () => {
     console.log(response);
     // console.log("token" , response.data.token);
   };
-  
+
   useEffect(() => {
     console.log('isCredValid', isCredValid);
     if (!isCredValid) {
@@ -81,15 +113,21 @@ const Login = () => {
       setIsCredValid(true);
     }
   };
+  const saveData = async (type, data) => {
+    try {
+      // Save the data to AsyncStorage
+      await AsyncStorage.setItem(type, data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <ScrollView style={styles.wholeScreen}>
       <View style={styles.LoginScreen}>
-      {/* <BackIcon style /> */}
+        {/* <BackIcon style /> */}
         <View>
-          <Text style={styles.WelcomeText}>
-            Welcome back!
-          </Text>
+          <Text style={styles.WelcomeText}>Welcome back!</Text>
           <Text style={styles.WelcomeText2}>Glad to see you again.</Text>
         </View>
 
@@ -107,7 +145,7 @@ const Login = () => {
           onChangeText={value => setPassword(value)}
           DefaultText="Password"
           secureTextEntry={showPassword}
-          style={styles.passwordInput} >
+          style={styles.passwordInput}>
           <TouchableOpacity
             onPress={() => setshowPassword(!showPassword)}
             style={styles.eye}>
@@ -232,17 +270,16 @@ const styles = StyleSheet.create({
     // translateY: '-50%',
     right: '5%',
   },
-  WelcomeText2:{
+  WelcomeText2: {
     color: '#1E232C',
     fontSize: 16,
     fontFamily: 'Urbanist',
-    marginBottom:25
+    marginBottom: 25,
   },
-  passwordInput:{
-    bottom:45,
-    right:230,
-  }
+  passwordInput: {
+    bottom: 45,
+    right: 230,
+  },
 });
 
 export default Login;
-
