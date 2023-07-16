@@ -171,11 +171,13 @@ const Add = () => {
           fillColor="blue"
         />
       </View>
-
+      
       <Button
         style={styles.Button}
         styleButton={styles.buttonText}
         buttonText="Save"
+        loading={loading}
+        backgroundColor={{backgroundColor: disable ? '#8391A1' : '#1E232C'}}
         onPress={onPress}
       />
     </View>
