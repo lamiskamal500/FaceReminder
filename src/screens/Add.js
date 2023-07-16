@@ -102,6 +102,7 @@ const Add = () => {
   //   }
   // });
   return (
+    <ScrollView style={styles.wholeScreen}>
     <View style={styles.StaticProfileScreen}>
       {/* <View style={styles.Images}> */}
       <View style={{display: 'flex'}}>
@@ -181,6 +182,7 @@ const Add = () => {
         onPress={onPress}
       />
     </View>
+    </ScrollView>
   );
 };
 const styles = StyleSheet.create({
@@ -190,6 +192,9 @@ const styles = StyleSheet.create({
     height: '100%',
     // alignItems:'center',
     // justifyContent:'center'
+  },
+  wholeScreen: {
+    backgroundColor: '#FFFFFF',
   },
   // Images: {
   //   display: 'flex',

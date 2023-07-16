@@ -56,7 +56,7 @@ const HomePage = () => {
         <TouchableOpacity onPress={onPressMove}>
           <Image source={require('../assets/menu.png')} style={styles.Menu} />
         </TouchableOpacity>
-        <TouchableOpacity style={{width: '90%'}}>
+        <TouchableOpacity style={{width: '90%'}} onPress={() => navigation.navigate('StaticProfile')}>
           <Image
             source={user.image ? {uri: `http://52.58.150.200${user.image}`} : require('../assets/User2.png')}
             style={styles.User2}
@@ -170,6 +170,7 @@ const styles = StyleSheet.create({
     height: 55,
     marginTop: 20,
     marginBottom:15,
+    bottom:'-8%',
     // // alignSelf:'flex-start',
     marginLeft: 220,
     borderRadius: 100,
