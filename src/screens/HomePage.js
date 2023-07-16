@@ -26,7 +26,6 @@ const HomePage = () => {
   const token = useSelector(defaultToken);
   const network = useSelector(defaultNetwork);
   const [modalVisible, setModalVisible] = React.useState(false);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
   useEffect(() => {
@@ -39,11 +38,9 @@ const HomePage = () => {
     console.log('user', user);
   }, []);
   useEffect(() => {
-    if (isDrawerOpen) {
-      onPressMove();
-    }
     if (isFocused) {
-      console.log('user', user);
+      console.log("navigation",navigation)
+      navigation.closeDrawer();
       if (user) {
         onPress();
       } else {
@@ -66,7 +63,6 @@ const HomePage = () => {
 
   const onPressMove = () => {
     navigation.toggleDrawer();
-    setIsDrawerOpen(!isDrawerOpen);
   };
   const onPress = async () => {
     const response = await Axios.get('/profiles/');
