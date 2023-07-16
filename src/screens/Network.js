@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Text, View, StyleSheet, Image, TouchableOpacity, FlatList} from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import {useNavigation} from '@react-navigation/native';
 import BackIcon from '../components/BackIcon';
 import InputText from '../components/InputText';
@@ -22,7 +23,11 @@ const Network = () => {
     fetchData();
     console.log('network', network);
   }, []);
-
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchData();
+    }, [])
+  );
   const fetchData = async () => {
     try {
       const response = await Axios.get('/connections/');

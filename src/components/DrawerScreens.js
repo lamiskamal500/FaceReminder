@@ -6,7 +6,6 @@ import CustomDrawer from '../components/CustomDrawer'
 import StaticProfile from '../screens/StaticProfile';
 import EditProfile from '../screens/EditProfile';
 import Network from '../screens/Network';
-
 const Drawer = createDrawerNavigator();
 const DrawerScreens = ()=>{
     return(
@@ -14,7 +13,7 @@ const DrawerScreens = ()=>{
             drawerStyle: {
               width: 240,
             },
-          }}>
+        }}>
         <Drawer.Screen name="HomePage" component={HomePage} 
         options={{headerShown:false}}/>
         <Drawer.Screen name="StaticProfile" component={StaticProfile} 
