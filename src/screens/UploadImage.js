@@ -6,7 +6,8 @@ import {
   Image,
   TouchableOpacity,
   Modal,
-  Alert
+  Alert,
+  ScrollView
 } from 'react-native';
 import RNFS from 'react-native-fs';
 import BackIcon from '../components/BackIcon';
@@ -41,6 +42,18 @@ const UploadImage = () => {
   //   useEffect(() => {
   //     console.log('image', images);
   //   }, []);
+  const convertImageToBase64 = async imageUri => {
+    try {
+      const fileUri = `file://${imageUri}`;
+      const base64Data = await RNFS.readFile(fileUri, 'base64');
+      const mimeType = 'image/jpeg';
+
+      return `data:${mimeType};base64,${base64Data}`;
+    } catch (error) {
+      console.log('Error converting image to Base64:', error);
+    }
+  };
+
   const handleImage = async () => {
     const options = {
       mediaType: 'photo',
@@ -66,23 +79,15 @@ const UploadImage = () => {
       setImageUri(selectedImageUri);
       console.log('result', result);
       const base64Image = await convertImageToBase64(selectedImageUri);
+      console.log('image', imageData)
       setImageData(base64Image);
     } catch (error) {
       console.log('Image picker error:', error);
     }
   };
 
-  const convertImageToBase64 = async imageUri => {
-    try {
-      const fileUri = `file://${imageUri}`;
-      const base64Data = await RNFS.readFile(fileUri, 'base64');
-      const mimeType = 'image/jpeg';
+  console.log('image', imageData)
 
-      return `data:${mimeType};base64,${base64Data}`;
-    } catch (error) {
-      console.log('Error converting image to Base64:', error);
-    }
-  };
   const onPress = async () => {
     setDisable(true);
     setLoading(true);
@@ -109,6 +114,7 @@ const UploadImage = () => {
     setModalVisible(false)
   };
   return (
+    <ScrollView style={styles.wholeScreen}>
     <View style={styles.uploadScreen}>
       <BackIcon style={styles.back} />
       <Text style={styles.uploadText}>Upload your Photo</Text>
@@ -169,14 +175,17 @@ const UploadImage = () => {
         </View>
       </Modal>
     </View>
+    </ScrollView>
   );
 };
 const styles = StyleSheet.create({
+  wholeScreen: {
+    backgroundColor: '#FFFFFF',
+  },
   uploadScreen: {
     backgroundColor: '#FFFFFF',
     display: 'flex',
     fontFamily: 'Urbanist',
-    height: '100%',
   },
   uploadText: {
     color: '#1E232C',
@@ -213,7 +222,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   recognize: {
-    width: 200,
+    width: '50%',
     paddingVertical: 15,
     alignSelf: 'center',
   },
@@ -250,7 +259,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   addButton: {
-    width: 210,
+    width: 200,
   },
 });
 export default UploadImage;

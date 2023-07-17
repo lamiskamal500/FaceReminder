@@ -17,24 +17,38 @@ import {setDefaultNetwork} from '../store/slices/network';
 import {defaultNetwork} from '../store/slices/network';
 import {useDispatch, useSelector} from 'react-redux';
 import Axios from '../Network/Axios';
+import { defaultUser, setDefaultUser } from '../store/slices/user';
 
-3;
 const ExternalCamera = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [disable, setDisable] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [userId, setUserId] = useState(false);
   const network = useSelector(defaultNetwork);
+  const user = useSelector(defaultUser);
   const [modalVisible, setModalVisible] = React.useState(false);
+
+
   const GetImage = async () => {
     const response = await Axios.get('/preview-image/');
+    dispatch(setDefaultUser(response.data))
     dispatch(setDefaultNetwork(response.data));
     console.log('response', response);
+  
   };
   useEffect(() => {
     GetImage();
     console.log('network', network)
+    console.log('user', user)
+    setUserId(user.id)
   }, []);
+  
+  const imageUrl = `https://face-reminder.online/media/connections/${userId}/ESP32CAMCap.jpg`;
+  const date = new Date();
+  const imageUri = `${imageUrl}?timestamp=${date.getTime()}`;
+  console.log('Image URI:', imageUri);
+
   const onPress = async () => {
     setDisable(true);
     setLoading(true);
@@ -64,11 +78,11 @@ const ExternalCamera = () => {
       <BackIcon style={styles.back} />
       <Text style={styles.uploadText}>Review Camera Image</Text>
       <View style={styles.uploadFrame}>
-        {/* <Image
-          source={{uri: `http://52.58.150.200/media/ESP32CAMCap.jpg?timestamp=${new Date()}`}}
+        <Image
+          source={{uri: imageUri}}
           // source={require('../assets/kenzy.jpeg')}
           style={styles.image}
-        /> */}
+        />
       </View>
       <Button
         style={styles.recognize}

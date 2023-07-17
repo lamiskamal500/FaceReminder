@@ -25,7 +25,7 @@ const StaticProfile = () => {
 
       <View style={{alignItems: 'center'}}>
         <Image
-          source={user.image ? {uri: `http://52.58.150.200${user.image}`} : require('../assets/profilePhoto.png')}
+          source={user.image ? {uri: `https://face-reminder.online${user.image}`} : require('../assets/profilePhoto.png')}
           style={styles.User2}
         />
         <Text style={styles.UserText}>

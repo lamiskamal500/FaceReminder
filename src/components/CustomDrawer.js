@@ -57,11 +57,11 @@ const CustomDrawer = () => {
   return (
     <View style={styles.customDrawer}>
       <Image
-        source={
-          user
-            ? {uri: `http://52.58.150.200${user.image}`}
-            : require('../assets/User2.png')
-        }
+         source={
+              user? user.image ? {uri:`https://face-reminder.online${user.image}`} :
+              require('../assets/User2.png')
+                : require('../assets/User2.png')
+            }
         style={styles.user}
       />
       <Text style={styles.profileName}>{user?.fullname}</Text>

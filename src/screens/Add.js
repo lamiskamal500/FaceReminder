@@ -132,7 +132,7 @@ const Add = () => {
       <View style={styles.imageNetwork}>
       <Image
             style={styles.imageStyle}
-            source={network.image ? { uri: network.image } : {uri: 'http://52.58.150.200/media/ESP32CAMCap.jpg?timestamp=16263625820936'}}
+            source={network.image ? { uri: network.image } : {uri: 'https://face-reminder.online/media/ESP32CAMCap.jpg?timestamp=16263625820936'}}
             alt="avatar"
         />
         </View>
@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
   Button: {
     marginLeft: 15,
     marginTop: 18,
-    width: 270,
+    width: 200,
     paddingVertical: 15,
     alignSelf: 'center',
   },

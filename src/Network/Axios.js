@@ -1,11 +1,16 @@
 import axios from "axios";
 
 const Axios = axios.create({
-    baseURL: 'http://52.58.150.200/accounts', 
+    baseURL: 'https://face-reminder.online/accounts', 
 });
 
 Axios.interceptors.response.use(
     response => response,
     error => error.response
 )
-export default Axios;
+Axios.interceptors.request.use(
+    (request) => {console.log('request', request) 
+    return request},
+    error => error.request
+)
+export default Axios; 

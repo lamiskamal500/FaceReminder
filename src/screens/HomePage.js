@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Image,
   Modal,
+  Alert
 } from 'react-native';
 import Button from '../components/Button';
 import {useNavigation} from '@react-navigation/native';
@@ -64,6 +65,18 @@ const HomePage = () => {
   const onPressMove = () => {
     navigation.toggleDrawer();
   };
+  const GetImage = async () => {
+    const response = await Axios.get('/preview-image/');
+    if (response.status === 200) {
+    dispatch(setDefaultNetwork(response.data));
+    console.log('response', response);
+    navigation.navigate('ExternalCamera');
+    setModalVisible(false);
+    }
+    if (response.status === 404){
+      Alert.alert('Error' , 'Image Not Found');
+    }
+  };
   const onPress = async () => {
     const response = await Axios.get('/profiles/');
     if (response.status === 200) {
@@ -93,8 +106,8 @@ const HomePage = () => {
           onPress={() => navigation.navigate('StaticProfile')}>
           <Image
             source={
-              user
-                ? {uri: `http://52.58.150.200${user.image}`}
+              user? user.image ? {uri:  `https://face-reminder.online${user.image}`} :
+              require('../assets/User2.png')
                 : require('../assets/User2.png')
             }
             style={styles.User2}
@@ -166,7 +179,7 @@ const HomePage = () => {
             <Button
               buttonText="OK"
               style={styles.addButton}
-              onPress={onPressCamera}
+              onPress={GetImage}
             />
           </View>
         </View>

@@ -25,11 +25,11 @@ const CameraScreen = () => {
   const [loading, setLoading] = useState(null);
   const [disable, setDisable] = useState(false);
   const [loadings, setLoadings] = useState(false);
-  const [imageData, setImageData] = useState('');
   const [imageUri, setImageUri] = useState('');
   const cameraRef = useRef(Camera);
   const [photoPath, setPhotoPath] = useState('');
   const [base64Image, setBase64Image] = useState('');
+  const [imageData, setImageData] = useState('');
   const [torch, setTorch] = useState(false);
   const devices = useCameraDevices();
   const [viewImage, setViewImage] = useState(false);
@@ -99,6 +99,7 @@ const CameraScreen = () => {
 
       await RNFS.moveFile(photo.path, path);
       const base64Image = await convertImageToBase64(path);
+      console.log('image', base64Image)
       setBase64Image(base64Image);
       setPhotoPath('file://' + path);
       console.log(' photopath', photoPath);

@@ -76,7 +76,7 @@ const Network = () => {
               colors={['#F5F8FA', '#BABDBF']}
               style={styles.gradient}>
               <Image
-                source={{uri: `http://52.58.150.200${item.image}`}}
+                source={{uri: `https://face-reminder.online${item.image}`}}
                 style={styles.networkImage}
               />
               <Text style={styles.info}>{item.name}</Text>
