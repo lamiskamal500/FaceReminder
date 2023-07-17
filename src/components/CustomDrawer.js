@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation,DrawerActions} from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux';
 import {defaultUser} from '../store/slices/user';
 import {setDefaultUser} from '../store/slices/user';
@@ -40,7 +40,10 @@ const CustomDrawer = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const user = useSelector(defaultUser);
-
+  const closeDrawerAndNavigate = (screen) => {
+    navigation.closeDrawer();
+    navigation.navigate(screen);
+  };
   useEffect(() => {
     onPress();
     console.log('user', user);
@@ -57,18 +60,24 @@ const CustomDrawer = () => {
   return (
     <View style={styles.customDrawer}>
       <Image
-         source={
-              user? user.image ? {uri:`https://face-reminder.online${user.image}`} :
-              require('../assets/User2.png')
-                : require('../assets/User2.png')
-            }
+        source={
+          user
+            ? user.image
+              ? {uri: `https://face-reminder.online${user.image}`}
+              : require('../assets/User2.png')
+            : require('../assets/User2.png')
+        }
         style={styles.user}
       />
       <Text style={styles.profileName}>{user?.fullname}</Text>
       <DrawerItems
         item="HomePage"
-        onpress={() => navigation.navigate('HomePage')}
+        onpress={() => {
+          navigation.navigate('HomePage');
+          navigation.dispatch(DrawerActions.closeDrawer()); // Close drawer after navigating to HomePage
+        }}
       />
+
       <DrawerItems
         item="Profile"
         onpress={() => navigation.navigate('StaticProfile')}

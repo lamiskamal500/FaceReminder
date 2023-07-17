@@ -51,11 +51,11 @@ const App = () => {
             component={ForgetPassword}
             options={{headerShown: false}}
           />
-          <Stack.Screen
+          {/* <Stack.Screen
             name="CreateNewPassword"
             component={CreateNewPassword}
             options={{headerShown: false}}
-          />
+          /> */}
           <Stack.Screen
             name="HomePage"
             component={DrawerScreens}
