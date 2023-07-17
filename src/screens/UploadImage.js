@@ -189,13 +189,14 @@ const styles = StyleSheet.create({
   },
   uploadText: {
     color: '#1E232C',
-    fontSize: 28,
+    fontSize: 25,
     fontWeight: 'bold',
-    marginTop: 25,
-    marginLeft: 25,
+    marginTop: -35,
+    marginLeft: 70,
   },
   back: {
-    marginLeft: 15,
+    marginLeft: 10,
+    marginTop:5
   },
   uploadFrame: {
     borderWidth: 3,
@@ -205,6 +206,7 @@ const styles = StyleSheet.create({
     width: 290,
     height: 360,
     alignItems: 'center',
+    marginTop:10
   },
   upload: {
     alignItems: 'center',

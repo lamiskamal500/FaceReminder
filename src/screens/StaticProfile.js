@@ -17,19 +17,23 @@ const StaticProfile = () => {
       <View style={styles.Images}>
         <BackIcon style={styles.backIcon} />
         <Text style={styles.ProfileText}>Profile</Text>
-        <Image
+        {/* <Image
           source={require('../assets/Icon.png')}
           style={styles.ShareIcon}
-        />
+        /> */}
       </View>
 
       <View style={{alignItems: 'center'}}>
         <Image
-          source={user.image ? {uri: `https://face-reminder.online${user.image}`} : require('../assets/profilePhoto.png')}
+           source={
+            user? user.image ? {uri:  `https://face-reminder.online${user.image}`} :
+            require('../assets/User2.png')
+              : require('../assets/User2.png')
+          }
           style={styles.User2}
         />
         <Text style={styles.UserText}>
-          {user.fullname ? user.fullname : 'Jessia'}
+          {user ? user.fullname ? user.fullname : 'Jessia': 'Jessia'}
         </Text>
         <Text style={styles.me}>me</Text>
       </View>
@@ -38,19 +42,19 @@ const StaticProfile = () => {
 
       <View style={styles.infoBox}>
         <Text style={styles.info}>
-          {user.email ? user.email : 'xxxx@xxxx.com'}
+          { user ? user.email ? user.email : 'xxxx@xxxx.com' : 'xxxx@xxxx.com'}
         </Text>
       </View>
 
       <Text style={styles.EmailText}>Phone number</Text>
       <View style={styles.infoBox}>
-        <Text style={styles.info}>{user.phone ? user.phone : '0xxxxxxxx'}</Text>
+        <Text style={styles.info}>{ user ? user.phone ? user.phone : '0xxxxxxxx' : '0xxxxxxxx'}</Text>
       </View>
 
       <Text style={styles.EmailText}>Address</Text>
       <View style={styles.infoBox}>
         <Text style={styles.info}>
-          {user.address ? user.address : 'xxxxxxx at xxxxx'}
+          { user ? user.address ? user.address : 'xxxxxxx at xxxxx' : 'xxxxxxx at xxxxx'}
         </Text>
       </View>
     </View>
@@ -81,11 +85,11 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   ProfileText: {
-    color: '#1D1838',
-    fontSize: 16,
+    color: '#000000',
+    fontSize: 25,
     fontWeight: 'bold',
-    marginTop: 25,
-    marginLeft: -130,
+    marginTop: 23,
+    marginLeft: -145,
   },
   UserText: {
     color: '#1D1838',

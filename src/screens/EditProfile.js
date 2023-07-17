@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     color: '#000000',
     fontSize: 25,
     fontWeight: 'bold',
-    marginTop: 40,
+    marginTop: 35,
     marginBottom: 20,
     top:'-10%'
   },
@@ -157,7 +157,8 @@ const styles = StyleSheet.create({
     resizeMode:'contain',
     zIndex:10
   },back: {
-    marginLeft: 15,
+    marginLeft: 0,
+    marginTop:5
   },
   nameInput:{
     right:230,
