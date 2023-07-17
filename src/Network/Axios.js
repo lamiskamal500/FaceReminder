@@ -4,8 +4,13 @@ const Axios = axios.create({
     baseURL: 'https://face-reminder.online/accounts', 
 });
 
+// Axios.interceptors.response.use(
+//     response => response,
+//     error => error.response
+// )
 Axios.interceptors.response.use(
-    response => response,
+    (response) => {console.log('response', response) 
+    return response},
     error => error.response
 )
 Axios.interceptors.request.use(

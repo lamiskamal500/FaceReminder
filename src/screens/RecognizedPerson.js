@@ -39,16 +39,13 @@ const RecognizedPerson = () => {
       <View style={styles.circle}>
         <Image
           source={
-            network.image
-              ? {uri: `https://face-reminder.online/${network.image}`}
-              : require('../assets/RecognizedPerson.png')
+            {uri: `https://face-reminder.online/${network.image}`}
           }
           style={styles.image}
         />
       </View>
       <Text style={styles.info}>{network.name}</Text>
       <Text style={styles.info2}>{network.relation}</Text>
-
       <View style={styles.extraDetails}>
         <Text style={styles.about}>About</Text>
         <Text style={styles.aboutText}>{network.biography}</Text>

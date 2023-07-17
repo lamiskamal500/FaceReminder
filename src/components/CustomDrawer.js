@@ -81,7 +81,7 @@ const CustomDrawer = () => {
         item="Network"
         onpress={() => navigation.navigate('Network')}
       />
-      <DrawerButton item="Logout" />
+      <DrawerButton item="Logout"/>
     </View>
   );
 };
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: 'bold',
     marginTop: 10,
-    marginBottom: 20,
+    marginBottom: 10,
   },
   drawerItems: {
     color: '#434954',
@@ -115,6 +115,8 @@ const styles = StyleSheet.create({
   },
   Button: {
     width: 100,
+    paddingVertical:14,
+    marginTop:5
   },
 });
 export default CustomDrawer;

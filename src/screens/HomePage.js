@@ -106,7 +106,7 @@ const HomePage = () => {
           onPress={() => navigation.navigate('StaticProfile')}>
           <Image
             source={
-              user? user.image ? {uri:  `https://face-reminder.online${user.image}`} :
+              user? user.image ? {uri:`https://face-reminder.online${user.image}`} :
               require('../assets/User2.png')
                 : require('../assets/User2.png')
             }

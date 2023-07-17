@@ -18,6 +18,7 @@ import {defaultNetwork} from '../store/slices/user';
 import {useDispatch} from 'react-redux';
 import Axios from '../Network/Axios';
 
+
 const fullWindowHeight = Dimensions.get('window').height;
 const CameraScreen = () => {
   const dispatch = useDispatch();
@@ -34,7 +35,8 @@ const CameraScreen = () => {
   const devices = useCameraDevices();
   const [viewImage, setViewImage] = useState(false);
   const [modalVisible, setModalVisible] = React.useState(false);
-  const device = devices.front;
+
+  const device = devices.back;
   const convertImageToBase64 = async imageUri => {
     try {
       const fileUri = `file://${imageUri}`;
@@ -119,6 +121,7 @@ const CameraScreen = () => {
     setDisable(true);
     setLoadings(true);
     const response = await Axios.post('/recognize/', {image: base64Image});
+    console.log('image', base64Image)
     if (response.status === 200) {
       dispatch(setDefaultNetwork(response.data));
       navigation.navigate('RecognizedPerson', {connectionId: null});
@@ -153,7 +156,7 @@ const CameraScreen = () => {
           </TouchableOpacity>
 
           <Button
-            buttonText="recognize"
+            buttonText="Recognize"
             style={styles.sendButton}
             onPress={onPress}
             loading={loadings}
@@ -286,7 +289,7 @@ const styles = StyleSheet.create({
     bottom: 50,
     left: '35%',
     backgroundColor: '#000000',
-    width: 90,
+    width: 125,
     position: 'absolute',
     fontWeight: 'bold',
   }, modalContainer: {

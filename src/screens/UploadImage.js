@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: 'bold',
     marginTop: 25,
-    marginLeft: 25,
+    marginLeft: 34,
   },
   back: {
     marginLeft: 15,
@@ -259,7 +259,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   addButton: {
-    width: 200,
+    width: 210,
   },
 });
 export default UploadImage;

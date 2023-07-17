@@ -17,10 +17,10 @@ const StaticProfile = () => {
       <View style={styles.Images}>
         <BackIcon style={styles.backIcon} />
         <Text style={styles.ProfileText}>Profile</Text>
-        <Image
+        {/* <Image
           source={require('../assets/Icon.png')}
           style={styles.ShareIcon}
-        />
+        /> */}
       </View>
 
       <View style={{alignItems: 'center'}}>
@@ -81,11 +81,11 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   ProfileText: {
-    color: '#1D1838',
-    fontSize: 16,
+    color: '#000000',
+    fontSize: 24,
     fontWeight: 'bold',
     marginTop: 25,
-    marginLeft: -130,
+    marginLeft: -140,
   },
   UserText: {
     color: '#1D1838',

@@ -27,7 +27,7 @@ const ForgetPassword = () => {
         Alert.alert('Success', 'Password reset link sent to your email.');
         setDisable(false);
         setLoading(false);
-        navigation.navigate('CreateNewPassword');
+        // navigation.navigate('CreateNewPassword');
       } else {
         // Display an error message to the user
         Alert.alert('Error', 'Failed to send password reset email.');
