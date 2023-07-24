@@ -12,4 +12,16 @@ recognized individuals.
 
 # Recognition by ESP32 Camera image
 
+<img src='ESP32 camera.gif'></img>
 
+# Recognition by Mobile Camera image
+
+<img src='Mobile Camera-1.gif'></img>
+
+# Side Bar options
+
+<img src='Side bar.gif'></img>
+
+# Login, Logout, Sign Up, Forget password
+
+<img src='LogOut.gif'></img>
