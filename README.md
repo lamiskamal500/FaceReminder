@@ -12,7 +12,7 @@ recognized individuals.
 
 # Recognition by ESP32 Camera image
 
-<img src='ESP32 camera.gif'></img>
+<img src='ESP32 camera.gif' width=400 height=600></img>
 
 # Recognition by Mobile Camera image
 
@@ -24,4 +24,4 @@ recognized individuals.
 
 # Login, Logout, Sign Up, Forget password
 
-<img src='LogOut.gif'></img>
+<img src='LogOut.gif' width=400 height=600></img>
