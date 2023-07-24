@@ -6,22 +6,22 @@ capturing images: using the device's camera, an external camera, or uploading ph
 Using a face recognition model, the application can accurately detect faces in the provided images and provide essential information about the 
 recognized individuals.
 
-# Recognition by uploading an image
+## Recognition by uploading an image
 
 <img src='Upload.gif'></img>
 
-# Recognition by ESP32 Camera image
+## Recognition by ESP32 Camera image
 
 <img src='ESP32 camera.gif' width=320 height=680></img>
 
-# Recognition by Mobile Camera image
+## Recognition by Mobile Camera image
 
 <img src='Mobile Camera-1.gif'></img>
 
-# Side Bar options
+## Side Bar options
 
 <img src='Side bar.gif'></img>
 
-# Login, Logout, Sign Up, Forget password
+## Login, Logout, Sign Up, Forget password
 
 <img src='LogOut.gif' width=320 height=680></img>
