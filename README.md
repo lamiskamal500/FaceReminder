@@ -8,4 +8,4 @@ recognized individuals.
 
 # Recognition by uploading image
 
-<img src='Upload.gif'></img>
+<img src='Upload Image.gif'></img>
