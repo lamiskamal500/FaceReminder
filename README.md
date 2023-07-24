@@ -8,4 +8,8 @@ recognized individuals.
 
 # Recognition by uploading image
 
-<img src='Upload Image.gif'></img>
+<img src='Upload.gif'></img>
+
+# Recognition by ESP32 Camera image
+
+
